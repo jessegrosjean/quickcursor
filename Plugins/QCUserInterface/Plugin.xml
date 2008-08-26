@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin
+	id="com.hogbaysoftware.quickcursor.QCUserInterface"
+	label="User Interface"
+	version="1.0.0"
+	info="QuickCursor User Interface">
+
+	<requirement bundle="com.blocks.Blocks" version="1.0.0" />
+	<requirement bundle="com.blocks.BLifecycle" version="1.0.0" />
+	<requirement bundle="com.blocks.BUserInterface" version="1.0.0" />
+
+	<extension point="com.blocks.BLifecycle.lifecycle">
+		<applicationDidFinishLaunching class="QCUserInterfaceController sharedInstance" />
+	</extension>
+	
+	<extension point="com.blocks.BUserInterface.menus">
+		<menu id="com.hogbaysoftware.quickcursor.menus.statusMenu">
+			<menuitem title="Quick Cursor" id="quickcursor" submenu="com.blocks.BUserInterface.menus.main" />
+		</menu>		
+	</extension>
+	
+</plugin>

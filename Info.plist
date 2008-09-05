@@ -17,13 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>QcCr</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0 - Development</string>
-	<key>CFBundleSignature</key>
-	<string>QcCr</string>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>4</string>
 	<key>LSUIElement</key>
 	<string>1</string>
 	<key>NSMainNibFile</key>
@@ -34,10 +32,10 @@
 	<string>http://hogbaysoftware.com/products/quickcursor/report_crash</string>
 	<key>SUFeedURL</key>
 	<string>http://hogbaysoftware.com/products/quickcursor/releases.rss</string>
-    <key>LSEnvironment</key>
-    <dict>
-        <key>MinimumSystemVersion</key>
-        <string>10.5</string>
-    </dict>
+	<key>LSEnvironment</key>
+	<dict>
+		<key>MinimumSystemVersion</key>
+		<string>10.5</string>
+	</dict>
 </dict>
 </plist>

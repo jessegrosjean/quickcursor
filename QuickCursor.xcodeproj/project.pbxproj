@@ -156,14 +156,14 @@
 		886B87970CFC989F0023E2B8 /* BLifecycle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BLifecycle.xcodeproj; path = Vendor/BLifecycle/BLifecycle.xcodeproj; sourceTree = "<group>"; };
 		886B87AA0CFC9A1D0023E2B8 /* BSoftwareUpdate.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BSoftwareUpdate.xcodeproj; path = Vendor/BSoftwareUpdate/BSoftwareUpdate.xcodeproj; sourceTree = "<group>"; };
 		886B87CD0CFC9A470023E2B8 /* BCrashReporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCrashReporter.xcodeproj; path = Vendor/BCrashReporter/BCrashReporter.xcodeproj; sourceTree = "<group>"; };
-		889A49B50CFDB3910041848B /* QCUIElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QCUIElement.h; path = ../../QCUIElement.h; sourceTree = "<group>"; };
-		889A49B60CFDB3910041848B /* QCUIElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QCUIElement.m; path = ../../QCUIElement.m; sourceTree = "<group>"; };
+		889A49B50CFDB3910041848B /* QCUIElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCUIElement.h; sourceTree = "<group>"; };
+		889A49B60CFDB3910041848B /* QCUIElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCUIElement.m; sourceTree = "<group>"; };
 		889A4A3F0CFDBA150041848B /* QCUserInterface.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QCUserInterface.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		889A4A400CFDBA150041848B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		889A4A550CFDBAE00041848B /* Plugin.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Plugin.xml; sourceTree = "<group>"; };
 		889A4A750CFDBCA50041848B /* QCUserInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCUserInterfaceController.h; sourceTree = "<group>"; };
 		889A4A760CFDBCA50041848B /* QCUserInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCUserInterfaceController.m; sourceTree = "<group>"; };
-		889A4BD30CFDC5B70041848B /* ODBEditorSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ODBEditorSuite.h; path = ../../ODBEditorSuite.h; sourceTree = "<group>"; };
+		889A4BD30CFDC5B70041848B /* ODBEditorSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODBEditorSuite.h; sourceTree = "<group>"; };
 		889A4BE90CFDC6090041848B /* NSAppleEventDescriptor-Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAppleEventDescriptor-Extensions.h"; sourceTree = "<group>"; };
 		889A4BEA0CFDC6090041848B /* NSAppleEventDescriptor-Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAppleEventDescriptor-Extensions.m"; sourceTree = "<group>"; };
 		889A4BF30CFDC6360041848B /* ODBEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODBEditor.h; sourceTree = "<group>"; };

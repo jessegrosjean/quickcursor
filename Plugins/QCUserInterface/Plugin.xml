@@ -8,16 +8,19 @@
 
 	<requirement bundle="com.blocks.Blocks" version="1.0.0" />
 	<requirement bundle="com.blocks.BLifecycle" version="1.0.0" />
-	<requirement bundle="com.blocks.BUserInterface" version="1.0.0" />
+
+	<extension-point id="editor" label="Edit in Editor" />
 
 	<extension point="com.blocks.BLifecycle.lifecycle">
 		<applicationDidFinishLaunching class="QCUserInterfaceController sharedInstance" />
 	</extension>
-	
-	<extension point="com.blocks.BUserInterface.menus">
-		<menu id="com.hogbaysoftware.quickcursor.menus.statusMenu">
-			<menuitem title="Quick Cursor" id="quickcursor" submenu="com.blocks.BUserInterface.menus.main" />
-		</menu>		
+
+	<!-- editor apps should support ODBEditorSuite.h -->
+	<extension point="com.hogbaysoftware.quickcursor.QCUserInterface.editor">
+		<editor bundle="com.barebones.bbedit" />
+		<editor bundle="com.macromates.textmate" />
+		<editor bundle="org.smultron.Smultron" />
+		<editor bundle="com.hogbaysoftware.WriteRoom" />
 	</extension>
-	
+		
 </plugin>

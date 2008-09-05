@@ -2,6 +2,8 @@
 //  ODBEditor.m
 //  B-Quartic
 
+// http://gusmueller.com/odb/
+
 /**
     
     Nov 30- Updates from Eric Blair:
@@ -64,9 +66,7 @@ static ODBEditor	*_sharedODBEditor;
 		CFBundleGetPackageInfo(CFBundleGetMainBundle(), &packageType, &packageCreator);
 		_signature = packageCreator;
 		
-//		[self setEditorBundleIdentifier: @"com.macromates.textmate"];
 		[self setEditorBundleIdentifier: @"com.hogbaysoftware.WriteRoom"];
-//		[self setEditorBundleIdentifier: @"org.smultron.Smultron"];
 		
 		_filesBeingEdited = [[NSMutableDictionary alloc] init];
 		

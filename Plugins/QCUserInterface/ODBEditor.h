@@ -1,5 +1,7 @@
 #import <Cocoa/Cocoa.h>
 
+// http://gusmueller.com/odb/
+
 extern NSString * const ODBEditorCustomPathKey;
 
 @interface ODBEditor : NSObject

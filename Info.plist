@@ -19,17 +19,13 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1.1 - Development</string>
+	<string>1.0 - Development</string>
 	<key>CFBundleSignature</key>
 	<string>QcCr</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>LSUIElement</key>
 	<string>1</string>
-	<key>NSAppleScriptEnabled</key>
-	<string>YES</string>
-	<key>OSAScriptingDefinition</key>
-	<string>QuickCursor.sdef</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

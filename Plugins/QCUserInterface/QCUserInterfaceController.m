@@ -3,7 +3,7 @@
 //  QuickCursor
 //
 //  Created by Jesse Grosjean on 11/28/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+//  Copyright 2007 Hog Bay Software. All rights reserved.
 //
 
 #import "QCUserInterfaceController.h"
@@ -43,10 +43,15 @@
 		NSDictionary *context = [NSDictionary dictionaryWithObject:focusedElement forKey:@"uiElement"];
 		NSString *processName = [focusedElement processName];
 		NSString *windowTitle = focusedElement.window.title;
-		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ – %@", processName, windowTitle];
+		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ – %@", processName, windowTitle];		
+		[[ODBEditor sharedODBEditor] setEditorBundleIdentifier:[sender representedObject]];
 		[[ODBEditor sharedODBEditor] editString:value options:[NSDictionary dictionaryWithObject:editorCustomPath forKey:ODBEditorCustomPathKey] forClient:self context:context];
 	} else {
-		NSBeep();
+		[[NSAlert alertWithMessageText:BLocalizedString(@"Could not edit text", nil)
+						 defaultButton:BLocalizedString(@"OK", nil)
+					   alternateButton:nil
+						   otherButton:nil
+			 informativeTextWithFormat:BLocalizedString(@"QuickCursor could not find any text to edit. Make sure that a text view has keyboard focus, and then try again.", nil)] runModal];
 	}
 }
 
@@ -83,14 +88,56 @@
                 return;
         }
     }
-	
-	NSStatusBar *systemStatusBar = [NSStatusBar systemStatusBar];
-    quickCursorStatusItem = [systemStatusBar statusItemWithLength:NSVariableStatusItemLength];
+
+    quickCursorStatusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     [quickCursorStatusItem setTitle:BLocalizedString(@"Q",@"")];
 	[quickCursorStatusItem setTarget:self];
-	[quickCursorStatusItem setAction:@selector(beginQuickCursorEdit:)];
     [quickCursorStatusItem setHighlightMode:YES];
-//    [quickCursorStatusItem setMenu:[[[BUserInterfaceController sharedInstance] menuControllerForMenuExtensionPoint:@"com.hogbaysoftware.quickcursor.menus.statusMenu"] menu]];
+
+	NSMenu *quickCursorMenu = [[NSMenu alloc] init];
+	
+	NSMenuItem *aboutMenuItem = [[NSMenuItem alloc] initWithTitle:BLocalizedString(@"About", nil) action:@selector(orderFrontStandardAboutPanel:) keyEquivalent:@""];
+	[aboutMenuItem setTarget:NSApp];
+	[quickCursorMenu addItem:aboutMenuItem];
+
+	[quickCursorMenu addItem:[NSMenuItem separatorItem]];
+
+	[quickCursorMenu addItemWithTitle:BLocalizedString(@"Edit in...", nil) action:NULL keyEquivalent:@""];
+	
+	NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
+	BExtensionPoint *extensionPoint = [[BExtensionRegistry sharedInstance] extensionPointFor:@"com.hogbaysoftware.quickcursor.QCUserInterface.editor"];
+	NSMutableArray *editInMenuItems = [NSMutableArray array];
+	
+	for (BConfigurationElement *each in [extensionPoint configurationElementsNamed:@"editor"]) {
+		NSString *bundleID = [each attributeForKey:@"bundle"];
+		NSString *bundlePath = [workspace absolutePathForAppBundleWithIdentifier:bundleID];
+		
+		if (bundlePath) {
+			NSMenuItem *eachMenuItem = [[NSMenuItem alloc] initWithTitle:[[NSBundle bundleWithPath:bundlePath] objectForInfoDictionaryKey:@"CFBundleName"] action:@selector(beginQuickCursorEdit:) keyEquivalent:@""];
+			[eachMenuItem setTarget:self];
+			[eachMenuItem setRepresentedObject:bundleID];
+			[eachMenuItem setIndentationLevel:1];
+			[eachMenuItem setImage:[workspace iconForFile:bundlePath]];
+			[eachMenuItem setKeyEquivalentModifierMask:NSAlternateKeyMask | NSCommandKeyMask | NSControlKeyMask];
+			[editInMenuItems addObject:eachMenuItem];
+		} else {
+			BLogInfo([NSString stringWithFormat:@"failed to find edit in application for bundle id %@", bundleID]);
+		}
+	}
+
+	[editInMenuItems sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES]]];
+	
+	for (NSMenuItem *each in editInMenuItems) {
+		[quickCursorMenu addItem:each];
+	}
+	
+	[quickCursorMenu addItem:[NSMenuItem separatorItem]];
+	
+	NSMenuItem *quitMenuItem = [[NSMenuItem alloc] initWithTitle:BLocalizedString(@"Quit QuickCursor", nil) action:@selector(terminate:) keyEquivalent:@""];
+	[quitMenuItem setTarget:NSApp];
+	[quickCursorMenu addItem:quitMenuItem];
+
+	[quickCursorStatusItem setMenu:quickCursorMenu];
 }
 
 @end

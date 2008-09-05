@@ -13,6 +13,20 @@ Todo:
 
 Building:
 
+First checkout from github:
+
+$ git clone git://github.com/jessegrosjean/quickcursor.git
+...
+
+Next init and update submodules:
+
+$ cd quickcursor/
+$ git submodule init
+...
+$ git submodule update
+...
+$ open QuickCursor.xcodeproj/ 
+
 To build QuickCursor:
 
 1. Open the QuickCursor XCode project ./QuickCursor/QuickCursor.xcode

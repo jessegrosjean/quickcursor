@@ -383,7 +383,7 @@
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				886B875C0CFC97D80023E2B8 /* Copy Frameworks */,
 				886B875D0CFC97D80023E2B8 /* Copy Plugins */,
-				886B87940CFC985F0023E2B8 /* Install SystemVersionCheck Script */,
+				886B87940CFC985F0023E2B8 /* Prepare Release Script */,
 			);
 			buildRules = (
 			);
@@ -515,19 +515,19 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ $CONFIGURATION != 'Release' ]; then\n\texit\nfi\n\ngenstrings -s BLocalizedString -o English.lproj/ Sources/*.[mch] Sources/*/*.[mch]";
 		};
-		886B87940CFC985F0023E2B8 /* Install SystemVersionCheck Script */ = {
+		886B87940CFC985F0023E2B8 /* Prepare Release Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Install SystemVersionCheck Script";
+			name = "Prepare Release Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION != 'Release' ]; then\n\texit\nfi\n\ncp \"$BUILT_PRODUCTS_DIR/SystemVersionCheck\" \"$BUILT_PRODUCTS_DIR/$EXECUTABLE_FOLDER_PATH/$EXECUTABLE_NAME-SystemVersionCheck\"";
+			shellScript = "if [ $CONFIGURATION != 'Release' ]; then\n\texit\nfi\n\n### Version Constants\n\nVERSION=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleVersion)\nSHORT_VERSION_STRING=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleShortVersionString)\n\n### System Version Check\n\ncp \"$BUILT_PRODUCTS_DIR/SystemVersionCheck\" \"$BUILT_PRODUCTS_DIR/$EXECUTABLE_FOLDER_PATH/$EXECUTABLE_NAME-SystemVersionCheck\"\n\n### Build DMG\n\nDMG_DIR=\"$TEMP_FILES_DIR/disk\"\nDMG_PATH=\"$BUILT_PRODUCTS_DIR/$PROJECT_NAME-$SHORT_VERSION_STRING.dmg\"\n\nrm -rf \"$DMG_DIR\"\nmkdir \"$DMG_DIR\"\ncp -R \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app\" \"$DMG_DIR\"\nrm -f \"$DMG_PATH\"\nhdiutil create -srcfolder \"$DMG_DIR\" -volname \"$PROJECT_NAME-$SHORT_VERSION_STRING\" \"$DMG_PATH\"\nhdiutil internet-enable -yes \"$DMG_PATH\"\nrm -rf \"$DMG_DIR\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -1,16 +1,14 @@
 //
 //  main.m
-//  «PROJECTNAME»
+//  QuickCursor
 //
-//  Created by «FULLUSERNAME» on «DATE».
-//  Copyright «ORGANIZATIONNAME» «YEAR» . All rights reserved.
+//  Created by Jesse Grosjean on 9/1/09.
+//  Copyright 2009 Hog Bay Software. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Blocks/Blocks.h>
 
-
-int main(int argc, char *argv[]) {
-	[[BExtensionRegistry sharedInstance] loadMainExtension];
+int main(int argc, char *argv[])
+{
     return NSApplicationMain(argc,  (const char **) argv);
 }

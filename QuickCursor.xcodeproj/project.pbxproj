@@ -3,199 +3,146 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 44;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		882845960D09B5F500091F25 /* Plugin.xml in Resources */ = {isa = PBXBuildFile; fileRef = 882845950D09B5F500091F25 /* Plugin.xml */; };
-		889A4A560CFDBAE00041848B /* Plugin.xml in Resources */ = {isa = PBXBuildFile; fileRef = 889A4A550CFDBAE00041848B /* Plugin.xml */; };
-		889A4A5A0CFDBB440041848B /* QCUserInterface.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 889A4A3F0CFDBA150041848B /* QCUserInterface.plugin */; };
-		889A4A740CFDBC850041848B /* QCUIElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 889A49B60CFDB3910041848B /* QCUIElement.m */; };
-		889A4A770CFDBCA50041848B /* QCUserInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 889A4A760CFDBCA50041848B /* QCUserInterfaceController.m */; };
-		889A4BEB0CFDC6090041848B /* NSAppleEventDescriptor-Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 889A4BEA0CFDC6090041848B /* NSAppleEventDescriptor-Extensions.m */; };
-		889A4BF50CFDC6360041848B /* ODBEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 889A4BF40CFDC6360041848B /* ODBEditor.m */; };
-		889A4C840CFDD90D0041848B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		88BE40D60E71439000E113B7 /* Blocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88BE409B0E7142E000E113B7 /* Blocks.framework */; };
-		88BE40E00E71439D00E113B7 /* Blocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88BE409B0E7142E000E113B7 /* Blocks.framework */; };
-		88BE41010E7143E900E113B7 /* Blocks.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 88BE409B0E7142E000E113B7 /* Blocks.framework */; };
-		88BE41060E71440500E113B7 /* BLifecycle.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 88BE40A50E7142EE00E113B7 /* BLifecycle.plugin */; };
-		88BE410B0E71440A00E113B7 /* BSoftwareUpdate.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 88BE40AE0E7142FA00E113B7 /* BSoftwareUpdate.plugin */; };
-		88BE410E0E71441000E113B7 /* BCrashReporter.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 88BE40B70E71430400E113B7 /* BCrashReporter.plugin */; };
-		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		256AC3DA0F4B6AC300CF3369 /* QCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* QCAppDelegate.m */; };
+		88AAF90C105014A500DFD8E5 /* StatusItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 88AAF90B105014A500DFD8E5 /* StatusItemIcon.pdf */; };
+		88AAFA4D10503BEC00DFD8E5 /* BBAppSessionLoginState.m in Sources */ = {isa = PBXBuildFile; fileRef = 88AAFA4C10503BEC00DFD8E5 /* BBAppSessionLoginState.m */; };
+		88B27D9E104D8EDF00806BAE /* NSAppleEventDescriptor-Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B27D95104D8EDE00806BAE /* NSAppleEventDescriptor-Extensions.m */; };
+		88B27D9F104D8EDF00806BAE /* ODBEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B27D97104D8EDE00806BAE /* ODBEditor.m */; };
+		88B27DA1104D8EDF00806BAE /* QCUIElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B27D9B104D8EDF00806BAE /* QCUIElement.m */; };
+		88B27E47104D95A000806BAE /* QuickCursor.icns in Resources */ = {isa = PBXBuildFile; fileRef = 88B27E46104D95A000806BAE /* QuickCursor.icns */; };
+		88B2801E104DA2BD00806BAE /* ShortcutRecorder.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 88B28019104DA2B200806BAE /* ShortcutRecorder.framework */; };
+		88B28060104DA44900806BAE /* PTHotKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B28059104DA44900806BAE /* PTHotKey.m */; };
+		88B28061104DA44900806BAE /* PTHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B2805B104DA44900806BAE /* PTHotKeyCenter.m */; };
+		88B28062104DA44900806BAE /* PTKeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B2805D104DA44900806BAE /* PTKeyCodeTranslator.m */; };
+		88B28063104DA44900806BAE /* PTKeyCombo.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B2805F104DA44900806BAE /* PTKeyCombo.m */; };
+		88B28067104DA48500806BAE /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B28066104DA48500806BAE /* Carbon.framework */; };
+		88B2806C104DA49000806BAE /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B2806B104DA49000806BAE /* CoreServices.framework */; };
+		88B281D3104DC8AB00806BAE /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B28019104DA2B200806BAE /* ShortcutRecorder.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		889A4A570CFDBB330041848B /* PBXContainerItemProxy */ = {
+		88B28018104DA2B200806BAE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 889A4A3E0CFDBA150041848B;
-			remoteInfo = QCController;
-		};
-		88BE409A0E7142E000E113B7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 886B87480CFC97730023E2B8 /* Blocks.xcodeproj */;
+			containerPortal = 88B2800E104DA2B200806BAE /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = Blocks;
+			remoteGlobalIDString = 939837800DA42965007F53F3;
+			remoteInfo = ShortcutRecorder.framework;
 		};
-		88BE40A40E7142EE00E113B7 /* PBXContainerItemProxy */ = {
+		88B2801A104DA2B200806BAE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 886B87970CFC989F0023E2B8 /* BLifecycle.xcodeproj */;
+			containerPortal = 88B2800E104DA2B200806BAE /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = BLifecycle;
+			remoteGlobalIDString = 939838A50DA4300F007F53F3;
+			remoteInfo = ShortcutRecorder.ibplugin;
 		};
-		88BE40AD0E7142FA00E113B7 /* PBXContainerItemProxy */ = {
+		88B2801C104DA2B200806BAE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 886B87AA0CFC9A1D0023E2B8 /* BSoftwareUpdate.xcodeproj */;
+			containerPortal = 88B2800E104DA2B200806BAE /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = BSoftwareUpdate;
+			remoteGlobalIDString = 93983B220DA43C4E007F53F3;
+			remoteInfo = ShortcutRecorderFramework_Tester;
 		};
-		88BE40B60E71430400E113B7 /* PBXContainerItemProxy */ = {
+		88B28033104DA32600806BAE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 886B87CD0CFC9A470023E2B8 /* BCrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = BCrashReporter;
-		};
-		88BE40E90E7143AF00E113B7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 886B87CD0CFC9A470023E2B8 /* BCrashReporter.xcodeproj */;
+			containerPortal = 88B2800E104DA2B200806BAE /* ShortcutRecorder.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = BCrashReporter;
-		};
-		88BE40EB0E7143AF00E113B7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 886B87AA0CFC9A1D0023E2B8 /* BSoftwareUpdate.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = BSoftwareUpdate;
-		};
-		88BE40ED0E7143AF00E113B7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 886B87970CFC989F0023E2B8 /* BLifecycle.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = BLifecycle;
-		};
-		88BE40EF0E7143AF00E113B7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 886B87480CFC97730023E2B8 /* Blocks.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = Blocks;
-		};
-		88BE41670E7144BA00E113B7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88BE415F0E7144BA00E113B7 /* SystemVersionCheck.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DD76FA10486AA7600D96B5E;
-			remoteInfo = SystemVersionCheck;
-		};
-		88BE416B0E7144CE00E113B7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88BE415F0E7144BA00E113B7 /* SystemVersionCheck.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DD76F960486AA7600D96B5E;
-			remoteInfo = SystemVersionCheck;
-		};
-		88BE41BB0E71491300E113B7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 886B87480CFC97730023E2B8 /* Blocks.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = Blocks;
+			remoteGlobalIDString = 9398377F0DA42965007F53F3;
+			remoteInfo = ShortcutRecorder.framework;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		886B875C0CFC97D80023E2B8 /* Copy Frameworks */ = {
+		88B28028104DA2FC00806BAE /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				88BE41010E7143E900E113B7 /* Blocks.framework in Copy Frameworks */,
+				88B2801E104DA2BD00806BAE /* ShortcutRecorder.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		886B875D0CFC97D80023E2B8 /* Copy Plugins */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				88BE41060E71440500E113B7 /* BLifecycle.plugin in Copy Plugins */,
-				88BE410B0E71440A00E113B7 /* BSoftwareUpdate.plugin in Copy Plugins */,
-				88BE410E0E71441000E113B7 /* BCrashReporter.plugin in Copy Plugins */,
-				889A4A5A0CFDBB440041848B /* QCUserInterface.plugin in Copy Plugins */,
-			);
-			name = "Copy Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		256AC3D80F4B6AC300CF3369 /* QCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCAppDelegate.h; sourceTree = "<group>"; };
+		256AC3D90F4B6AC300CF3369 /* QCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCAppDelegate.m; sourceTree = "<group>"; };
+		256AC3F00F4B6AF500CF3369 /* QuickCursor_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickCursor_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		32CA4F630368D1EE00C91783 /* QuickCursor_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickCursor_Prefix.pch; sourceTree = "<group>"; };
-		882845950D09B5F500091F25 /* Plugin.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Plugin.xml; sourceTree = "<group>"; };
-		886B87480CFC97730023E2B8 /* Blocks.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Blocks.xcodeproj; path = Vendor/Blocks/Blocks.xcodeproj; sourceTree = "<group>"; };
-		886B87970CFC989F0023E2B8 /* BLifecycle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BLifecycle.xcodeproj; path = Vendor/BLifecycle/BLifecycle.xcodeproj; sourceTree = "<group>"; };
-		886B87AA0CFC9A1D0023E2B8 /* BSoftwareUpdate.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BSoftwareUpdate.xcodeproj; path = Vendor/BSoftwareUpdate/BSoftwareUpdate.xcodeproj; sourceTree = "<group>"; };
-		886B87CD0CFC9A470023E2B8 /* BCrashReporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCrashReporter.xcodeproj; path = Vendor/BCrashReporter/BCrashReporter.xcodeproj; sourceTree = "<group>"; };
-		889A49B50CFDB3910041848B /* QCUIElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCUIElement.h; sourceTree = "<group>"; };
-		889A49B60CFDB3910041848B /* QCUIElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCUIElement.m; sourceTree = "<group>"; };
-		889A4A3F0CFDBA150041848B /* QCUserInterface.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QCUserInterface.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
-		889A4A400CFDBA150041848B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		889A4A550CFDBAE00041848B /* Plugin.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Plugin.xml; sourceTree = "<group>"; };
-		889A4A750CFDBCA50041848B /* QCUserInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCUserInterfaceController.h; sourceTree = "<group>"; };
-		889A4A760CFDBCA50041848B /* QCUserInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCUserInterfaceController.m; sourceTree = "<group>"; };
-		889A4BD30CFDC5B70041848B /* ODBEditorSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODBEditorSuite.h; sourceTree = "<group>"; };
-		889A4BE90CFDC6090041848B /* NSAppleEventDescriptor-Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAppleEventDescriptor-Extensions.h"; sourceTree = "<group>"; };
-		889A4BEA0CFDC6090041848B /* NSAppleEventDescriptor-Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAppleEventDescriptor-Extensions.m"; sourceTree = "<group>"; };
-		889A4BF30CFDC6360041848B /* ODBEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODBEditor.h; sourceTree = "<group>"; };
-		889A4BF40CFDC6360041848B /* ODBEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODBEditor.m; sourceTree = "<group>"; };
-		88BE415F0E7144BA00E113B7 /* SystemVersionCheck.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SystemVersionCheck.xcodeproj; path = Vendor/SystemVersionCheck/SystemVersionCheck.xcodeproj; sourceTree = "<group>"; };
-		88BE41C00E71499900E113B7 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; wrapsLines = 1; };
-		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88AAF90B105014A500DFD8E5 /* StatusItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = StatusItemIcon.pdf; sourceTree = "<group>"; };
+		88AAFA4B10503BEC00DFD8E5 /* BBAppSessionLoginState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBAppSessionLoginState.h; sourceTree = "<group>"; };
+		88AAFA4C10503BEC00DFD8E5 /* BBAppSessionLoginState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBAppSessionLoginState.m; sourceTree = "<group>"; };
+		88B27D94104D8EDE00806BAE /* NSAppleEventDescriptor-Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAppleEventDescriptor-Extensions.h"; sourceTree = "<group>"; };
+		88B27D95104D8EDE00806BAE /* NSAppleEventDescriptor-Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAppleEventDescriptor-Extensions.m"; sourceTree = "<group>"; };
+		88B27D96104D8EDE00806BAE /* ODBEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODBEditor.h; sourceTree = "<group>"; };
+		88B27D97104D8EDE00806BAE /* ODBEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODBEditor.m; sourceTree = "<group>"; };
+		88B27D98104D8EDE00806BAE /* ODBEditorSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODBEditorSuite.h; sourceTree = "<group>"; };
+		88B27D9A104D8EDF00806BAE /* QCUIElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCUIElement.h; sourceTree = "<group>"; };
+		88B27D9B104D8EDF00806BAE /* QCUIElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCUIElement.m; sourceTree = "<group>"; };
+		88B27E46104D95A000806BAE /* QuickCursor.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = QuickCursor.icns; sourceTree = "<group>"; };
+		88B2800E104DA2B200806BAE /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = "shortcutrecorder-read-only/ShortcutRecorder.xcodeproj"; sourceTree = "<group>"; };
+		88B28058104DA44900806BAE /* PTHotKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTHotKey.h; sourceTree = "<group>"; };
+		88B28059104DA44900806BAE /* PTHotKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTHotKey.m; sourceTree = "<group>"; };
+		88B2805A104DA44900806BAE /* PTHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTHotKeyCenter.h; sourceTree = "<group>"; };
+		88B2805B104DA44900806BAE /* PTHotKeyCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTHotKeyCenter.m; sourceTree = "<group>"; };
+		88B2805C104DA44900806BAE /* PTKeyCodeTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTKeyCodeTranslator.h; sourceTree = "<group>"; };
+		88B2805D104DA44900806BAE /* PTKeyCodeTranslator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTKeyCodeTranslator.m; sourceTree = "<group>"; };
+		88B2805E104DA44900806BAE /* PTKeyCombo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTKeyCombo.h; sourceTree = "<group>"; };
+		88B2805F104DA44900806BAE /* PTKeyCombo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTKeyCombo.m; sourceTree = "<group>"; };
+		88B28066104DA48500806BAE /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		88B2806B104DA49000806BAE /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		8D1107310486CEB800E47090 /* QuickCursor-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QuickCursor-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* QuickCursor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickCursor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		889A4A3D0CFDBA150041848B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				889A4C840CFDD90D0041848B /* Cocoa.framework in Frameworks */,
-				88BE40E00E71439D00E113B7 /* Blocks.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8D11072E0486CEB800E47090 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88B281D3104DC8AB00806BAE /* ShortcutRecorder.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				88BE40D60E71439000E113B7 /* Blocks.framework in Frameworks */,
+				88B28067104DA48500806BAE /* Carbon.framework in Frameworks */,
+				88B2806C104DA49000806BAE /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				256AC3D80F4B6AC300CF3369 /* QCAppDelegate.h */,
+				256AC3D90F4B6AC300CF3369 /* QCAppDelegate.m */,
+				88B27D96104D8EDE00806BAE /* ODBEditor.h */,
+				88B27D97104D8EDE00806BAE /* ODBEditor.m */,
+				88B27D98104D8EDE00806BAE /* ODBEditorSuite.h */,
+				88B27D9A104D8EDF00806BAE /* QCUIElement.h */,
+				88B27D9B104D8EDF00806BAE /* QCUIElement.m */,
+				88AAFA4A10503BDC00DFD8E5 /* BBAppSessionLoginState */,
+				88B28057104DA43C00806BAE /* HotKey */,
+				88B27D94104D8EDE00806BAE /* NSAppleEventDescriptor-Extensions.h */,
+				88B27D95104D8EDE00806BAE /* NSAppleEventDescriptor-Extensions.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,7 +165,6 @@
 			isa = PBXGroup;
 			children = (
 				8D1107320486CEB800E47090 /* QuickCursor.app */,
-				889A4A3F0CFDBA150041848B /* QCUserInterface.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -226,17 +172,14 @@
 		29B97314FDCFA39411CA2CEA /* QuickCursor */ = {
 			isa = PBXGroup;
 			children = (
-				88BE415F0E7144BA00E113B7 /* SystemVersionCheck.xcodeproj */,
-				886B87480CFC97730023E2B8 /* Blocks.xcodeproj */,
-				886B87970CFC989F0023E2B8 /* BLifecycle.xcodeproj */,
-				886B87AA0CFC9A1D0023E2B8 /* BSoftwareUpdate.xcodeproj */,
-				886B87CD0CFC9A470023E2B8 /* BCrashReporter.xcodeproj */,
-				88BE41C00E71499900E113B7 /* README.txt */,
+				88B2800E104DA2B200806BAE /* ShortcutRecorder.xcodeproj */,
+				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
-				889A4A3A0CFDB9CF0041848B /* Plugins */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				88B28066104DA48500806BAE /* Carbon.framework */,
+				88B2806B104DA49000806BAE /* CoreServices.framework */,
 			);
 			name = QuickCursor;
 			sourceTree = "<group>";
@@ -244,7 +187,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32CA4F630368D1EE00C91783 /* QuickCursor_Prefix.pch */,
+				256AC3F00F4B6AF500CF3369 /* QuickCursor_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
@@ -253,10 +196,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107310486CEB800E47090 /* Info.plist */,
+				88AAF90B105014A500DFD8E5 /* StatusItemIcon.pdf */,
+				88B27E46104D95A000806BAE /* QuickCursor.icns */,
+				8D1107310486CEB800E47090 /* QuickCursor-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
-				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
-				882845950D09B5F500091F25 /* Plugin.xml */,
+				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -270,130 +214,56 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		889A4A3A0CFDB9CF0041848B /* Plugins */ = {
+		88AAFA4A10503BDC00DFD8E5 /* BBAppSessionLoginState */ = {
 			isa = PBXGroup;
 			children = (
-				889A4A460CFDBA5B0041848B /* QCUserInterface */,
+				88AAFA4B10503BEC00DFD8E5 /* BBAppSessionLoginState.h */,
+				88AAFA4C10503BEC00DFD8E5 /* BBAppSessionLoginState.m */,
 			);
-			path = Plugins;
+			name = BBAppSessionLoginState;
 			sourceTree = "<group>";
 		};
-		889A4A460CFDBA5B0041848B /* QCUserInterface */ = {
+		88B2800F104DA2B200806BAE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				889A49B50CFDB3910041848B /* QCUIElement.h */,
-				889A49B60CFDB3910041848B /* QCUIElement.m */,
-				889A4A750CFDBCA50041848B /* QCUserInterfaceController.h */,
-				889A4A760CFDBCA50041848B /* QCUserInterfaceController.m */,
-				889A4BFA0CFDC65A0041848B /* ODBEditor */,
-				889A4A5B0CFDBB5E0041848B /* Resources */,
-			);
-			path = QCUserInterface;
-			sourceTree = "<group>";
-		};
-		889A4A5B0CFDBB5E0041848B /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				889A4A400CFDBA150041848B /* Info.plist */,
-				889A4A550CFDBAE00041848B /* Plugin.xml */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		889A4BFA0CFDC65A0041848B /* ODBEditor */ = {
-			isa = PBXGroup;
-			children = (
-				889A4BD30CFDC5B70041848B /* ODBEditorSuite.h */,
-				889A4BF30CFDC6360041848B /* ODBEditor.h */,
-				889A4BF40CFDC6360041848B /* ODBEditor.m */,
-				889A4BE90CFDC6090041848B /* NSAppleEventDescriptor-Extensions.h */,
-				889A4BEA0CFDC6090041848B /* NSAppleEventDescriptor-Extensions.m */,
-			);
-			name = ODBEditor;
-			sourceTree = "<group>";
-		};
-		88BE40970E7142E000E113B7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				88BE409B0E7142E000E113B7 /* Blocks.framework */,
+				88B28019104DA2B200806BAE /* ShortcutRecorder.framework */,
+				88B2801B104DA2B200806BAE /* ShortcutRecorder.ibplugin */,
+				88B2801D104DA2B200806BAE /* ShortcutRecorder.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		88BE40A10E7142EE00E113B7 /* Products */ = {
+		88B28057104DA43C00806BAE /* HotKey */ = {
 			isa = PBXGroup;
 			children = (
-				88BE40A50E7142EE00E113B7 /* BLifecycle.plugin */,
+				88B28058104DA44900806BAE /* PTHotKey.h */,
+				88B28059104DA44900806BAE /* PTHotKey.m */,
+				88B2805A104DA44900806BAE /* PTHotKeyCenter.h */,
+				88B2805B104DA44900806BAE /* PTHotKeyCenter.m */,
+				88B2805C104DA44900806BAE /* PTKeyCodeTranslator.h */,
+				88B2805D104DA44900806BAE /* PTKeyCodeTranslator.m */,
+				88B2805E104DA44900806BAE /* PTKeyCombo.h */,
+				88B2805F104DA44900806BAE /* PTKeyCombo.m */,
 			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		88BE40AA0E7142FA00E113B7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				88BE40AE0E7142FA00E113B7 /* BSoftwareUpdate.plugin */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		88BE40B30E71430400E113B7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				88BE40B70E71430400E113B7 /* BCrashReporter.plugin */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		88BE41600E7144BA00E113B7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				88BE41680E7144BA00E113B7 /* SystemVersionCheck */,
-			);
-			name = Products;
+			name = HotKey;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		889A4A3E0CFDBA150041848B /* QCUserInterface */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 889A4A430CFDBA160041848B /* Build configuration list for PBXNativeTarget "QCUserInterface" */;
-			buildPhases = (
-				889A4A3B0CFDBA150041848B /* Resources */,
-				889A4A3C0CFDBA150041848B /* Sources */,
-				889A4A3D0CFDBA150041848B /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				88BE41BC0E71491300E113B7 /* PBXTargetDependency */,
-			);
-			name = QCUserInterface;
-			productName = QCController;
-			productReference = 889A4A3F0CFDBA150041848B /* QCUserInterface.plugin */;
-			productType = "com.apple.product-type.bundle";
-		};
 		8D1107260486CEB800E47090 /* QuickCursor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "QuickCursor" */;
 			buildPhases = (
-				886B87920CFC982A0023E2B8 /* Run genstrings Script */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				886B875C0CFC97D80023E2B8 /* Copy Frameworks */,
-				886B875D0CFC97D80023E2B8 /* Copy Plugins */,
-				886B87940CFC985F0023E2B8 /* Prepare Release Script */,
+				88B28028104DA2FC00806BAE /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				88BE416C0E7144CE00E113B7 /* PBXTargetDependency */,
-				88BE40F00E7143AF00E113B7 /* PBXTargetDependency */,
-				88BE40EE0E7143AF00E113B7 /* PBXTargetDependency */,
-				88BE40EC0E7143AF00E113B7 /* PBXTargetDependency */,
-				88BE40EA0E7143AF00E113B7 /* PBXTargetDependency */,
-				889A4A580CFDBB330041848B /* PBXTargetDependency */,
+				88B28034104DA32600806BAE /* PBXTargetDependency */,
 			);
 			name = QuickCursor;
 			productInstallPath = "$(HOME)/Applications";
@@ -407,187 +277,86 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "QuickCursor" */;
-			compatibilityVersion = "Xcode 3.0";
+			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* QuickCursor */;
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 88BE40B30E71430400E113B7 /* Products */;
-					ProjectRef = 886B87CD0CFC9A470023E2B8 /* BCrashReporter.xcodeproj */;
-				},
-				{
-					ProductGroup = 88BE40A10E7142EE00E113B7 /* Products */;
-					ProjectRef = 886B87970CFC989F0023E2B8 /* BLifecycle.xcodeproj */;
-				},
-				{
-					ProductGroup = 88BE40970E7142E000E113B7 /* Products */;
-					ProjectRef = 886B87480CFC97730023E2B8 /* Blocks.xcodeproj */;
-				},
-				{
-					ProductGroup = 88BE40AA0E7142FA00E113B7 /* Products */;
-					ProjectRef = 886B87AA0CFC9A1D0023E2B8 /* BSoftwareUpdate.xcodeproj */;
-				},
-				{
-					ProductGroup = 88BE41600E7144BA00E113B7 /* Products */;
-					ProjectRef = 88BE415F0E7144BA00E113B7 /* SystemVersionCheck.xcodeproj */;
+					ProductGroup = 88B2800F104DA2B200806BAE /* Products */;
+					ProjectRef = 88B2800E104DA2B200806BAE /* ShortcutRecorder.xcodeproj */;
 				},
 			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* QuickCursor */,
-				889A4A3E0CFDBA150041848B /* QCUserInterface */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		88BE409B0E7142E000E113B7 /* Blocks.framework */ = {
+		88B28019104DA2B200806BAE /* ShortcutRecorder.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = Blocks.framework;
-			remoteRef = 88BE409A0E7142E000E113B7 /* PBXContainerItemProxy */;
+			path = ShortcutRecorder.framework;
+			remoteRef = 88B28018104DA2B200806BAE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		88BE40A50E7142EE00E113B7 /* BLifecycle.plugin */ = {
+		88B2801B104DA2B200806BAE /* ShortcutRecorder.ibplugin */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = BLifecycle.plugin;
-			remoteRef = 88BE40A40E7142EE00E113B7 /* PBXContainerItemProxy */;
+			path = ShortcutRecorder.ibplugin;
+			remoteRef = 88B2801A104DA2B200806BAE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		88BE40AE0E7142FA00E113B7 /* BSoftwareUpdate.plugin */ = {
+		88B2801D104DA2B200806BAE /* ShortcutRecorder.app */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BSoftwareUpdate.plugin;
-			remoteRef = 88BE40AD0E7142FA00E113B7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		88BE40B70E71430400E113B7 /* BCrashReporter.plugin */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BCrashReporter.plugin;
-			remoteRef = 88BE40B60E71430400E113B7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		88BE41680E7144BA00E113B7 /* SystemVersionCheck */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = SystemVersionCheck;
-			remoteRef = 88BE41670E7144BA00E113B7 /* PBXContainerItemProxy */;
+			fileType = wrapper.application;
+			path = ShortcutRecorder.app;
+			remoteRef = 88B2801C104DA2B200806BAE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
-		889A4A3B0CFDBA150041848B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				889A4A560CFDBAE00041848B /* Plugin.xml in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8D1107290486CEB800E47090 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
-				882845960D09B5F500091F25 /* Plugin.xml in Resources */,
+				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+				88B27E47104D95A000806BAE /* QuickCursor.icns in Resources */,
+				88AAF90C105014A500DFD8E5 /* StatusItemIcon.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		886B87920CFC982A0023E2B8 /* Run genstrings Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run genstrings Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION != 'Release' ]; then\n\texit\nfi\n\ngenstrings -s BLocalizedString -o English.lproj/ Sources/*.[mch] Sources/*/*.[mch]";
-		};
-		886B87940CFC985F0023E2B8 /* Prepare Release Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Prepare Release Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION != 'Release' ]; then\n\texit\nfi\n\n### Version Constants\n\nVERSION=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleVersion)\nSHORT_VERSION_STRING=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleShortVersionString)\n\n### System Version Check\n\ncp \"$BUILT_PRODUCTS_DIR/SystemVersionCheck\" \"$BUILT_PRODUCTS_DIR/$EXECUTABLE_FOLDER_PATH/$EXECUTABLE_NAME-SystemVersionCheck\"\n\n### Build DMG\n\nDMG_DIR=\"$TEMP_FILES_DIR/disk\"\nDMG_PATH=\"$BUILT_PRODUCTS_DIR/$PROJECT_NAME-$SHORT_VERSION_STRING.dmg\"\n\nrm -rf \"$DMG_DIR\"\nmkdir \"$DMG_DIR\"\ncp -R \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app\" \"$DMG_DIR\"\nrm -f \"$DMG_PATH\"\nhdiutil create -srcfolder \"$DMG_DIR\" -volname \"$PROJECT_NAME-$SHORT_VERSION_STRING\" \"$DMG_PATH\"\nhdiutil internet-enable -yes \"$DMG_PATH\"\nrm -rf \"$DMG_DIR\"";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		889A4A3C0CFDBA150041848B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				889A4A740CFDBC850041848B /* QCUIElement.m in Sources */,
-				889A4A770CFDBCA50041848B /* QCUserInterfaceController.m in Sources */,
-				889A4BEB0CFDC6090041848B /* NSAppleEventDescriptor-Extensions.m in Sources */,
-				889A4BF50CFDC6360041848B /* ODBEditor.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				256AC3DA0F4B6AC300CF3369 /* QCAppDelegate.m in Sources */,
+				88B27D9E104D8EDF00806BAE /* NSAppleEventDescriptor-Extensions.m in Sources */,
+				88B27D9F104D8EDF00806BAE /* ODBEditor.m in Sources */,
+				88B27DA1104D8EDF00806BAE /* QCUIElement.m in Sources */,
+				88B28060104DA44900806BAE /* PTHotKey.m in Sources */,
+				88B28061104DA44900806BAE /* PTHotKeyCenter.m in Sources */,
+				88B28062104DA44900806BAE /* PTKeyCodeTranslator.m in Sources */,
+				88B28063104DA44900806BAE /* PTKeyCombo.m in Sources */,
+				88AAFA4D10503BEC00DFD8E5 /* BBAppSessionLoginState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		889A4A580CFDBB330041848B /* PBXTargetDependency */ = {
+		88B28034104DA32600806BAE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 889A4A3E0CFDBA150041848B /* QCUserInterface */;
-			targetProxy = 889A4A570CFDBB330041848B /* PBXContainerItemProxy */;
-		};
-		88BE40EA0E7143AF00E113B7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BCrashReporter;
-			targetProxy = 88BE40E90E7143AF00E113B7 /* PBXContainerItemProxy */;
-		};
-		88BE40EC0E7143AF00E113B7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BSoftwareUpdate;
-			targetProxy = 88BE40EB0E7143AF00E113B7 /* PBXContainerItemProxy */;
-		};
-		88BE40EE0E7143AF00E113B7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BLifecycle;
-			targetProxy = 88BE40ED0E7143AF00E113B7 /* PBXContainerItemProxy */;
-		};
-		88BE40F00E7143AF00E113B7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Blocks;
-			targetProxy = 88BE40EF0E7143AF00E113B7 /* PBXContainerItemProxy */;
-		};
-		88BE416C0E7144CE00E113B7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SystemVersionCheck;
-			targetProxy = 88BE416B0E7144CE00E113B7 /* PBXContainerItemProxy */;
-		};
-		88BE41BC0E71491300E113B7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Blocks;
-			targetProxy = 88BE41BB0E71491300E113B7 /* PBXContainerItemProxy */;
+			name = ShortcutRecorder.framework;
+			targetProxy = 88B28033104DA32600806BAE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -600,73 +369,21 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
+		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				29B97319FDCFA39411CA2CEA /* English */,
+				1DDD58150DA1D0A300B32029 /* English */,
 			);
-			name = MainMenu.nib;
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		889A4A410CFDBA160041848B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = Plugins/QCUserInterface/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-					"-undefined",
-					dynamic_lookup,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = QCUserInterface;
-				WRAPPER_EXTENSION = plugin;
-				ZERO_LINK = YES;
-			};
-			name = Debug;
-		};
-		889A4A420CFDBA160041848B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = Plugins/QCUserInterface/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-					"-undefined",
-					dynamic_lookup,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = QCUserInterface;
-				WRAPPER_EXTENSION = plugin;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -674,66 +391,55 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QuickCursor_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = "QuickCursor-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = QuickCursor;
-				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QuickCursor_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = "QuickCursor-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = QuickCursor;
-				SYSTEM_VERSION_CHECK_SUFFIX = "-SystemVersionCheck";
-				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_ENABLE_OBJC_GC = required;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+				SDKROOT = macosx10.6;
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				GCC_ENABLE_OBJC_GC = required;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+				SDKROOT = macosx10.6;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		889A4A430CFDBA160041848B /* Build configuration list for PBXNativeTarget "QCUserInterface" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				889A4A410CFDBA160041848B /* Debug */,
-				889A4A420CFDBA160041848B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "QuickCursor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

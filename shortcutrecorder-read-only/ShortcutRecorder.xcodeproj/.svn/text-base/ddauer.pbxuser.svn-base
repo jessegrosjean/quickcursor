@@ -1,0 +1,184 @@
+// !$*UTF8*$!
+{
+	0B8E29BD09CDB9360085E9ED /* CTGradient.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {964, 17220}}";
+			sepNavSelRange = "{32351, 0}";
+			sepNavVisRect = "{{0, 10293}, {964, 373}}";
+		};
+	};
+	0B8E29C009CDB9360085E9ED /* SRRecorderControl.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1066, 826}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRect = "{{0, 0}, {1066, 701}}";
+		};
+	};
+	0B8E29C109CDB9360085E9ED /* SRRecorderControl.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1066, 3584}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRect = "{{0, 0}, {1066, 701}}";
+		};
+	};
+	0B8E29C209CDB9360085E9ED /* SRRecorderCell.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1066, 1232}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRect = "{{0, 0}, {1066, 701}}";
+		};
+	};
+	0B8E29C309CDB9360085E9ED /* SRRecorderCell.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1220, 12166}}";
+			sepNavSelRange = "{14733, 28}";
+			sepNavVisRect = "{{0, 6664}, {1090, 359}}";
+		};
+	};
+	0B8E29DA09CDB9720085E9ED /* Palette */ = {
+		activeExec = 0;
+	};
+	0B8E2A3909CDBBA30085E9ED /* SRRecorderInspector.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1066, 1456}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRect = "{{0, 0}, {1066, 701}}";
+		};
+	};
+	0B8E2A3A09CDBBA30085E9ED /* SRRecorderInspector.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1066, 701}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRect = "{{0, 0}, {1066, 701}}";
+		};
+	};
+	0B8E2A3B09CDBBA30085E9ED /* SRRecorderPalette.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1066, 882}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRect = "{{0, 0}, {1066, 701}}";
+		};
+	};
+	0B8E2A3C09CDBBA30085E9ED /* SRRecorderPalette.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1066, 701}}";
+			sepNavSelRange = "{24, 0}";
+			sepNavVisRect = "{{0, 0}, {1066, 701}}";
+		};
+	};
+	0BBDDFF60A389A2300BE2EB8 /* ShortcutRecorder */ = {
+		isa = PBXExecutable;
+		activeArgIndex = 2147483647;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = ShortcutRecorder;
+		sourceDirectories = (
+		);
+	};
+	0BBDE0120A389A3400BE2EB8 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+		scmType = "";
+	};
+	0BBDE0130A389A3400BE2EB8 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	0BE6C01A0A42ABF10045300E /* XCBreakpointsBucket */ = {
+		isa = XCBreakpointsBucket;
+		name = "Project Breakpoints";
+		objects = (
+		);
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = 0BBDDFF60A389A2300BE2EB8 /* ShortcutRecorder */;
+		activeTarget = 8D1107260486CEB800E47090 /* ShortcutRecorder */;
+		breakpointsGroup = 0BE6C01A0A42ABF10045300E /* XCBreakpointsBucket */;
+		codeSenseManager = 0BBDE0130A389A3400BE2EB8 /* Code sense */;
+		executables = (
+			0BBDDFF60A389A2300BE2EB8 /* ShortcutRecorder */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					243,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 175542650;
+			PBXWorkspaceStateSaveDate = 175542650;
+		};
+		sourceControlManager = 0BBDE0120A389A3400BE2EB8 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	74C3670E0A246B4900B69171 /* SRValidator.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1090, 476}}";
+			sepNavSelRange = "{553, 5}";
+			sepNavVisRect = "{{0, 0}, {1090, 359}}";
+		};
+	};
+	74C3670F0A246B4900B69171 /* SRValidator.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1622, 3682}}";
+			sepNavSelRange = "{9320, 25}";
+			sepNavVisRect = "{{0, 2936}, {1090, 359}}";
+		};
+	};
+	74C367100A246B4900B69171 /* SRCommon.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1066, 1820}}";
+			sepNavSelRange = "{4188, 0}";
+			sepNavVisRect = "{{0, 1119}, {1066, 701}}";
+		};
+	};
+	74C367110A246B4900B69171 /* SRCommon.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1090, 2842}}";
+			sepNavSelRange = "{6589, 0}";
+			sepNavVisRect = "{{0, 0}, {1090, 359}}";
+		};
+	};
+	8D1107260486CEB800E47090 /* ShortcutRecorder */ = {
+		activeExec = 0;
+		executables = (
+			0BBDDFF60A389A2300BE2EB8 /* ShortcutRecorder */,
+		);
+	};
+}

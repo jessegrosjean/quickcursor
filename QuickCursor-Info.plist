@@ -35,8 +35,9 @@
 	<key>QCEditInChoices</key>
 	<array>
 		<string>com.barebones.bbedit</string>
-		<string>com.macromates.textmate</string>
+		<string>org.vim.MacVim</string>
 		<string>org.smultron.Smultron</string>
+		<string>com.macromates.textmate</string>
 		<string>com.hogbaysoftware.WriteRoom</string>
 	</array>
 </dict>

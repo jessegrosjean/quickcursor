@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Blocks/Blocks.h>
 
 
 @interface QCUIElement : NSObject {

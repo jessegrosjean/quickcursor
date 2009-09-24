@@ -24,6 +24,8 @@
 
 #pragma mark Actions
 
+@property (assign) BOOL loginOnStartup;
+
 - (IBAction)showAbout:(id)sender;	
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)editInPopUpButtonClicked:(id)sender;

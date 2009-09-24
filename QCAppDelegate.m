@@ -110,8 +110,12 @@
 	return YES;
 }
 
-- (BBAppSessionLoginState *)appSessionLoginState {
-	return [BBAppSessionLoginState sharedController];
+- (BOOL)loginOnStartup {
+	return [[BBAppSessionLoginState sharedController] isAppInSessionLoginList];	
+}
+
+- (void)setLoginOnStartup:(BOOL)aBool {
+	[[BBAppSessionLoginState sharedController] setIsAppInSessionLoginList:aBool];	
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -143,8 +147,14 @@
 		
 	[quickCursorMenu addItemWithTitle:NSLocalizedString(@"Edit In...", nil) action:NULL keyEquivalent:@""];
 	
-	for (NSMenuItem *each in [self validatedEditorMenuItems:@selector(beginQuickCursorEdit:)]) {
-		[quickCursorMenu addItem:each];
+	NSArray *supportedAppsMenuItems = [self validatedEditorMenuItems:@selector(beginQuickCursorEdit:)];
+	if ([supportedAppsMenuItems count] > 0) {
+		for (NSMenuItem *each in supportedAppsMenuItems) {
+			[quickCursorMenu addItem:each];
+		}
+	} else {
+		[quickCursorMenu addItemWithTitle:NSLocalizedString(@"No Supported Apps Found", nil) action:nil keyEquivalent:@""];
+		[[[quickCursorMenu itemArray] lastObject] setIndentationLevel:1];
 	}
 	
 	[quickCursorMenu addItem:[NSMenuItem separatorItem]];
@@ -189,6 +199,11 @@
 		}
 		
 		[self editInPopUpButtonClicked:nil];
+		
+		if ([editInPopUpButton numberOfItems] == 0) {
+			[editInPopUpButton setEnabled:NO];
+			[shortcutRecorder setEnabled:NO];
+		}
 	}
 	
 	[NSApp activateIgnoringOtherApps:YES];
@@ -197,15 +212,18 @@
 }
 
 - (IBAction)editInPopUpButtonClicked:(id)sender {
-	id keyComboPlist = [[NSUserDefaults standardUserDefaults] objectForKey:[[editInPopUpButton selectedItem] representedObject]];
-	if (keyComboPlist) {
-		KeyCombo keyCombo;
-		PTKeyCombo *keyComboObject = [[[PTKeyCombo alloc] initWithPlistRepresentation:keyComboPlist] autorelease];
-		keyCombo.code = [keyComboObject keyCode];
-		keyCombo.flags = [shortcutRecorder carbonToCocoaFlags:[keyComboObject modifiers]];
-		[shortcutRecorder setKeyCombo:keyCombo];
-	} else {
-		[shortcutRecorder setKeyCombo:SRMakeKeyCombo(ShortcutRecorderEmptyCode, ShortcutRecorderEmptyFlags)];		
+	id clicked = [[editInPopUpButton selectedItem] representedObject];
+	if (clicked) {
+		id keyComboPlist = [[NSUserDefaults standardUserDefaults] objectForKey:clicked];
+		if (keyComboPlist) {
+			KeyCombo keyCombo;
+			PTKeyCombo *keyComboObject = [[[PTKeyCombo alloc] initWithPlistRepresentation:keyComboPlist] autorelease];
+			keyCombo.code = [keyComboObject keyCode];
+			keyCombo.flags = [shortcutRecorder carbonToCocoaFlags:[keyComboObject modifiers]];
+			[shortcutRecorder setKeyCombo:keyCombo];
+		} else {
+			[shortcutRecorder setKeyCombo:SRMakeKeyCombo(ShortcutRecorderEmptyCode, ShortcutRecorderEmptyFlags)];		
+		}
 	}
 }
 

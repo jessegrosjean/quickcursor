@@ -33,14 +33,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 88B2800E104DA2B200806BAE /* ShortcutRecorder.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 939838A40DA4300F007F53F3 /* ShortcutRecorder.ibplugin */;
+			remoteGlobalIDString = 939838A40DA4300F007F53F3;
 			remoteInfo = ShortcutRecorder.ibplugin;
 		};
 		8818B722106BFF53007661DF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88B2800E104DA2B200806BAE /* ShortcutRecorder.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 939838AC0DA430B3007F53F3 /* ShortcutRecorderFramework */;
+			remoteGlobalIDString = 939838AC0DA430B3007F53F3;
 			remoteInfo = ShortcutRecorderFramework;
 		};
 		88B28018104DA2B200806BAE /* PBXContainerItemProxy */ = {

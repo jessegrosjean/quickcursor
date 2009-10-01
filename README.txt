@@ -8,7 +8,6 @@ Todo:
 
 - Doesn't work with Mail.app. Mail.app's text area is a AXWebArea. It seems that the default kAXValueAttribute doesn't work for reading and writing AXWebArea's text. Need to find out how to read write text from AXWebArea and handle as a special case.
 - String is written back into source application with [QCUIElement setValue:]. This generally works, but it seems to change the value behind the scenes... this can mess up undo stacks and such in the destination app. Needs to be some documentation that describes how the source app can be made aware of these changes and how to custom handle them.
-- Doesn't seem to work with BBEdit editor.
 
 Thanks,
 Jesse Grosjean

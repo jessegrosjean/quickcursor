@@ -127,7 +127,7 @@ static void SharedFileListChanged(LSSharedFileListRef list, void *context)
 - (LSSharedFileListItemRef)itemRefForApp
 {
     UInt32 seed;
-    NSArray *items = [(NSArray *)LSSharedFileListCopySnapshot(_sessionLoginItemsList, &seed) autorelease];
+    NSArray *items = (NSArray *)LSSharedFileListCopySnapshot(_sessionLoginItemsList, &seed);
     
     for (id item in items) {
         LSSharedFileListItemRef itemRef = (LSSharedFileListItemRef)item;

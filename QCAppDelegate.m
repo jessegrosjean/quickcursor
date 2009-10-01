@@ -72,7 +72,7 @@
 		id eachKeyComboPlist = [userDefaults objectForKey:[each representedObject]];
 		if (eachKeyComboPlist) {
 			PTKeyCombo *keyCombo = [[[PTKeyCombo alloc] initWithPlistRepresentation:eachKeyComboPlist] autorelease];
-			PTHotKey *hotKey = [[PTHotKey alloc] initWithIdentifier:[each representedObject] keyCombo:keyCombo];
+			PTHotKey *hotKey = [[[PTHotKey alloc] initWithIdentifier:[each representedObject] keyCombo:keyCombo] autorelease];
 			[hotKey setTarget:self];
 			[hotKey setAction:@selector(beginQuickCursorEdit:)];
 			[hotKeyCenter registerHotKey:hotKey];
@@ -180,7 +180,6 @@
 	[quickCursorStatusItem setMenu:quickCursorMenu];
 	[self updateHotKeys];
 }
-
 
 #pragma mark Actions
 

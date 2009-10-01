@@ -12,7 +12,7 @@
 
 @class PTHotKey;
 
-@interface QCAppDelegate : NSObject <NSApplicationDelegate> {
+@interface QCAppDelegate : NSObject {
 	IBOutlet NSWindow *preferencesWindow;
 	IBOutlet NSPopUpButton *editInPopUpButton;
 	IBOutlet SRRecorderControl *shortcutRecorder;

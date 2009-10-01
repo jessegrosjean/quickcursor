@@ -37,6 +37,11 @@
 	return self;
 }
 
+- (void)dealloc {
+	CFRelease(uiElementRef);
+	[super dealloc];
+}
+
 #pragma mark Attributes
 
 - (NSString *)processName {
@@ -97,6 +102,7 @@
 }
 
 - (id)valueForAttribute:(NSString *)attributeName {
+	id result = nil;
 	CFTypeRef theValue;
 	
 	AXError error = AXUIElementCopyAttributeValue(uiElementRef, (CFStringRef)attributeName, &theValue);
@@ -105,7 +111,7 @@
 		NSLog(@"error in AXUIElementCopyAttributeValue");
 		return nil;
 	}
-	
+		
 	if (AXValueGetType(theValue) == kAXValueCGPointType) {
 		NSLog(@"unimplemented, should not be used by QuickCursor");
 	} else if (AXValueGetType(theValue) == kAXValueCGSizeType) {
@@ -115,12 +121,17 @@
 	} else if (AXValueGetType(theValue) == kAXValueCFRangeType) {
 		NSLog(@"unimplemented, should not be used by QuickCursor");
 	} else if (CFGetTypeID(theValue) == AXUIElementGetTypeID()) {
-		return [[[QCUIElement alloc] initWithAXUIElementRef:theValue] autorelease];
+		result = [[[QCUIElement alloc] initWithAXUIElementRef:theValue] autorelease];
 	} else if (CFGetTypeID(theValue) == CFArrayGetTypeID()) {
 		NSLog(@"unimplemented, should not be used by QuickCursor");
 	} else {
-		return [(id)theValue description];
+		result = [[[(id)theValue description] copy] autorelease];
 	}
+	
+	CFRelease(theValue);
+	
+	return result;
+
 /*	
 	if (theValue) {
         if (AXValueGetType(theValue) != kAXValueIllegalType) {
@@ -134,7 +145,6 @@
 		}
 	}
 */	
-	return nil;
 }
 
 - (BOOL)setValue:(id)newValue forAttribute:(NSString *)attributeName {
@@ -191,6 +201,8 @@
         } else if ([(id)theOldValue isKindOfClass:[NSValue class]]) { // NSValue
             AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, [NSNumber numberWithLong:[newValue intValue]] );
         }
+		
+		CFRelease(theOldValue);
 	}
 	
 	return YES;

@@ -1,0 +1,4 @@
+- **Added** Check for updates option.
+- **Added** Crash reporting framework.
+- **Fixed** Some crashes related to login items.
+- **Fixed** Incorrect keyboard shortcuts shown in menu.

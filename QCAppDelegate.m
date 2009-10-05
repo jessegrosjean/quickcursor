@@ -11,7 +11,8 @@
 #import "PTHotKey.h"
 #import "QCUIElement.h"
 #import "ODBEditor.h"
-#import "BBAppSessionLoginState.h"
+#import "CrashReporter.h"
+
 
 @implementation QCAppDelegate
 
@@ -84,22 +85,19 @@
 - (BOOL)validateMenuItem:(NSMenuItem *)anItem {
 	if ([anItem action] == @selector(beginQuickCursorEdit:)) {
 		id keyComboPlist = [[NSUserDefaults standardUserDefaults] objectForKey:[anItem representedObject]];
-		BOOL clear = NO;
+		BOOL clear = YES;
 		
 		if (keyComboPlist) {
 			PTKeyCombo *keyComboObject = [[[PTKeyCombo alloc] initWithPlistRepresentation:keyComboPlist] autorelease];
-			//NSString *keyEquivalent = SRStringForKeyCode([keyComboObject keyCode]);
-			NSString *keyEquivalent = SRCharacterForKeyCodeAndCarbonFlags([keyComboObject keyCode], [keyComboObject modifiers]);
-			
-			if (keyEquivalent) {
-				[anItem setKeyEquivalent:[keyEquivalent lowercaseString]];
-				[anItem setKeyEquivalentModifierMask:[shortcutRecorder carbonToCocoaFlags:[keyComboObject modifiers]]];
-			} else {
-				clear = YES;
+			if ([keyComboObject keyCode] != -1) {
+				NSString *keyEquivalent = SRCharacterForKeyCodeAndCarbonFlags([keyComboObject keyCode], [keyComboObject modifiers]);
+				
+				if (keyEquivalent != nil) {
+					[anItem setKeyEquivalent:[keyEquivalent lowercaseString]];
+					[anItem setKeyEquivalentModifierMask:[shortcutRecorder carbonToCocoaFlags:[keyComboObject modifiers]]];
+					clear = NO;
+				}			
 			}
-			
-		} else {
-			clear = YES;
 		}
 		
 		if (clear) {
@@ -110,15 +108,9 @@
 	return YES;
 }
 
-- (BOOL)loginOnStartup {
-	return [[BBAppSessionLoginState sharedController] isAppInSessionLoginList];	
-}
-
-- (void)setLoginOnStartup:(BOOL)aBool {
-	[[BBAppSessionLoginState sharedController] setIsAppInSessionLoginList:aBool];	
-}
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	[[CrashReporter sharedInstance] check:nil];
+	
 	quickCursorSessionQCUIElements = [[NSMutableSet alloc] init];
 	registeredHotKeys = [[NSMutableArray alloc] init];
 
@@ -166,10 +158,14 @@
 	NSMenuItem *preferencesMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Preferences...", nil) action:@selector(showPreferences:) keyEquivalent:@""] autorelease];
 	[preferencesMenuItem setTarget:self];
 	[quickCursorMenu addItem:preferencesMenuItem];
+
+	NSMenuItem *checkForUpdatesMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Check For Updates...", nil) action:@selector(checkForUpdates:) keyEquivalent:@""] autorelease];
+	[checkForUpdatesMenuItem setTarget:self];
+	[quickCursorMenu addItem:checkForUpdatesMenuItem];
 	
-	NSMenuItem *helpMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"QuickCursor Help", nil) action:@selector(showPreferences:) keyEquivalent:@""] autorelease];
-	[helpMenuItem setTarget:self];
-	[quickCursorMenu addItem:helpMenuItem];
+//	NSMenuItem *helpMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"QuickCursor Help", nil) action:@selector(showPreferences:) keyEquivalent:@""] autorelease];
+//	[helpMenuItem setTarget:self];
+//	[quickCursorMenu addItem:helpMenuItem];
 
 	[quickCursorMenu addItem:[NSMenuItem separatorItem]];
 
@@ -182,6 +178,59 @@
 }
 
 #pragma mark Actions
+
+- (BOOL)enableLoginItem {
+	NSString *bundleName = [[[NSBundle mainBundle] bundlePath] lastPathComponent];
+	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+	BOOL result = NO;
+	
+	// 1. Remove everything.
+	CFURLRef thePath;
+	UInt32 seedValue;
+	NSArray  *loginItemsArray = (NSArray *)LSSharedFileListCopySnapshot(loginItems, &seedValue);
+	for (id item in loginItemsArray) {		
+		LSSharedFileListItemRef itemRef = (LSSharedFileListItemRef)item;
+		if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &thePath, NULL) == noErr) {
+			if ([[(NSURL *)thePath path] hasSuffix:bundleName])
+				result = YES;
+		}
+	}	
+	[loginItemsArray release];
+	
+	CFRelease(loginItems);	
+	
+	return result;
+}
+
+- (void)setEnableLoginItem:(BOOL)aBOOL {
+	NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+	CFURLRef bundlePathURL = (CFURLRef)[NSURL fileURLWithPath:bundlePath];
+	NSString *bundleName = [bundlePath lastPathComponent];
+	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+
+	// 1. Remove everything.
+	CFURLRef thePath;
+	UInt32 seedValue;
+	NSArray  *loginItemsArray = (NSArray *)LSSharedFileListCopySnapshot(loginItems, &seedValue);
+	for (id item in loginItemsArray) {		
+		LSSharedFileListItemRef itemRef = (LSSharedFileListItemRef)item;
+		if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &thePath, NULL) == noErr) {
+			if ([[(NSURL *)thePath path] hasSuffix:bundleName])
+				LSSharedFileListItemRemove(loginItems, itemRef); // Deleting the item
+		}
+	}	
+	[loginItemsArray release];
+	
+	// 2. Add back if needed.
+	if (aBOOL) {
+		LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemLast, NULL, NULL, bundlePathURL, NULL, NULL);		
+		if (item) {
+			CFRelease(item);
+		}
+	}
+	
+	CFRelease(loginItems);
+}
 
 - (IBAction)showAbout:(id)sender {
 	[NSApp activateIgnoringOtherApps:YES];
@@ -208,6 +257,10 @@
 	[NSApp activateIgnoringOtherApps:YES];
 	[preferencesWindow center];
 	[preferencesWindow makeKeyAndOrderFront:sender];
+}
+
+- (IBAction)checkForUpdates:(id)sender {
+	[[SUUpdater sharedUpdater] checkForUpdates:sender];
 }
 
 - (IBAction)editInPopUpButtonClicked:(id)sender {

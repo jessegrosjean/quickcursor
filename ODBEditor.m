@@ -99,7 +99,7 @@ static ODBEditor	*_sharedODBEditor;
 }
 
 - (void)abortEditingFile:(NSString *)path {
-	 #warning REVIEW if we created a temporary file for this session should we try to delete it and/or close it in the editor?
+	 //#warning REVIEW if we created a temporary file for this session should we try to delete it and/or close it in the editor?
 
 	if (nil == [_filesBeingEdited objectForKey: path])
 		NSLog(@"ODBEditor: No active editing session for \"%@\"", path);
@@ -108,7 +108,7 @@ static ODBEditor	*_sharedODBEditor;
 }
 
 - (void)abortAllEditingSessionsForClient:(id)client {
-	 #warning REVIEW if we created a temporary file for this session should we try to delete it and/or close it in the editor?
+	 //#warning REVIEW if we created a temporary file for this session should we try to delete it and/or close it in the editor?
 
 	BOOL found = NO;
 	NSEnumerator *enumerator = [_filesBeingEdited objectEnumerator];

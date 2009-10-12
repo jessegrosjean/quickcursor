@@ -1,4 +1,2 @@
-- **Added** Check for updates option.
-- **Added** Crash reporting framework.
-- **Fixed** Some crashes related to login items.
-- **Fixed** Incorrect keyboard shortcuts shown in menu.
+- **Added** Option to switch back to souch app when finished editing.
+- **Changed** Icon to represent text cursor. Application icon still needs work.

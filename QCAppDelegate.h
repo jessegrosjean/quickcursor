@@ -34,3 +34,5 @@
 - (IBAction)beginQuickCursorEdit:(id)sender;	
 
 @end
+
+APPKIT_EXTERN NSString *QCSwitchBackWhenFinishedEditing;

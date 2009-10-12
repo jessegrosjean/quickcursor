@@ -24,6 +24,7 @@
 
 #pragma mark Attributes
 
+@property(readonly) pid_t processID; 
 @property(readonly) NSString *processName; 
 @property(readonly) QCUIElement *application;
 @property(readonly) QCUIElement *topLevelUIElement;
@@ -36,5 +37,9 @@
 @property(readonly) NSArray *attributeNames;
 - (id)valueForAttribute:(NSString *)attributeName;
 - (BOOL)setValue:(id)newValue forAttribute:(NSString *)attributeName;
-	
+
+#pragma mark Process
+
+- (BOOL)activateProcess;
+
 @end

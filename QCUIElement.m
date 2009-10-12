@@ -44,6 +44,14 @@
 
 #pragma mark Attributes
 
+- (pid_t)processID {
+	pid_t theAppPID = 0;
+	if (AXUIElementGetPid(uiElementRef, &theAppPID) == kAXErrorSuccess) {
+		return theAppPID;
+	}
+	return -1;
+}
+
 - (NSString *)processName {
 	pid_t theAppPID = 0;
 	ProcessSerialNumber theAppPSN = {0,0};
@@ -206,6 +214,19 @@
 	}
 	
 	return YES;
+}
+
+#pragma mark Process
+
+- (BOOL)activateProcess {
+	pid_t theAppPID = 0;
+	ProcessSerialNumber theAppPSN = {0,0};
+	
+	if (AXUIElementGetPid(uiElementRef, &theAppPID) == kAXErrorSuccess && GetProcessForPID(theAppPID, &theAppPSN) == noErr && SetFrontProcess(&theAppPSN) == noErr) {
+		return YES;
+	}
+	
+	return NO;
 }
 
 @end

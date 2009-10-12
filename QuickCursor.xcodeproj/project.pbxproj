@@ -15,6 +15,7 @@
 		88864E7D107A3D27001CFB7E /* CrashReporterWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88864E7B107A3D27001CFB7E /* CrashReporterWindow.xib */; };
 		888CB5B510763D2A0093C30E /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 88E71F5010763A9A0080DE7E /* Sparkle.framework */; };
 		88AAF90C105014A500DFD8E5 /* StatusItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 88AAF90B105014A500DFD8E5 /* StatusItemIcon.pdf */; };
+		88AF3357107FCD190045633D /* StatusItemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AF3356107FCD190045633D /* StatusItemIcon.png */; };
 		88B27D9E104D8EDF00806BAE /* NSAppleEventDescriptor-Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B27D95104D8EDE00806BAE /* NSAppleEventDescriptor-Extensions.m */; };
 		88B27D9F104D8EDF00806BAE /* ODBEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B27D97104D8EDE00806BAE /* ODBEditor.m */; };
 		88B27DA1104D8EDF00806BAE /* QCUIElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B27D9B104D8EDF00806BAE /* QCUIElement.m */; };
@@ -112,6 +113,7 @@
 		888CB656107645A00093C30E /* release_notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes; sourceTree = "<group>"; };
 		888CB658107645B90093C30E /* Markdown.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = Markdown.pl; sourceTree = "<group>"; };
 		88AAF90B105014A500DFD8E5 /* StatusItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = StatusItemIcon.pdf; sourceTree = "<group>"; };
+		88AF3356107FCD190045633D /* StatusItemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusItemIcon.png; sourceTree = "<group>"; };
 		88B27D94104D8EDE00806BAE /* NSAppleEventDescriptor-Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAppleEventDescriptor-Extensions.h"; sourceTree = "<group>"; };
 		88B27D95104D8EDE00806BAE /* NSAppleEventDescriptor-Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAppleEventDescriptor-Extensions.m"; sourceTree = "<group>"; };
 		88B27D96104D8EDE00806BAE /* ODBEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODBEditor.h; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 			children = (
 				88864E7B107A3D27001CFB7E /* CrashReporterWindow.xib */,
 				88AAF90B105014A500DFD8E5 /* StatusItemIcon.pdf */,
+				88AF3356107FCD190045633D /* StatusItemIcon.png */,
 				88B27E46104D95A000806BAE /* QuickCursor.icns */,
 				8D1107310486CEB800E47090 /* QuickCursor-Info.plist */,
 				88864D36107A3305001CFB7E /* sparkle_dsa_pub.pem */,
@@ -374,6 +377,7 @@
 				88864D37107A3305001CFB7E /* sparkle_dsa_pub.pem in Resources */,
 				88864DFC107A376C001CFB7E /* PTKeyCodes.plist in Resources */,
 				88864E7D107A3D27001CFB7E /* CrashReporterWindow.xib in Resources */,
+				88AF3357107FCD190045633D /* StatusItemIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

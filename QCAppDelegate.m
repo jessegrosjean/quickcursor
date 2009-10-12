@@ -18,6 +18,7 @@
 
 + (void)initialize {
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
+															 [NSNumber numberWithBool:YES], QCSwitchBackWhenFinishedEditing,
 															 nil]];
 }
 
@@ -130,7 +131,7 @@
     }
 
     quickCursorStatusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];
-	NSImage *image = [NSImage imageNamed:@"StatusItemIcon"];
+	NSImage *image = [NSImage imageNamed:@"StatusItemIcon.png"];
 	[image setTemplate:YES];
 	[quickCursorStatusItem setImage:image];
     [quickCursorStatusItem setHighlightMode:YES];
@@ -311,9 +312,11 @@
 #pragma mark ODBEditor Callbacks
 
 - (void)odbEditor:(ODBEditor *)editor didModifyFile:(NSString *)path newFileLocation:(NSString *)newPath  context:(NSDictionary *)context {
+	// never seems to be called.
 }
 
 - (void)odbEditor:(ODBEditor *)editor didClosefile:(NSString *)path context:(NSDictionary *)context; {
+	// never seems to be called.
 }
 
 - (void)odbEditor:(ODBEditor *)editor didModifyFileForString:(NSString *)newString context:(NSDictionary *)context; {
@@ -322,6 +325,9 @@
 }
 
 - (void)odbEditor:(ODBEditor *)editor didCloseFileForString:(NSString *)newString context:(NSDictionary *)context; {
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:QCSwitchBackWhenFinishedEditing]) {
+		[[context valueForKey:@"uiElement"] activateProcess];
+	}
 }
 
 #pragma mark shortcutRecorder Delegate
@@ -341,3 +347,5 @@
 }
 
 @end
+
+NSString *QCSwitchBackWhenFinishedEditing = @"QCSwitchBackWhenFinishedEditing";

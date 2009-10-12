@@ -297,7 +297,7 @@
 		NSDictionary *context = [NSDictionary dictionaryWithObject:focusedElement forKey:@"uiElement"];
 		NSString *processName = [focusedElement processName];
 		NSString *windowTitle = focusedElement.window.title;
-		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ – %@", processName, windowTitle];		
+		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ — %@", processName, windowTitle];		
 		[[ODBEditor sharedODBEditor] setEditorBundleIdentifier:bundleID];
 		[[ODBEditor sharedODBEditor] editString:value options:[NSDictionary dictionaryWithObject:editorCustomPath forKey:ODBEditorCustomPathKey] forClient:self context:context];
 	} else {

@@ -31,7 +31,7 @@ NSString * const ODBEditorIsEditingString	= @"ODBEditorIsEditingString";
 @interface ODBEditor(Private)
 
 - (BOOL)_launchExternalEditor;
-- (NSString *)_tempFileForEditingString:(NSString *)string;
+- (NSString *)_tempFileForEditingString:(NSString *)string ODBEditorCustomPathKey:(NSString *)customPathKey;
 - (BOOL)_editFile:(NSString *)path isEditingString:(BOOL)editingStringFlag options:(NSDictionary *)options forClient:(id)client context:(NSDictionary *)context;
 - (void)handleModifiedFileEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent;
 - (void)handleClosedFileEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent;
@@ -136,8 +136,8 @@ static ODBEditor	*_sharedODBEditor;
 }
 
 - (BOOL)editString:(NSString *)string options:(NSDictionary *)options forClient:(id)client context:(NSDictionary *)context {
-		BOOL success = NO;
-	NSString *path = [self _tempFileForEditingString: string];
+	BOOL success = NO;
+	NSString *path = [self _tempFileForEditingString:string ODBEditorCustomPathKey:[options objectForKey:ODBEditorCustomPathKey]];
 	
 	if (path != nil) {
 		success = [self _editFile: path isEditingString: YES options: options forClient: client context: context];
@@ -147,7 +147,6 @@ static ODBEditor	*_sharedODBEditor;
 }
 
 @end
-
 
 @implementation ODBEditor(Private)
 
@@ -177,14 +176,14 @@ static ODBEditor	*_sharedODBEditor;
 	return success;
 }
 
-- (NSString *)_tempFileForEditingString:(NSString *)string {
+- (NSString *)_tempFileForEditingString:(NSString *)string ODBEditorCustomPathKey:(NSString *)customPathKey {
 	static  unsigned sTempFileSequence;
 	
 	NSString *fileName = nil;
 
 	sTempFileSequence++;
-	
-	fileName = [NSString stringWithFormat: @"ODBEditor-%@-%06d.txt", [[NSBundle mainBundle] bundleIdentifier], sTempFileSequence];
+			
+	fileName = [NSString stringWithFormat: @"%@ (via %@) %03d.txt", customPathKey, [[NSProcessInfo processInfo] processName], sTempFileSequence];
 	fileName = [NSTemporaryDirectory() stringByAppendingPathComponent: fileName];
 
 	if (NO == [string writeToFile:fileName atomically:NO encoding:NSUTF8StringEncoding error:nil])

@@ -1,2 +1,1 @@
-- **Added** Option to switch back to souch app when finished editing.
-- **Changed** Icon to represent text cursor. Application icon still needs work.
+- **Changed** QuickCursor tempfile names to include source application and source window title.

@@ -93,7 +93,7 @@
 	@try {
 		NSFileManager *fileManager = [NSFileManager defaultManager];
 		NSString *latestCrashPath = [self latestCrashPath];
-		NSDictionary *lastCrashFileAttributes = [fileManager fileAttributesAtPath:latestCrashPath traverseLink:YES];
+		NSDictionary *lastCrashFileAttributes = [fileManager attributesOfItemAtPath:latestCrashPath error:nil];
 		
 		if (lastCrashFileAttributes) {
 			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

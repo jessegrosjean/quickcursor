@@ -1,1 +1,1 @@
-- **Changed** QuickCursor tempfile names to include source application and source window title.
+- **Fixed** Keyboard shortcuts should no longer have accent character incorrectly added.

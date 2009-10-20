@@ -91,13 +91,9 @@
 		if (keyComboPlist) {
 			PTKeyCombo *keyComboObject = [[[PTKeyCombo alloc] initWithPlistRepresentation:keyComboPlist] autorelease];
 			if ([keyComboObject keyCode] != -1) {
-				NSString *keyEquivalent = SRCharacterForKeyCodeAndCarbonFlags([keyComboObject keyCode], [keyComboObject modifiers]);
-				
-				if (keyEquivalent != nil) {
-					[anItem setKeyEquivalent:[keyEquivalent lowercaseString]];
-					[anItem setKeyEquivalentModifierMask:[shortcutRecorder carbonToCocoaFlags:[keyComboObject modifiers]]];
-					clear = NO;
-				}			
+				[anItem setKeyEquivalent:[SRStringForKeyCode([keyComboObject keyCode]) lowercaseString]];
+				[anItem setKeyEquivalentModifierMask:SRCarbonToCocoaFlags([keyComboObject modifiers])];
+				clear = NO;
 			}
 		}
 		

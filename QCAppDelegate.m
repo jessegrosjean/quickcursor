@@ -293,7 +293,8 @@
 		NSDictionary *context = [NSDictionary dictionaryWithObject:focusedElement forKey:@"uiElement"];
 		NSString *processName = [focusedElement processName];
 		NSString *windowTitle = focusedElement.window.title;
-		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ — %@", processName, windowTitle];		
+		//NSString *editorCustomPath = [NSString stringWithFormat:@"%@ — %@", processName, windowTitle]; // EM dash caused trouble with some external editors.
+		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ - %@", processName, windowTitle];		
 		[[ODBEditor sharedODBEditor] setEditorBundleIdentifier:bundleID];
 		[[ODBEditor sharedODBEditor] editString:value options:[NSDictionary dictionaryWithObject:editorCustomPath forKey:ODBEditorCustomPathKey] forClient:self context:context];
 	} else {
@@ -317,7 +318,14 @@
 
 - (void)odbEditor:(ODBEditor *)editor didModifyFileForString:(NSString *)newString context:(NSDictionary *)context; {
 	QCUIElement *uiElement = [context valueForKey:@"uiElement"];
-	uiElement.value = newString;
+	if (![uiElement setValue:newString]) {
+		[NSApp activateIgnoringOtherApps:YES];
+		[[NSAlert alertWithMessageText:NSLocalizedString(@"Could not save text", nil)
+						 defaultButton:NSLocalizedString(@"OK", nil)
+					   alternateButton:nil
+						   otherButton:nil
+			 informativeTextWithFormat:NSLocalizedString(@"QuickCursor could not save your changes back to the source application.", nil)] runModal];
+	}
 }
 
 - (void)odbEditor:(ODBEditor *)editor didCloseFileForString:(NSString *)newString context:(NSDictionary *)context; {

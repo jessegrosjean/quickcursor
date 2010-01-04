@@ -98,10 +98,9 @@
 	return [self valueForAttribute:(NSString *)kAXValueAttribute];
 }
 
-- (void)setValue:(id)value {
-	[self setValue:value forAttribute:(NSString *)kAXValueAttribute];
+- (BOOL)setValue:(id)value {
+	return [self setValue:value forAttribute:(NSString *)kAXValueAttribute];
 }
-
 
 - (NSArray *)attributeNames {
 	NSArray* attributeNames;
@@ -116,7 +115,7 @@
 	AXError error = AXUIElementCopyAttributeValue(uiElementRef, (CFStringRef)attributeName, &theValue);
 		
 	if (error != kAXErrorSuccess) {
-		NSLog(@"error in AXUIElementCopyAttributeValue");
+		NSLog(@"error in AXUIElementCopyAttributeValue for attribute %@", attributeName);
 		return nil;
 	}
 		
@@ -171,7 +170,7 @@
 	AXError error = AXUIElementCopyAttributeValue(uiElementRef, (CFStringRef)attributeName, &theOldValue);
 	
 	if (error != kAXErrorSuccess) {
-		NSLog(@"error in AXUIElementCopyAttributeValue");
+		NSLog(@"error in AXUIElementCopyAttributeValue for attribute %@", attributeName);
 		return NO;
 	}
 	

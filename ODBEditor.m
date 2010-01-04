@@ -31,7 +31,7 @@ NSString * const ODBEditorIsEditingString	= @"ODBEditorIsEditingString";
 @interface ODBEditor(Private)
 
 - (BOOL)_launchExternalEditor;
-- (NSString *)_tempFileForEditingString:(NSString *)string ODBEditorCustomPathKey:(NSString *)customPathKey;
+- (NSString *)_tempFilePathForEditingString:(NSString *)string ODBEditorCustomPathKey:(NSString *)customPathKey;
 - (BOOL)_editFile:(NSString *)path isEditingString:(BOOL)editingStringFlag options:(NSDictionary *)options forClient:(id)client context:(NSDictionary *)context;
 - (void)handleModifiedFileEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent;
 - (void)handleClosedFileEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent;
@@ -66,9 +66,9 @@ static ODBEditor	*_sharedODBEditor;
 		CFBundleGetPackageInfo(CFBundleGetMainBundle(), &packageType, &packageCreator);
 		_signature = packageCreator;
 		
-		[self setEditorBundleIdentifier: @"com.hogbaysoftware.WriteRoom"];
+		[self setEditorBundleIdentifier:@"com.hogbaysoftware.WriteRoom"];
 		
-		_filesBeingEdited = [[NSMutableDictionary alloc] init];
+		_filePathsBeingEdited = [[NSMutableDictionary alloc] init];
 		
 		// setup our event handlers
 		
@@ -85,7 +85,7 @@ static ODBEditor	*_sharedODBEditor;
 	[appleEventManager removeEventHandlerForEventClass: kODBEditorSuite andEventID: kAEModifiedFile];
 	[appleEventManager removeEventHandlerForEventClass: kODBEditorSuite andEventID: kAEClosedFile];
 	[_editorBundleIdentifier release];
-	[_filesBeingEdited release];
+	[_filePathsBeingEdited release];
 	[super dealloc];
 }
 
@@ -101,17 +101,17 @@ static ODBEditor	*_sharedODBEditor;
 - (void)abortEditingFile:(NSString *)path {
 	 //#warning REVIEW if we created a temporary file for this session should we try to delete it and/or close it in the editor?
 
-	if (nil == [_filesBeingEdited objectForKey: path])
+	if (nil == [_filePathsBeingEdited objectForKey: path])
 		NSLog(@"ODBEditor: No active editing session for \"%@\"", path);
 
-	 [_filesBeingEdited removeObjectForKey: path];
+	 [_filePathsBeingEdited removeObjectForKey: path];
 }
 
 - (void)abortAllEditingSessionsForClient:(id)client {
 	 //#warning REVIEW if we created a temporary file for this session should we try to delete it and/or close it in the editor?
 
 	BOOL found = NO;
-	NSEnumerator *enumerator = [_filesBeingEdited objectEnumerator];
+	NSEnumerator *enumerator = [_filePathsBeingEdited objectEnumerator];
 	NSMutableArray *keysToRemove = [NSMutableArray array];
 	NSDictionary *dictionary = nil;
 	
@@ -124,7 +124,7 @@ static ODBEditor	*_sharedODBEditor;
 		}
 	}
 	
-	[_filesBeingEdited removeObjectsForKeys: keysToRemove];
+	[_filePathsBeingEdited removeObjectsForKeys: keysToRemove];
 	
 	if (! found) {
 		NSLog(@"ODBEditor: No active editing session for \"%@\"", client);
@@ -137,7 +137,7 @@ static ODBEditor	*_sharedODBEditor;
 
 - (BOOL)editString:(NSString *)string options:(NSDictionary *)options forClient:(id)client context:(NSDictionary *)context {
 	BOOL success = NO;
-	NSString *path = [self _tempFileForEditingString:string ODBEditorCustomPathKey:[options objectForKey:ODBEditorCustomPathKey]];
+	NSString *path = [self _tempFilePathForEditingString:string ODBEditorCustomPathKey:[options objectForKey:ODBEditorCustomPathKey]];
 	
 	if (path != nil) {
 		success = [self _editFile: path isEditingString: YES options: options forClient: client context: context];
@@ -176,25 +176,33 @@ static ODBEditor	*_sharedODBEditor;
 	return success;
 }
 
-- (NSString *)_tempFileForEditingString:(NSString *)string ODBEditorCustomPathKey:(NSString *)customPathKey {
+- (NSString *)_tempFilePathForEditingString:(NSString *)string ODBEditorCustomPathKey:(NSString *)customPathKey {
 	static  unsigned sTempFileSequence;
 	
-	NSString *fileName = nil;
-
-	sTempFileSequence++;
+	NSString *path = nil;
+	NSFileManager *fileManager = [NSFileManager defaultManager];
 			
-	fileName = [NSString stringWithFormat: @"%@ (via %@) %03d.txt", customPathKey, [[NSProcessInfo processInfo] processName], sTempFileSequence];
-	fileName = [NSTemporaryDirectory() stringByAppendingPathComponent: fileName];
+	//path = [NSString stringWithFormat: @"ODBEditor-%@-%06d.txt", [[NSBundle mainBundle] bundleIdentifier], sTempFileSequence];
+	//path = [NSTemporaryDirectory() stringByAppendingPathComponent: path];
 
-	if (NO == [string writeToFile:fileName atomically:NO encoding:NSUTF8StringEncoding error:nil])
-		fileName = nil;
+	do {
+		sTempFileSequence++;
+		path = [NSString stringWithFormat: @"%@ %03d.txt", customPathKey, sTempFileSequence];
+		path = [NSTemporaryDirectory() stringByAppendingPathComponent: path];
+	} while ([fileManager fileExistsAtPath:path]);
 
-	return fileName;
+	NSError *error = nil;
+	if (NO == [string writeToFile:path atomically:NO encoding:NSUTF8StringEncoding error:&error]) {
+		NSLog([error description], nil);
+		path = nil;
+	}
+
+	return path;
 }
 
-- (BOOL)_editFile:(NSString *)fileName isEditingString:(BOOL)editingStringFlag options:(NSDictionary *)options forClient:(id)client context:(NSDictionary *)context {
+- (BOOL)_editFile:(NSString *)path isEditingString:(BOOL)editingStringFlag options:(NSDictionary *)options forClient:(id)client context:(NSDictionary *)context {
     // 10.2 fix- akm Nov 30 2004
-    fileName = [fileName stringByResolvingSymlinksInPath];
+    path = [path stringByResolvingSymlinksInPath];
     
 	BOOL success = NO;
 	OSStatus status = noErr;
@@ -212,12 +220,11 @@ static ODBEditor	*_sharedODBEditor;
 	
 	[self _launchExternalEditor];
 	
-	[appleEvent setParamDescriptor: [NSAppleEventDescriptor descriptorWithFilePath: fileName] forKeyword: keyDirectObject];
+	[appleEvent setParamDescriptor: [NSAppleEventDescriptor descriptorWithFilePath: path] forKeyword: keyDirectObject];
 	[appleEvent setParamDescriptor: [NSAppleEventDescriptor descriptorWithTypeCode: _signature] forKeyword: keyFileSender];
 	if (customPath != nil)
 		[appleEvent setParamDescriptor: [NSAppleEventDescriptor descriptorWithString: customPath] forKeyword: keyFileCustomPath];
 	
-	//status = AESend([appleEvent aeDesc], &reply, kAEWaitReply, kAENormalPriority, kAEDefaultTimeout, NULL, NULL);
 	AESendMessage([appleEvent aeDesc], &reply, kAEWaitReply, kAEDefaultTimeout);
 	
 	if (status == noErr) {
@@ -236,10 +243,10 @@ static ODBEditor	*_sharedODBEditor;
 			[dictionary setObject: [NSValue valueWithNonretainedObject: client] forKey: ODBEditorNonRetainedClient];
 			if (context != NULL)
 				[dictionary setObject: context forKey: ODBEditorClientContext];
-			[dictionary setObject: fileName forKey: ODBEditorFileName];
+			[dictionary setObject: path forKey: ODBEditorFileName];
 			[dictionary setObject: [NSNumber numberWithBool: editingStringFlag] forKey: ODBEditorIsEditingString];
 			
-			[_filesBeingEdited setObject: dictionary forKey: fileName];
+			[_filePathsBeingEdited setObject: dictionary forKey: path];
 		}
 	}
 
@@ -251,35 +258,37 @@ static ODBEditor	*_sharedODBEditor;
 - (void)handleModifiedFileEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
 	NSAppleEventDescriptor *fpDescriptor = [[event paramDescriptorForKeyword: keyDirectObject] coerceToDescriptorType: typeFileURL];
 	NSString *urlString = [[[NSString alloc] initWithData: [fpDescriptor data] encoding: NSUTF8StringEncoding] autorelease];
-	NSString *fileName = [[[NSURL URLWithString: urlString] path] stringByResolvingSymlinksInPath];
+	NSString *path = [[[NSURL URLWithString: urlString] path] stringByResolvingSymlinksInPath];
 	NSAppleEventDescriptor	*nfpDescription = [[event paramDescriptorForKeyword: keyNewLocation] coerceToDescriptorType: typeFileURL];
 	NSString *newUrlString = [[[NSString alloc] initWithData: [nfpDescription data] encoding: NSUTF8StringEncoding] autorelease];
-	NSString *newFileName = [[NSURL URLWithString: newUrlString] path];
+	NSString *newPath = [[NSURL URLWithString: newUrlString] path];
 	NSDictionary *dictionary = nil;
+	NSError *error = nil;
 	
-	dictionary = [_filesBeingEdited objectForKey: fileName];
+	dictionary = [_filePathsBeingEdited objectForKey: path];
 	
 	if (dictionary != nil)
 	{
 		id  client		= [[dictionary objectForKey: ODBEditorNonRetainedClient] nonretainedObjectValue];
 		id isString		= [dictionary objectForKey: ODBEditorIsEditingString];
 		NSDictionary *context	= [dictionary objectForKey: ODBEditorClientContext];
-// XXXX JESSE		NSDictionary *context	= [[dictionary objectForKey: ODBEditorClientContext] nonretainedObjectValue];
 		
-		if(isString)
-		{
-			NSString	*stringContents = [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil];
-			[client odbEditor: self didModifyFileForString: stringContents context: context];
+		if(isString) {
+			NSString *stringContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+			if (stringContents) {
+				[client odbEditor: self didModifyFileForString: stringContents context: context];
+			} else {
+				NSLog([error description], nil);
+			}
+		} else {
+			[client odbEditor:self didModifyFile:path newFileLocation:newPath context:context];
 		}
-		else
-			[client odbEditor:self didModifyFile:fileName newFileLocation:newFileName context:context];
 
 		// if we've received a Save As message, remove the file from the list of edited files
 		// This may be break compatibility with BBEdit versioner < 6.0, since these versions
 		// continue to send notifications after after doing a Save As...
-		if(newFileName)
-		{
-			[_filesBeingEdited removeObjectForKey: fileName];
+		if(newPath) {
+			[_filePathsBeingEdited removeObjectForKey: path];
 	    }
 
 	}
@@ -289,31 +298,28 @@ static ODBEditor	*_sharedODBEditor;
 	}
 }
 
-- (void)handleClosedFileEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
-{
+- (void)handleClosedFileEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
 	NSAppleEventDescriptor  *descriptor = [[event paramDescriptorForKeyword: keyDirectObject] coerceToDescriptorType: typeFileURL];
 	NSString				*urlString = [[[NSString alloc] initWithData: [descriptor data] encoding: NSUTF8StringEncoding] autorelease];
-
 	NSString				*fileName = [[[NSURL URLWithString: urlString] path] stringByResolvingSymlinksInPath];
-
 	NSDictionary			*dictionary = nil;
+	NSError *error = nil;
 	
-	dictionary = [_filesBeingEdited objectForKey: fileName];
+	dictionary = [_filePathsBeingEdited objectForKey: fileName];
 	
-	if (dictionary != nil)
-	{
+	if (dictionary != nil) {
 		id client		= [[dictionary objectForKey: ODBEditorNonRetainedClient] nonretainedObjectValue];
 		id isString		= [dictionary objectForKey: ODBEditorIsEditingString];
 		NSDictionary *context	= [dictionary objectForKey: ODBEditorClientContext];
 		
-		if(isString)
-		{
-			 NSString	*stringContents = [NSString stringWithContentsOfURL:[NSURL fileURLWithPath:fileName] encoding:NSUTF8StringEncoding error:nil];
-			//NSString	*stringContents = [NSString stringWithContentsOfFile: fileName];
-			[client odbEditor: self didCloseFileForString: stringContents context: context];
-		}
-		else
-		{
+		if(isString) {
+			 NSString	*stringContents = [NSString stringWithContentsOfURL:[NSURL fileURLWithPath:fileName] encoding:NSUTF8StringEncoding error:&error];
+			if (stringContents) {
+				[client odbEditor: self didCloseFileForString: stringContents context: context];
+			} else {
+				NSLog([error description], nil);
+			}
+		} else {
 			[client odbEditor:self didClosefile:fileName context:context];
 		}
 	}
@@ -322,7 +328,7 @@ static ODBEditor	*_sharedODBEditor;
 		NSLog(@"Got ODB editor event for unknown file.");
 	}
 	
-	 [_filesBeingEdited removeObjectForKey: fileName];
+	 [_filePathsBeingEdited removeObjectForKey: fileName];
 }
 
 @end

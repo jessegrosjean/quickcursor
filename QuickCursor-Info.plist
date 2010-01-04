@@ -23,9 +23,9 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.5-Development</string>
+	<string>1.1.6-Development</string>
 	<key>CFBundleVersion</key>
-	<string>15</string>
+	<string>16</string>
 	<key>SUFeedURL</key>
 	<string>https://hogbaysoftware.appspot.com/products/quickcursor/releases.rss</string>
 	<key>SUPublicDSAKeyFile</key>
@@ -42,6 +42,7 @@
 		<string>com.macrabbit.espresso</string>
 		<string>org.vim.MacVim</string>
 		<string>org.smultron.Smultron</string>
+		<string>de.codingmonkeys.SubEthaEdit</string>
 		<string>com.macromates.textmate</string>
 		<string>com.barebones.textwrangler</string>
 		<string>com.hogbaysoftware.WriteRoom</string>

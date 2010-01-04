@@ -8,7 +8,7 @@ extern NSString * const ODBEditorCustomPathKey;
 {
 	UInt32					_signature;
 	NSString				*_editorBundleIdentifier;
-	NSMutableDictionary		*_filesBeingEdited;
+	NSMutableDictionary		*_filePathsBeingEdited;
 }
 
 + (id)sharedODBEditor;

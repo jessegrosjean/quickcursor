@@ -32,8 +32,9 @@
 @property(readonly) QCUIElement *parent;
 @property(readonly) NSString *title; 
 @property(readonly) NSString *role;
-@property(retain) id value;
 
+- (id)value;
+- (BOOL)setValue:(id)value;
 @property(readonly) NSArray *attributeNames;
 - (id)valueForAttribute:(NSString *)attributeName;
 - (BOOL)setValue:(id)newValue forAttribute:(NSString *)attributeName;

@@ -172,6 +172,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				88AAF90B105014A500DFD8E5 /* StatusItemIcon.pdf */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -222,7 +223,6 @@
 			isa = PBXGroup;
 			children = (
 				88864E7B107A3D27001CFB7E /* CrashReporterWindow.xib */,
-				88AAF90B105014A500DFD8E5 /* StatusItemIcon.pdf */,
 				88AF3356107FCD190045633D /* StatusItemIcon.png */,
 				88B27E46104D95A000806BAE /* QuickCursor.icns */,
 				8D1107310486CEB800E47090 /* QuickCursor-Info.plist */,

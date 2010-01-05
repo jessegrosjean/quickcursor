@@ -25,7 +25,7 @@
 }
 
 + (QCUIElement *)focusedElement {
-	return [[self systemWideElement] valueForAttribute:@"AXFocusedUIElement"];
+	return [[self systemWideElement] valueForAttribute:(NSString *)kAXFocusedUIElementAttribute];
 }
 
 #pragma mark Init
@@ -67,11 +67,15 @@
 }
 
 - (QCUIElement *)application {
-	QCUIElement *uiElement = self.topLevelUIElement;
+	QCUIElement *uiElement = self;
 	while (uiElement && ![[uiElement role] isEqualToString:(NSString *)kAXApplicationRole]) {
 		uiElement = uiElement.parent;
 	}
 	return uiElement;
+}
+
+- (QCUIElement *)menuBar {
+	return [[self application] valueForAttribute:(NSString *)kAXMenuBarAttribute];
 }
 
 - (QCUIElement *)topLevelUIElement {
@@ -84,6 +88,10 @@
 
 - (QCUIElement *)parent {
 	return [self valueForAttribute:(NSString *)kAXParentAttribute];
+}
+
+- (NSArray *)children {
+	return [self valueForAttribute:(NSString *)kAXChildrenAttribute];
 }
 
 - (NSString *)title {
@@ -105,20 +113,19 @@
 - (NSArray *)attributeNames {
 	NSArray* attributeNames;
 	AXUIElementCopyAttributeNames(uiElementRef, (CFArrayRef *)&attributeNames);
-	return attributeNames;
+	return [(id)attributeNames autorelease];
 }
 
 - (id)valueForAttribute:(NSString *)attributeName {
 	id result = nil;
 	CFTypeRef theValue;
-	
+		
 	AXError error = AXUIElementCopyAttributeValue(uiElementRef, (CFStringRef)attributeName, &theValue);
 		
 	if (error != kAXErrorSuccess) {
-		NSLog(@"error in AXUIElementCopyAttributeValue for attribute %@", attributeName);
 		return nil;
-	}
-		
+	}	
+	
 	if (AXValueGetType(theValue) == kAXValueCGPointType) {
 		NSLog(@"unimplemented, should not be used by QuickCursor");
 	} else if (AXValueGetType(theValue) == kAXValueCGSizeType) {
@@ -130,7 +137,12 @@
 	} else if (CFGetTypeID(theValue) == AXUIElementGetTypeID()) {
 		result = [[[QCUIElement alloc] initWithAXUIElementRef:theValue] autorelease];
 	} else if (CFGetTypeID(theValue) == CFArrayGetTypeID()) {
-		NSLog(@"unimplemented, should not be used by QuickCursor");
+		CFIndex count = CFArrayGetCount(theValue);
+		NSMutableArray *children = [NSMutableArray arrayWithCapacity:count];
+		for (CFIndex i = 0; i < count; i++) {
+			[children addObject:[[[QCUIElement alloc] initWithAXUIElementRef:CFArrayGetValueAtIndex(theValue, i)] autorelease]];
+		}
+		result = children;
 	} else {
 		result = [[[(id)theValue description] copy] autorelease];
 	}
@@ -223,6 +235,72 @@
 	
 	if (AXUIElementGetPid(uiElementRef, &theAppPID) == kAXErrorSuccess && GetProcessForPID(theAppPID, &theAppPSN) == noErr && SetFrontProcess(&theAppPSN) == noErr) {
 		return YES;
+	}
+	
+	return NO;
+}
+
+- (NSString *)readString {
+	NSArray *menuBarItems = [[self menuBar] children];
+	QCUIElement *editMenu = [[[menuBarItems objectAtIndex:3] children] lastObject];
+	
+	for (QCUIElement *eachMenuItem in editMenu.children) {
+		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
+
+		if ([shortcut isEqualToString:@"C"]) {
+			if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:@"0"]) {
+				NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+				NSString *savedString = [pboard stringForType:NSStringPboardType];
+				NSString *copiedString = nil;
+				
+				if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
+					if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) { // twice seems neccessary to give pastboard time to record value.
+						copiedString = [pboard stringForType:NSStringPboardType];
+					}
+				}
+				
+				[pboard setString:savedString forType:NSStringPboardType];
+				
+				return copiedString;
+			}
+		}
+	}
+	
+	return nil;
+}
+
+- (BOOL)writeString:(NSString *)pasteString {
+	NSArray *menuBarItems = [[self menuBar] children];
+	QCUIElement *editMenu = [[[menuBarItems objectAtIndex:3] children] lastObject];
+	
+	for (QCUIElement *eachMenuItem in editMenu.children) {
+		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
+		
+		if ([shortcut isEqualToString:@"V"]) {
+			NSString *modifiers = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute];
+			
+			if ([modifiers isEqualToString:@"0"]) {
+				NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+				NSString *savedString = [pboard stringForType:NSStringPboardType];
+				BOOL result = NO;
+				
+				[pboard setString:pasteString forType:NSStringPboardType];
+				
+				if ([self activateProcess]) {
+					sleep(2);
+					NSLog(pasteString, nil);
+					if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
+						if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
+							result = YES;
+						}
+					}
+				}
+				
+				[pboard setString:savedString forType:NSStringPboardType];
+				
+				return result;
+			}
+		}
 	}
 	
 	return NO;

@@ -287,6 +287,23 @@
 	
 	QCUIElement *focusedElement = [QCUIElement focusedElement];
 	
+	if ([focusedElement readString]) {
+		NSString *string = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
+		NSDictionary *context = [NSDictionary dictionaryWithObject:focusedElement forKey:@"uiElement"];
+		NSString *processName = [focusedElement processName];
+		NSString *windowTitle = focusedElement.window.title;
+		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ - %@", processName, windowTitle];		
+		[[ODBEditor sharedODBEditor] setEditorBundleIdentifier:bundleID];
+		[[ODBEditor sharedODBEditor] editString:string options:[NSDictionary dictionaryWithObject:editorCustomPath forKey:ODBEditorCustomPathKey] forClient:self context:context];
+	} else {
+		[[NSAlert alertWithMessageText:NSLocalizedString(@"Could not edit text", nil)
+						 defaultButton:NSLocalizedString(@"OK", nil)
+					   alternateButton:nil
+						   otherButton:nil
+			 informativeTextWithFormat:NSLocalizedString(@"QuickCursor could not find any text to edit. Make sure that a text view has keyboard focus, and then try again.", nil)] runModal];
+	}
+
+	/*
 	id value = focusedElement.value;
 	
 	if ([value isKindOfClass:[NSString class]]) {
@@ -303,7 +320,7 @@
 					   alternateButton:nil
 						   otherButton:nil
 			 informativeTextWithFormat:NSLocalizedString(@"QuickCursor could not find any text to edit. Make sure that a text view has keyboard focus, and then try again.", nil)] runModal];
-	}
+	}*/
 }
 
 #pragma mark ODBEditor Callbacks
@@ -318,7 +335,7 @@
 
 - (void)odbEditor:(ODBEditor *)editor didModifyFileForString:(NSString *)newString context:(NSDictionary *)context; {
 	QCUIElement *uiElement = [context valueForKey:@"uiElement"];
-	if (![uiElement setValue:newString]) {
+	if (![uiElement writeString:newString]) {
 		[NSApp activateIgnoringOtherApps:YES];
 		[[NSAlert alertWithMessageText:NSLocalizedString(@"Could not save text", nil)
 						 defaultButton:NSLocalizedString(@"OK", nil)

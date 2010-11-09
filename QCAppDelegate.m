@@ -157,10 +157,6 @@
 	[preferencesMenuItem setTarget:self];
 	[quickCursorMenu addItem:preferencesMenuItem];
 
-//	NSMenuItem *helpMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"QuickCursor Help", nil) action:@selector(showPreferences:) keyEquivalent:@""] autorelease];
-//	[helpMenuItem setTarget:self];
-//	[quickCursorMenu addItem:helpMenuItem];
-
 	[quickCursorMenu addItem:[NSMenuItem separatorItem]];
 
 	NSMenuItem *quitMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Quit", nil) action:@selector(terminate:) keyEquivalent:@""] autorelease];

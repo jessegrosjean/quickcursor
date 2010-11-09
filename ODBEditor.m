@@ -181,13 +181,16 @@ static ODBEditor	*_sharedODBEditor;
 	
 	NSString *path = nil;
 	NSFileManager *fileManager = [NSFileManager defaultManager];
-			
-	//path = [NSString stringWithFormat: @"ODBEditor-%@-%06d.txt", [[NSBundle mainBundle] bundleIdentifier], sTempFileSequence];
-	//path = [NSTemporaryDirectory() stringByAppendingPathComponent: path];
+	NSString *escapedPathKey = [customPathKey stringByReplacingOccurrencesOfString:@"/" withString:@"-"];	
+	NSString *pathExtension = [escapedPathKey pathExtension];
 
+	if ([pathExtension isEqualToString:@""]) {
+		pathExtension = @"txt";
+	}
+	
 	do {
 		sTempFileSequence++;
-		path = [NSString stringWithFormat: @"%@ %03d.txt", customPathKey, sTempFileSequence];
+		path = [NSString stringWithFormat: @"%@ %03d.%@", [escapedPathKey stringByDeletingPathExtension], sTempFileSequence, pathExtension];
 		path = [NSTemporaryDirectory() stringByAppendingPathComponent: path];
 	} while ([fileManager fileExistsAtPath:path]);
 

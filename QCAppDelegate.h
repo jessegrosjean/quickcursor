@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Sparkle/Sparkle.h>
 #import <ShortcutRecorder/ShortcutRecorder.h>
 
 

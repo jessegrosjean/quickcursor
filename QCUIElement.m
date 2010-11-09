@@ -13,9 +13,6 @@
 
 #pragma mark Class Methods
 
-// kAXValueChangedNotification
-// kAXUIElementDestroyedNotification
-
 + (QCUIElement *)systemWideElement {
 	static QCUIElement* systemWideQCUIElement = nil;
 	if (!systemWideQCUIElement) {
@@ -240,13 +237,48 @@
 	return NO;
 }
 
+/*
+ How to send key type directly.
+ 
+CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
+CGEventRef pasteCommandDown = CGEventCreateKeyboardEvent(source, (CGKeyCode)9, YES);
+CGEventSetFlags(pasteCommandDown, kCGEventFlagMaskCommand);
+CGEventRef pasteCommandUp = CGEventCreateKeyboardEvent(source, (CGKeyCode)9, NO);
+
+CGEventPost(kCGAnnotatedSessionEventTap, pasteCommandDown);
+CGEventPost(kCGAnnotatedSessionEventTap, pasteCommandUp);
+
+CFRelease(pasteCommandUp);
+CFRelease(pasteCommandDown);
+CFRelease(source);
+*/
+
+- (void)restoreSavedString:(NSString *)aSavedString {
+	NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+	[pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+	[pboard setString:aSavedString forType:NSStringPboardType];
+}
+
 - (NSString *)readString {
 	NSArray *menuBarItems = [[self menuBar] children];
 	QCUIElement *editMenu = [[[menuBarItems objectAtIndex:3] children] lastObject];
-	
+
+	// Select All
 	for (QCUIElement *eachMenuItem in editMenu.children) {
 		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
+		if ([shortcut isEqualToString:@"A"]) {
+			if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:@"0"]) {
+				if (!AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
+					return nil;
+				}
+			}
+		}
+	}
 
+	// Copy
+	for (QCUIElement *eachMenuItem in editMenu.children) {
+		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
+		
 		if ([shortcut isEqualToString:@"C"]) {
 			if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:@"0"]) {
 				NSPasteboard *pboard = [NSPasteboard generalPasteboard];
@@ -254,12 +286,12 @@
 				NSString *copiedString = nil;
 				
 				if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
-					if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) { // twice seems neccessary to give pastboard time to record value.
+					if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
 						copiedString = [pboard stringForType:NSStringPboardType];
 					}
 				}
 				
-				[pboard setString:savedString forType:NSStringPboardType];
+				[self performSelector:@selector(restoreSavedString:) withObject:savedString afterDelay:1];
 				
 				return copiedString;
 			}
@@ -273,30 +305,40 @@
 	NSArray *menuBarItems = [[self menuBar] children];
 	QCUIElement *editMenu = [[[menuBarItems objectAtIndex:3] children] lastObject];
 	
+	if (![self activateProcess]) {
+		return NO;
+	}
+	
+	// Select All
+	for (QCUIElement *eachMenuItem in editMenu.children) {
+		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
+		if ([shortcut isEqualToString:@"A"]) {
+			if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:@"0"]) {
+				if (!AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
+					return NO;
+				}
+			}
+		}
+	}
+	
+	// Paste
 	for (QCUIElement *eachMenuItem in editMenu.children) {
 		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
 		
 		if ([shortcut isEqualToString:@"V"]) {
-			NSString *modifiers = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute];
-			
-			if ([modifiers isEqualToString:@"0"]) {
+			if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:@"0"]) {
 				NSPasteboard *pboard = [NSPasteboard generalPasteboard];
 				NSString *savedString = [pboard stringForType:NSStringPboardType];
 				BOOL result = NO;
 				
+				[pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
 				[pboard setString:pasteString forType:NSStringPboardType];
 				
-				if ([self activateProcess]) {
-					sleep(2);
-					NSLog(pasteString, nil);
-					if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
-						if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
-							result = YES;
-						}
-					}
+				if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
+					result = YES;
 				}
 				
-				[pboard setString:savedString forType:NSStringPboardType];
+				[self performSelector:@selector(restoreSavedString:) withObject:savedString afterDelay:1];
 				
 				return result;
 			}

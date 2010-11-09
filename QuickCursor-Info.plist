@@ -26,12 +26,8 @@
 	<string>1.1.6-Development</string>
 	<key>CFBundleVersion</key>
 	<string>16</string>
-	<key>SUFeedURL</key>
-	<string>https://hogbaysoftware.appspot.com/products/quickcursor/releases.rss</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>sparkle_dsa_pub.pem</string>
-	<key>CrashReporterPostToURL</key>
-	<string>http://www.hogbaysoftware.com/products/quickcursor/report_crash</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

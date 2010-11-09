@@ -11,7 +11,6 @@
 #import "PTHotKey.h"
 #import "QCUIElement.h"
 #import "ODBEditor.h"
-#import "CrashReporter.h"
 
 
 @implementation QCAppDelegate
@@ -106,7 +105,9 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	[[CrashReporter sharedInstance] check:nil];
+	[NSApp setServicesProvider:self];
+
+	NSUpdateDynamicServices();
 	
 	quickCursorSessionQCUIElements = [[NSMutableSet alloc] init];
 	registeredHotKeys = [[NSMutableArray alloc] init];
@@ -156,10 +157,6 @@
 	[preferencesMenuItem setTarget:self];
 	[quickCursorMenu addItem:preferencesMenuItem];
 
-	NSMenuItem *checkForUpdatesMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Check For Updates...", nil) action:@selector(checkForUpdates:) keyEquivalent:@""] autorelease];
-	[checkForUpdatesMenuItem setTarget:self];
-	[quickCursorMenu addItem:checkForUpdatesMenuItem];
-	
 //	NSMenuItem *helpMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"QuickCursor Help", nil) action:@selector(showPreferences:) keyEquivalent:@""] autorelease];
 //	[helpMenuItem setTarget:self];
 //	[quickCursorMenu addItem:helpMenuItem];
@@ -171,6 +168,7 @@
 	[quickCursorMenu addItem:quitMenuItem];
 	
 	[quickCursorStatusItem setMenu:quickCursorMenu];
+	
 	[self updateHotKeys];
 }
 
@@ -256,10 +254,6 @@
 	[preferencesWindow makeKeyAndOrderFront:sender];
 }
 
-- (IBAction)checkForUpdates:(id)sender {
-	[[SUUpdater sharedUpdater] checkForUpdates:sender];
-}
-
 - (IBAction)editInPopUpButtonClicked:(id)sender {
 	id clicked = [[editInPopUpButton selectedItem] representedObject];
 	if (clicked) {
@@ -302,25 +296,6 @@
 						   otherButton:nil
 			 informativeTextWithFormat:NSLocalizedString(@"QuickCursor could not find any text to edit. Make sure that a text view has keyboard focus, and then try again.", nil)] runModal];
 	}
-
-	/*
-	id value = focusedElement.value;
-	
-	if ([value isKindOfClass:[NSString class]]) {
-		NSDictionary *context = [NSDictionary dictionaryWithObject:focusedElement forKey:@"uiElement"];
-		NSString *processName = [focusedElement processName];
-		NSString *windowTitle = focusedElement.window.title;
-		//NSString *editorCustomPath = [NSString stringWithFormat:@"%@ — %@", processName, windowTitle]; // EM dash caused trouble with some external editors.
-		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ - %@", processName, windowTitle];		
-		[[ODBEditor sharedODBEditor] setEditorBundleIdentifier:bundleID];
-		[[ODBEditor sharedODBEditor] editString:value options:[NSDictionary dictionaryWithObject:editorCustomPath forKey:ODBEditorCustomPathKey] forClient:self context:context];
-	} else {
-		[[NSAlert alertWithMessageText:NSLocalizedString(@"Could not edit text", nil)
-						 defaultButton:NSLocalizedString(@"OK", nil)
-					   alternateButton:nil
-						   otherButton:nil
-			 informativeTextWithFormat:NSLocalizedString(@"QuickCursor could not find any text to edit. Make sure that a text view has keyboard focus, and then try again.", nil)] runModal];
-	}*/
 }
 
 #pragma mark ODBEditor Callbacks

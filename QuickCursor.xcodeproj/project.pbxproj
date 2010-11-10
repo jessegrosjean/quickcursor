@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		256AC3DA0F4B6AC300CF3369 /* QCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* QCAppDelegate.m */; };
 		8818B680106BFBE7007661DF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8818B67E106BFBE7007661DF /* MainMenu.xib */; };
+		882A87E7128A58E700D05C94 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882A87E6128A58E700D05C94 /* Cocoa.framework */; };
 		88864DFC107A376C001CFB7E /* PTKeyCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88864DFB107A376C001CFB7E /* PTKeyCodes.plist */; };
 		88AAF90C105014A500DFD8E5 /* StatusItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 88AAF90B105014A500DFD8E5 /* StatusItemIcon.pdf */; };
 		88AF3357107FCD190045633D /* StatusItemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AF3356107FCD190045633D /* StatusItemIcon.png */; };
@@ -27,7 +28,6 @@
 		88D162EB10F6271400B300CD /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 88D162EA10F6271400B300CD /* Credits.html */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
-		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,9 +100,8 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8818B67F106BFBE7007661DF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		882A87E6128A58E700D05C94 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		88864DFB107A376C001CFB7E /* PTKeyCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PTKeyCodes.plist; sourceTree = "<group>"; };
-		888CB656107645A00093C30E /* release_notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes; sourceTree = "<group>"; };
-		888CB658107645B90093C30E /* Markdown.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = Markdown.pl; sourceTree = "<group>"; };
 		88AAF90B105014A500DFD8E5 /* StatusItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = StatusItemIcon.pdf; sourceTree = "<group>"; };
 		88AF3356107FCD190045633D /* StatusItemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusItemIcon.png; sourceTree = "<group>"; };
 		88B27D94104D8EDE00806BAE /* NSAppleEventDescriptor-Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAppleEventDescriptor-Extensions.h"; sourceTree = "<group>"; };
@@ -135,9 +134,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				88B281D3104DC8AB00806BAE /* ShortcutRecorder.framework in Frameworks */,
-				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				88B28067104DA48500806BAE /* Carbon.framework in Frameworks */,
 				88B2806C104DA49000806BAE /* CoreServices.framework in Frameworks */,
+				882A87E7128A58E700D05C94 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +191,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				882A87E6128A58E700D05C94 /* Cocoa.framework */,
 			);
 			name = QuickCursor;
 			sourceTree = "<group>";
@@ -199,7 +199,6 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				888CB655107645920093C30E /* Build Support */,
 				256AC3F00F4B6AF500CF3369 /* QuickCursor_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
@@ -229,15 +228,6 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		888CB655107645920093C30E /* Build Support */ = {
-			isa = PBXGroup;
-			children = (
-				888CB658107645B90093C30E /* Markdown.pl */,
-				888CB656107645A00093C30E /* release_notes */,
-			);
-			name = "Build Support";
 			sourceTree = "<group>";
 		};
 		888CB822107648110093C30E /* ODBEditor */ = {
@@ -289,7 +279,6 @@
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				88B28028104DA2FC00806BAE /* Copy Frameworks */,
-				8818B7C5106C02C3007661DF /* Prepare Release Script */,
 			);
 			buildRules = (
 			);
@@ -374,23 +363,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		8818B7C5106C02C3007661DF /* Prepare Release Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Prepare Release Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION != 'Release' ]; then\n\texit\nfi\n\n### Version Constants\n\nVERSION=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleVersion)\nSHORT_VERSION_STRING=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleShortVersionString)\n\n### Build DMG\n\nDMG_DIR=\"$TEMP_FILES_DIR/disk\"\nDMG_PATH=\"$BUILT_PRODUCTS_DIR/$PROJECT_NAME-$SHORT_VERSION_STRING.dmg\"\n\nrm -rf \"$DMG_DIR\"\nmkdir \"$DMG_DIR\"\ncp -R \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app\" \"$DMG_DIR\"\nrm -f \"$DMG_PATH\"\nhdiutil create -srcfolder \"$DMG_DIR\" -volname \"$PROJECT_NAME-$SHORT_VERSION_STRING\" \"$DMG_PATH\"\nhdiutil internet-enable -yes \"$DMG_PATH\"\nrm -rf \"$DMG_DIR\"\n\n### Generate Sparkle Appcast Item\n\nDOWNLOAD_URL=\"https://$PROJECT_NAME.s3.amazonaws.com/$PROJECT_NAME-$SHORT_VERSION_STRING.dmg\"\nSIZE=$(stat -f %z \"$DMG_PATH\")\nPUBDATE=$(date +\"%a, %d %b %G %T %z\")\nSIGNATURE=$(openssl dgst -sha1 -binary < \"$DMG_PATH\" | openssl dgst -dss1 -sign \"../sparkle_dsa_priv.pem\" | openssl enc -base64)\nRELEASE_NOTES=$(./Markdown.pl release_notes)\n\ncat <<EOF\n\t\t<item>\n\t\t\t<title>Version $SHORT_VERSION_STRING ($VERSION)</title>\n\t\t\t<pubDate>$PUBDATE</pubDate>\n\t\t\t<description><![CDATA[$RELEASE_NOTES]]></description>\n\t\t\t<enclosure\n\t\t\t\turl=\"$DOWNLOAD_URL\"\n\t\t\t\ttype=\"application/x-apple-diskimage\"\n\t\t\t\tlength=\"$SIZE\"\n\t\t\t\tsparkle:version=\"$VERSION\"\n\t\t\t\tsparkle:shortVersionString=\"$SHORT_VERSION_STRING\"\n\t\t\t\tsparkle:minimumSystemVersion=\"$MACOSX_DEPLOYMENT_TARGET\"\n\t\t\t\tsparkle:dsaSignature=\"$SIGNATURE\"\n\t\t\t/>\n\t\t</item>\nEOF\n\nexit 0";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {

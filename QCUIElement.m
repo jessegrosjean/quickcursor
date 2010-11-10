@@ -99,6 +99,17 @@
 	return [self valueForAttribute:(NSString *)kAXRoleAttribute];
 }
 
+- (BOOL)isEditableTextArea {
+	CFTypeRef focusedAttribute;
+	AXError error = AXUIElementCopyAttributeValue(uiElementRef, kAXFocusedAttribute, &focusedAttribute);
+	if (error != kAXErrorSuccess) {
+		return NO;
+	}
+	if (!CFBooleanGetValue(focusedAttribute)) return NO;
+	NSString *role = [self role];
+	return [role isEqualToString:(NSString *)kAXTextAreaRole] || [role isEqualToString:(NSString *)kAXTextFieldRole] || [role isEqualToString:@"AXWebArea"];
+}
+
 - (id)value {
 	return [self valueForAttribute:(NSString *)kAXValueAttribute];
 }
@@ -184,41 +195,53 @@
 	}
 	
 	if (theOldValue) {
-        if (AXValueGetType(theOldValue) == kAXValueCGPointType) { // CGPoint
+        /*if (AXValueGetType(theOldValue) == kAXValueCGPointType) { // CGPoint
             CGPoint point;
             theNewValue = AXValueCreate(kAXValueCGPointType, (const void *)&point);
             if (theNewValue) {
-                AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, theNewValue );
+                error = AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, theNewValue );
                 CFRelease(theNewValue);
             }
         } else if (AXValueGetType(theOldValue) == kAXValueCGSizeType) {	// CGSize
             CGSize size;
             theNewValue = AXValueCreate( kAXValueCGSizeType, (const void *)&size );
             if (theNewValue) {
-                AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, theNewValue );
+                error = AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, theNewValue );
                 CFRelease( theNewValue );
             }
         } else if (AXValueGetType(theOldValue) == kAXValueCGRectType) {	// CGRect
             CGRect rect;
             theNewValue = AXValueCreate( kAXValueCGRectType, (const void *)&rect );
             if (theNewValue) {
-                AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, theNewValue );
+                error = AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, theNewValue );
                 CFRelease( theNewValue );
             }
         } else if (AXValueGetType(theOldValue) == kAXValueCFRangeType) {	// CFRange
             CFRange range;
             theNewValue = AXValueCreate( kAXValueCFRangeType, (const void *)&range );
             if (theNewValue) {
-                AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, theNewValue );
+                error = AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, theNewValue );
                 CFRelease( theNewValue );
             }
-        } else if ([(id)theOldValue isKindOfClass:[NSString class]]) { // NSString
-            AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, newValue);
+		} else*/ if (CFGetTypeID(theOldValue) == CFBooleanGetTypeID()) {
+			if ([newValue boolValue]) {
+				theNewValue = kCFBooleanTrue;
+			} else {
+				theNewValue = kCFBooleanFalse;
+			}
+			error = AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, theNewValue);
+		} else if ([(id)theOldValue isKindOfClass:[NSString class]]) { // NSString
+            error = AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, newValue);
         } else if ([(id)theOldValue isKindOfClass:[NSValue class]]) { // NSValue
-            AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, [NSNumber numberWithLong:[newValue intValue]] );
+            error = AXUIElementSetAttributeValue(uiElementRef, (CFStringRef)attributeName, [NSNumber numberWithLong:[newValue intValue]] );
         }
 		
 		CFRelease(theOldValue);
+	}
+	
+	if (error != kAXErrorSuccess) {
+		NSLog(@"error in AXUIElementSetAttributeValue for attribute %@", attributeName);
+		return NO;
 	}
 	
 	return YES;
@@ -237,32 +260,14 @@
 	return NO;
 }
 
-/*
- How to send key type directly.
- 
-CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
-CGEventRef pasteCommandDown = CGEventCreateKeyboardEvent(source, (CGKeyCode)9, YES);
-CGEventSetFlags(pasteCommandDown, kCGEventFlagMaskCommand);
-CGEventRef pasteCommandUp = CGEventCreateKeyboardEvent(source, (CGKeyCode)9, NO);
-
-CGEventPost(kCGAnnotatedSessionEventTap, pasteCommandDown);
-CGEventPost(kCGAnnotatedSessionEventTap, pasteCommandUp);
-
-CFRelease(pasteCommandUp);
-CFRelease(pasteCommandDown);
-CFRelease(source);
-*/
-
-- (void)restoreSavedString:(NSString *)aSavedString {
-	NSPasteboard *pboard = [NSPasteboard generalPasteboard];
-	[pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-	[pboard setString:aSavedString forType:NSStringPboardType];
-}
-
 - (NSString *)readString {
+	if (![self isEditableTextArea]) {
+		return nil;
+	}
+	
 	NSArray *menuBarItems = [[self menuBar] children];
 	QCUIElement *editMenu = [[[menuBarItems objectAtIndex:3] children] lastObject];
-
+	
 	// Select All
 	for (QCUIElement *eachMenuItem in editMenu.children) {
 		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
@@ -274,26 +279,33 @@ CFRelease(source);
 			}
 		}
 	}
-
+	
 	// Copy
 	for (QCUIElement *eachMenuItem in editMenu.children) {
 		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
-		
+
 		if ([shortcut isEqualToString:@"C"]) {
 			if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:@"0"]) {
-				NSPasteboard *pboard = [NSPasteboard generalPasteboard];
-				NSString *savedString = [pboard stringForType:NSStringPboardType];
-				NSString *copiedString = nil;
-				
-				if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
-					if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
-						copiedString = [pboard stringForType:NSStringPboardType];
-					}
+				CFTypeRef enabledAttribute;
+				AXError error = AXUIElementCopyAttributeValue(eachMenuItem->uiElementRef, kAXEnabledAttribute, &enabledAttribute);
+				if (error != kAXErrorSuccess) {
+					return nil;
 				}
-				
-				[self performSelector:@selector(restoreSavedString:) withObject:savedString afterDelay:1];
-				
-				return copiedString;
+
+				if (CFBooleanGetValue(enabledAttribute)) {
+					NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+					NSUInteger changeCount = [pboard changeCount];
+					
+					if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
+						while ([pboard changeCount] == changeCount) {
+							usleep(100000);
+						}
+						return [pboard stringForType:NSStringPboardType];
+					}
+				} else {
+					// editable text area, but copy not enabled after select all... means it's empty.
+					return @"";
+				}
 			}
 		}
 	}
@@ -308,6 +320,10 @@ CFRelease(source);
 	if (![self activateProcess]) {
 		return NO;
 	}
+		
+	if (![self isEditableTextArea]) {
+		return NO;
+	}
 	
 	// Select All
 	for (QCUIElement *eachMenuItem in editMenu.children) {
@@ -320,7 +336,7 @@ CFRelease(source);
 			}
 		}
 	}
-	
+
 	// Paste
 	for (QCUIElement *eachMenuItem in editMenu.children) {
 		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
@@ -328,19 +344,13 @@ CFRelease(source);
 		if ([shortcut isEqualToString:@"V"]) {
 			if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:@"0"]) {
 				NSPasteboard *pboard = [NSPasteboard generalPasteboard];
-				NSString *savedString = [pboard stringForType:NSStringPboardType];
-				BOOL result = NO;
 				
 				[pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
 				[pboard setString:pasteString forType:NSStringPboardType];
 				
 				if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
-					result = YES;
+					return YES;
 				}
-				
-				[self performSelector:@selector(restoreSavedString:) withObject:savedString afterDelay:1];
-				
-				return result;
 			}
 		}
 	}

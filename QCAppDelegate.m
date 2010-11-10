@@ -15,10 +15,24 @@
 
 @implementation QCAppDelegate
 
-+ (void)initialize {
-	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
-															 [NSNumber numberWithBool:YES], QCSwitchBackWhenFinishedEditing,
-															 nil]];
++ (BOOL)universalAccessNeedsToBeTurnedOn {
+	if (!AXAPIEnabled()) {
+		NSString *message = NSLocalizedString(@"QuickCursor requires that you launch the Universal Access preferences pane and turn on \"Enable access for assistive devices\".", nil);
+        NSUInteger result = NSRunAlertPanel(message, @"", NSLocalizedString(@"OK", nil), NSLocalizedString(@"Quit QuickCursor", nil), NSLocalizedString(@"Cancel", nil));
+        
+        switch (result) {
+            case NSAlertDefaultReturn:
+                [[NSWorkspace sharedWorkspace] openFile:@"/System/Library/PreferencePanes/UniversalAccessPref.prefPane"];
+                break;
+                
+            case NSAlertAlternateReturn:
+                [NSApp terminate:self];
+				break;
+		}
+		return YES;
+	} else {
+		return NO;
+	}
 }
 
 - (NSArray *)validatedEditorMenuItems:(SEL)action {
@@ -111,21 +125,8 @@
 	
 	quickCursorSessionQCUIElements = [[NSMutableSet alloc] init];
 	registeredHotKeys = [[NSMutableArray alloc] init];
-
-    if (!AXAPIEnabled()) {
-		NSString *message = NSLocalizedString(@"QuickCursor requires that the Accessibility API be enabled. Would you like to launch System Preferences so that you can turn on \"Enable access for assistive devices\".", nil);
-        NSUInteger result = NSRunAlertPanel(message, @"", NSLocalizedString(@"OK", nil), NSLocalizedString(@"Quit QuickCursor", nil), NSLocalizedString(@"Cancel", nil));
-        
-        switch (result) {
-            case NSAlertDefaultReturn:
-                [[NSWorkspace sharedWorkspace] openFile:@"/System/Library/PreferencePanes/UniversalAccessPref.prefPane"];
-                break;
-                
-            case NSAlertAlternateReturn:
-                [NSApp terminate:self];
-                return;
-        }
-    }
+	
+	[QCAppDelegate universalAccessNeedsToBeTurnedOn];
 
     quickCursorStatusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];
 	NSImage *image = [NSImage imageNamed:@"StatusItemIcon.png"];
@@ -267,6 +268,10 @@
 }
 
 - (IBAction)beginQuickCursorEdit:(id)sender {
+	if ([QCAppDelegate universalAccessNeedsToBeTurnedOn]) {
+		return;
+	}
+	
 	NSString *bundleID = nil;
 	
 	if ([sender isKindOfClass:[NSMenuItem class]]) {
@@ -276,21 +281,21 @@
 	}
 	
 	QCUIElement *focusedElement = [QCUIElement focusedElement];
+	NSString *editString = [focusedElement readString];
 	
-	if ([focusedElement readString]) {
-		NSString *string = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
-		NSDictionary *context = [NSDictionary dictionaryWithObject:focusedElement forKey:@"uiElement"];
+	if (editString) {
 		NSString *processName = [focusedElement processName];
+		NSDictionary *context = [NSDictionary dictionaryWithObjectsAndKeys:focusedElement, @"uiElement", editString, @"originalString", processName, @"processName", nil];
 		NSString *windowTitle = focusedElement.window.title;
 		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ - %@", processName, windowTitle];		
 		[[ODBEditor sharedODBEditor] setEditorBundleIdentifier:bundleID];
-		[[ODBEditor sharedODBEditor] editString:string options:[NSDictionary dictionaryWithObject:editorCustomPath forKey:ODBEditorCustomPathKey] forClient:self context:context];
+		[[ODBEditor sharedODBEditor] editString:editString options:[NSDictionary dictionaryWithObject:editorCustomPath forKey:ODBEditorCustomPathKey] forClient:self context:context];
 	} else {
-		[[NSAlert alertWithMessageText:NSLocalizedString(@"Could not edit text", nil)
+		[[NSAlert alertWithMessageText:NSLocalizedString(@"Could not find editable text", nil)
 						 defaultButton:NSLocalizedString(@"OK", nil)
 					   alternateButton:nil
 						   otherButton:nil
-			 informativeTextWithFormat:NSLocalizedString(@"QuickCursor could not find any text to edit. Make sure that a text view has keyboard focus, and then try again.", nil)] runModal];
+			 informativeTextWithFormat:NSLocalizedString(@"QuickCursor needs an editable text area that has keyboard focus to work.", nil)] runModal];
 	}
 }
 
@@ -305,20 +310,27 @@
 }
 
 - (void)odbEditor:(ODBEditor *)editor didModifyFileForString:(NSString *)newString context:(NSDictionary *)context; {
-	QCUIElement *uiElement = [context valueForKey:@"uiElement"];
-	if (![uiElement writeString:newString]) {
-		[NSApp activateIgnoringOtherApps:YES];
-		[[NSAlert alertWithMessageText:NSLocalizedString(@"Could not save text", nil)
-						 defaultButton:NSLocalizedString(@"OK", nil)
-					   alternateButton:nil
-						   otherButton:nil
-			 informativeTextWithFormat:NSLocalizedString(@"QuickCursor could not save your changes back to the source application.", nil)] runModal];
-	}
 }
 
 - (void)odbEditor:(ODBEditor *)editor didCloseFileForString:(NSString *)newString context:(NSDictionary *)context; {
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:QCSwitchBackWhenFinishedEditing]) {
-		[[context valueForKey:@"uiElement"] activateProcess];
+	QCUIElement *uiElement = [context valueForKey:@"uiElement"];
+	NSString *originalString = [context valueForKey:@"originalString"];
+	NSString *processName = [context valueForKey:@"processName"];
+	
+	if (![originalString isEqualToString:newString]) {
+		if (![uiElement writeString:newString]) {
+			NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+			
+			[pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+			[pboard setString:newString forType:NSStringPboardType];
+			
+			[NSApp activateIgnoringOtherApps:YES];
+			[[NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Could not paste text back into %@", nil), processName]
+							 defaultButton:NSLocalizedString(@"OK", nil)
+						   alternateButton:nil
+							   otherButton:nil
+				 informativeTextWithFormat:NSLocalizedString(@"Your edited text has been saved to the clipboard and can be pasted into another application.", nil)] runModal];
+		}
 	}
 }
 
@@ -339,5 +351,3 @@
 }
 
 @end
-
-NSString *QCSwitchBackWhenFinishedEditing = @"QCSwitchBackWhenFinishedEditing";

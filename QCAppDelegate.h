@@ -23,6 +23,8 @@
 	NSMutableArray *registeredHotKeys;
 }
 
++ (BOOL)universalAccessNeedsToBeTurnedOn;
+
 @property(assign) BOOL enableLoginItem;
 
 #pragma mark Actions
@@ -33,5 +35,3 @@
 - (IBAction)beginQuickCursorEdit:(id)sender;	
 
 @end
-
-APPKIT_EXTERN NSString *QCSwitchBackWhenFinishedEditing;

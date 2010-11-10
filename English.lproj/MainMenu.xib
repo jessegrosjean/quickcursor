@@ -172,35 +172,13 @@
 								<reference key="NSControlView" ref="940179569"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<object class="NSCustomResource" key="NSNormalImage" id="371842225">
+								<object class="NSCustomResource" key="NSNormalImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSSwitch</string>
 								</object>
-								<object class="NSButtonImageSource" key="NSAlternateImage" id="945704191">
+								<object class="NSButtonImageSource" key="NSAlternateImage">
 									<string key="NSImageName">NSSwitch</string>
 								</object>
-								<string key="NSAlternateContents"/>
-								<string key="NSKeyEquivalent"/>
-								<int key="NSPeriodicDelay">200</int>
-								<int key="NSPeriodicInterval">25</int>
-							</object>
-						</object>
-						<object class="NSButton" id="417188638">
-							<reference key="NSNextResponder" ref="248881203"/>
-							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{133, 46}, {358, 18}}</string>
-							<reference key="NSSuperview" ref="248881203"/>
-							<bool key="NSEnabled">YES</bool>
-							<object class="NSButtonCell" key="NSCell" id="511874735">
-								<int key="NSCellFlags">-2080244224</int>
-								<int key="NSCellFlags2">0</int>
-								<string key="NSContents">Switch to source application when finished editing</string>
-								<reference key="NSSupport" ref="752916645"/>
-								<reference key="NSControlView" ref="417188638"/>
-								<int key="NSButtonFlags">1211912703</int>
-								<int key="NSButtonFlags2">2</int>
-								<reference key="NSNormalImage" ref="371842225"/>
-								<reference key="NSAlternateImage" ref="945704191"/>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">200</int>
@@ -297,22 +275,6 @@
 					</object>
 					<int key="connectionID">584</int>
 				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.QCSwitchBackWhenFinishedEditing</string>
-						<reference key="source" ref="417188638"/>
-						<reference key="destination" ref="313902647"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="417188638"/>
-							<reference key="NSDestination" ref="313902647"/>
-							<string key="NSLabel">value: values.QCSwitchBackWhenFinishedEditing</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.QCSwitchBackWhenFinishedEditing</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">591</int>
-				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -366,7 +328,6 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="940179569"/>
-							<reference ref="417188638"/>
 							<reference ref="705553932"/>
 							<reference ref="1039590887"/>
 							<reference ref="521699642"/>
@@ -451,20 +412,6 @@
 						<reference key="object" ref="313902647"/>
 						<reference key="parent" ref="0"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">585</int>
-						<reference key="object" ref="417188638"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="511874735"/>
-						</object>
-						<reference key="parent" ref="248881203"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">586</int>
-						<reference key="object" ref="511874735"/>
-						<reference key="parent" ref="417188638"/>
-					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -489,9 +436,6 @@
 					<string>548.IBPluginDependency</string>
 					<string>552.IBPluginDependency</string>
 					<string>553.IBPluginDependency</string>
-					<string>585.IBPluginDependency</string>
-					<string>585.IBViewBoundsToFrameTransform</string>
-					<string>586.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -518,11 +462,6 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDBQAAwoAAAA</bytes>
-					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>

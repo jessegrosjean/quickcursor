@@ -1,14 +1,14 @@
 10
 
 dir
-48
+55
 http://shortcutrecorder.googlecode.com/svn/trunk/Demo/English.lproj
 http://shortcutrecorder.googlecode.com/svn
 
 
 
-2008-04-02T22:40:09.755703Z
-21
+2010-09-06T14:51:16.550841Z
+55
 rarichter
 
 
@@ -60,9 +60,6 @@ has-props
 
 202
 
-MainMenu.nib
-dir
-
 Localizable.strings
 file
 
@@ -103,10 +100,10 @@ file
 
 
 
-2009-09-01T18:31:23.000000Z
-9316c8b4560552a561ae95de409bbf91
-2008-04-02T22:40:09.755703Z
-21
+2010-11-11T14:28:01.000000Z
+8082a8b2dcbef3f5d2e5faa37f491523
+2010-09-06T14:51:16.550841Z
+55
 rarichter
 
 
@@ -129,5 +126,5 @@ rarichter
 
 
 
-185713
+187556
 

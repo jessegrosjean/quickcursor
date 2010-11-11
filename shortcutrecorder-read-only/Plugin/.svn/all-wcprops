@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 29
-/svn/!svn/ver/41/trunk/Plugin
+/svn/!svn/ver/51/trunk/Plugin
 END
 SR_Leopard.h
 K 25
@@ -50,4 +50,10 @@ K 25
 svn:wc:ra_dav:version-url
 V 51
 /svn/!svn/ver/41/trunk/Plugin/SR_LeopardInspector.m
+END
+SR_PluginStandalone-Info.plist
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/51/trunk/Plugin/SR_PluginStandalone-Info.plist
 END

@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 41
-/svn/!svn/ver/21/trunk/Demo/English.lproj
+/svn/!svn/ver/55/trunk/Demo/English.lproj
 END
 InfoPlist.strings
 K 25
@@ -19,5 +19,5 @@ MainMenu.xib
 K 25
 svn:wc:ra_dav:version-url
 V 54
-/svn/!svn/ver/21/trunk/Demo/English.lproj/MainMenu.xib
+/svn/!svn/ver/55/trunk/Demo/English.lproj/MainMenu.xib
 END

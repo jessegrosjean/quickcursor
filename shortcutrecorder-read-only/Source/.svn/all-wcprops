@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 29
-/svn/!svn/ver/46/trunk/Source
+/svn/!svn/ver/55/trunk/Source
 END
 SRValidator.h
 K 25
@@ -25,7 +25,7 @@ SRRecorderControl.h
 K 25
 svn:wc:ra_dav:version-url
 V 49
-/svn/!svn/ver/41/trunk/Source/SRRecorderControl.h
+/svn/!svn/ver/55/trunk/Source/SRRecorderControl.h
 END
 SRCommon.h
 K 25
@@ -49,13 +49,13 @@ SRKeyCodeTransformer.m
 K 25
 svn:wc:ra_dav:version-url
 V 52
-/svn/!svn/ver/46/trunk/Source/SRKeyCodeTransformer.m
+/svn/!svn/ver/54/trunk/Source/SRKeyCodeTransformer.m
 END
 SRRecorderControl.m
 K 25
 svn:wc:ra_dav:version-url
 V 49
-/svn/!svn/ver/41/trunk/Source/SRRecorderControl.m
+/svn/!svn/ver/55/trunk/Source/SRRecorderControl.m
 END
 SRCommon.m
 K 25

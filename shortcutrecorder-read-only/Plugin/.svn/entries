@@ -1,15 +1,15 @@
 10
 
 dir
-48
+55
 http://shortcutrecorder.googlecode.com/svn/trunk/Plugin
 http://shortcutrecorder.googlecode.com/svn
 
 
 
-2009-07-01T18:45:57.022785Z
-41
-rarichter
+2009-11-17T20:30:46.709662Z
+51
+tekjew
 
 
 
@@ -300,4 +300,38 @@ rarichter
 
 English.lproj
 dir
+
+SR_PluginStandalone-Info.plist
+file
+
+
+
+
+2010-11-11T14:28:01.000000Z
+487488c405d3884a0a18f8a80cce9dd7
+2009-11-17T20:30:46.709662Z
+51
+tekjew
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+862
 

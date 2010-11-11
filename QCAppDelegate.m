@@ -140,11 +140,15 @@
 			[quickCursorMenu addItem:each];
 		}
 	} else {
-		[quickCursorMenu addItemWithTitle:NSLocalizedString(@"No Supported Apps Found", nil) action:nil keyEquivalent:@""];
+		[quickCursorMenu addItemWithTitle:NSLocalizedString(@"No Supported Text Editors Found", nil) action:nil keyEquivalent:@""];
 		[[[quickCursorMenu itemArray] lastObject] setIndentationLevel:1];
 	}
 	
 	[quickCursorMenu addItem:[NSMenuItem separatorItem]];
+	
+	NSMenuItem *helpMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Help", nil) action:@selector(showHelp:) keyEquivalent:@""] autorelease];
+	[helpMenuItem setTarget:self];
+	[quickCursorMenu addItem:helpMenuItem];
 	
 	NSMenuItem *aboutMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"About", nil) action:@selector(showAbout:) keyEquivalent:@""] autorelease];
 	[aboutMenuItem setTarget:self];
@@ -153,11 +157,7 @@
 	NSMenuItem *preferencesMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Preferences...", nil) action:@selector(showPreferences:) keyEquivalent:@""] autorelease];
 	[preferencesMenuItem setTarget:self];
 	[quickCursorMenu addItem:preferencesMenuItem];
-	
-	NSMenuItem *helpMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open User's Guide...", nil) action:@selector(showHelp:) keyEquivalent:@""] autorelease];
-	[helpMenuItem setTarget:self];
-	[quickCursorMenu addItem:helpMenuItem];
-	
+		
 	[quickCursorMenu addItem:[NSMenuItem separatorItem]];
 
 	NSMenuItem *quitMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Quit", nil) action:@selector(terminate:) keyEquivalent:@""] autorelease];
@@ -174,9 +174,8 @@
 										 defaultButton:NSLocalizedString(@"OK", nil)
 									   alternateButton:nil
 										   otherButton:nil
-							 informativeTextWithFormat:NSLocalizedString(@"When QuickCursor is running, its icon displays in the OS X Status Bar. Click the status bar icon to use and configure QuickCursor.", nil)];
+							 informativeTextWithFormat:NSLocalizedString(@"QuickCursor runs in the OS X menu bar. To use and configure QuickCursor click its menu bar icon.", nil)];
 		[alert setShowsSuppressionButton:YES];
-		[alert setDelegate:self];
 		[alert runModal];
 		if ([[alert suppressionButton] state] == NSOnState) {
 			[userDefaults setBool:YES forKey:@"SuppressWelcomeDefaultKey"];
@@ -301,20 +300,20 @@
 	
 	QCUIElement *focusedElement = [QCUIElement focusedElement];
 	NSString *editString = [focusedElement readString];
+	NSString *processName = [focusedElement processName];
 	
 	if (editString) {
-		NSString *processName = [focusedElement processName];
 		NSDictionary *context = [NSDictionary dictionaryWithObjectsAndKeys:focusedElement, @"uiElement", editString, @"originalString", processName, @"processName", nil];
 		NSString *windowTitle = focusedElement.window.title;
 		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ - %@", processName, windowTitle];		
 		[[ODBEditor sharedODBEditor] setEditorBundleIdentifier:bundleID];
 		[[ODBEditor sharedODBEditor] editString:editString options:[NSDictionary dictionaryWithObject:editorCustomPath forKey:ODBEditorCustomPathKey] forClient:self context:context];
 	} else {
-		[[NSAlert alertWithMessageText:NSLocalizedString(@"Could not find editable text", nil)
+		[[NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Could not copy text from %@", nil), processName]
 						 defaultButton:NSLocalizedString(@"OK", nil)
 					   alternateButton:nil
 						   otherButton:nil
-			 informativeTextWithFormat:NSLocalizedString(@"QuickCursor needs an editable text area that has keyboard focus to work.", nil)] runModal];
+			 informativeTextWithFormat:[NSString stringWithFormat:NSLocalizedString(@"QuickCursor could not copy text from %@. Please make sure that a text area has focus and try again.", nil), processName]] runModal];
 	}
 }
 
@@ -340,16 +339,19 @@
 		if (![uiElement writeString:newString]) {
 			NSPasteboard *pboard = [NSPasteboard generalPasteboard];
 			
-			[pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-			[pboard setString:newString forType:NSStringPboardType];
+			[pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
+			[pboard setString:newString forType:NSPasteboardTypeString];
 			
 			[NSApp activateIgnoringOtherApps:YES];
+			NSBeep();
 			[[NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Could not paste text back into %@", nil), processName]
 							 defaultButton:NSLocalizedString(@"OK", nil)
 						   alternateButton:nil
 							   otherButton:nil
 				 informativeTextWithFormat:NSLocalizedString(@"Your edited text has been saved to the clipboard and can be pasted into another application.", nil)] runModal];
 		}
+	} else {
+		[uiElement activateProcess];
 	}
 }
 

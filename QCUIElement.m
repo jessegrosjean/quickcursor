@@ -99,6 +99,10 @@
 	return [self valueForAttribute:(NSString *)kAXRoleAttribute];
 }
 
+- (BOOL)enabled {
+	return [[self valueForAttribute:(NSString *)kAXEnabledAttribute] boolValue];
+}
+
 - (BOOL)isEditableTextArea {
 	CFTypeRef focusedAttribute;
 	AXError error = AXUIElementCopyAttributeValue(uiElementRef, kAXFocusedAttribute, &focusedAttribute);
@@ -142,6 +146,8 @@
 		NSLog(@"unimplemented, should not be used by QuickCursor");
 	} else if (AXValueGetType(theValue) == kAXValueCFRangeType) {
 		NSLog(@"unimplemented, should not be used by QuickCursor");
+	} else if (CFGetTypeID(theValue) == CFBooleanGetTypeID()) {
+		result = [NSNumber numberWithBool:theValue == kCFBooleanTrue];
 	} else if (CFGetTypeID(theValue) == AXUIElementGetTypeID()) {
 		result = [[[QCUIElement alloc] initWithAXUIElementRef:theValue] autorelease];
 	} else if (CFGetTypeID(theValue) == CFArrayGetTypeID()) {
@@ -296,7 +302,7 @@
 						while ([pboard changeCount] == changeCount) {
 							usleep(100000);
 						}
-						return [pboard stringForType:NSStringPboardType];
+						return [pboard stringForType:NSPasteboardTypeString];
 					}
 				} else {
 					// editable text area, but copy not enabled after select all... means it's empty.
@@ -310,13 +316,13 @@
 }
 
 - (BOOL)writeString:(NSString *)pasteString {
-	NSArray *menuBarItems = [[self menuBar] children];
-	QCUIElement *editMenu = [[[menuBarItems objectAtIndex:3] children] lastObject];
-	
 	if (![self activateProcess]) {
 		return NO;
 	}
-	
+
+	NSArray *menuBarItems = [[self menuBar] children];
+	QCUIElement *editMenu = [[[menuBarItems objectAtIndex:3] children] lastObject];
+
 	// Paste
 	for (QCUIElement *eachMenuItem in editMenu.children) {
 		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
@@ -325,11 +331,14 @@
 			if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:@"0"]) {
 				NSPasteboard *pboard = [NSPasteboard generalPasteboard];
 				
-				[pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-				[pboard setString:pasteString forType:NSStringPboardType];
-				
-				if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
-					return YES;
+				[pboard clearContents];
+				[pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
+				[pboard setString:pasteString forType:NSPasteboardTypeString];
+							
+				if ([eachMenuItem enabled]) {
+					if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
+						return YES;
+					}
 				}
 			}
 		}

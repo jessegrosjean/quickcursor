@@ -1,15 +1,15 @@
 10
 
 dir
-48
+55
 http://shortcutrecorder.googlecode.com/svn/trunk/Framework
 http://shortcutrecorder.googlecode.com/svn
 
 
 
-2009-07-01T02:33:18.496015Z
-40
-rarichter
+2009-11-17T20:30:46.709662Z
+51
+tekjew
 
 
 
@@ -93,6 +93,40 @@ rarichter
 
 
 443
+
+SR_LeopardFrameworkEmbed-Info.plist
+file
+
+
+
+
+2010-11-11T14:28:01.000000Z
+c9305a30329cd30b9ccd343ac52d795a
+2009-11-17T20:30:46.709662Z
+51
+tekjew
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+643
 
 SR_LeopardFramework-Info.plist
 file

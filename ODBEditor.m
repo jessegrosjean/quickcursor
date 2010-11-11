@@ -170,7 +170,7 @@ static ODBEditor	*_sharedODBEditor;
 	}
 	
 	if (running == NO) {
-		success = [workspace launchAppWithBundleIdentifier: _editorBundleIdentifier options: 0L additionalEventParamDescriptor: nil launchIdentifier:NULL];
+		success = [workspace launchAppWithBundleIdentifier: _editorBundleIdentifier options:NSWorkspaceLaunchDefault additionalEventParamDescriptor: nil launchIdentifier:NULL];
 	}
 	
 	return success;

@@ -337,13 +337,8 @@
 	
 	if (![originalString isEqualToString:newString]) {
 		if (![uiElement writeString:newString]) {
-			NSPasteboard *pboard = [NSPasteboard generalPasteboard];
-			
-			[pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
-			[pboard setString:newString forType:NSPasteboardTypeString];
-			
-			[NSApp activateIgnoringOtherApps:YES];
 			NSBeep();
+			[NSApp activateIgnoringOtherApps:YES];
 			[[NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Could not paste text back into %@", nil), processName]
 							 defaultButton:NSLocalizedString(@"OK", nil)
 						   alternateButton:nil

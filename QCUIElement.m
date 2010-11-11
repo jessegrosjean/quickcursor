@@ -266,81 +266,82 @@
 	return NO;
 }
 
-- (NSString *)readString {	
+- (QCUIElement *)menuItemWithShortCut:(NSString *)shortCut modifiers:(NSString *)modifiers {
 	NSArray *menuBarItems = [[self menuBar] children];
 	QCUIElement *editMenu = [[[menuBarItems objectAtIndex:3] children] lastObject];
-	
-	// Select All
-	for (QCUIElement *eachMenuItem in editMenu.children) {
-		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
-		if ([shortcut isEqualToString:@"A"]) {
-			if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:@"0"]) {
-				if (!AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
-					return nil;
+
+	//for (QCUIElement *eachMenu in [[self menuBar] children]) {
+		for (QCUIElement *eachMenuItem in editMenu.children) {
+			if ([shortCut isEqualToString:[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute]]) {
+				if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:modifiers]) {
+					return eachMenuItem;
 				}
 			}
 		}
-	}
+	//}
+	return nil;
+}
+
+- (BOOL)performSelectAll {
+	return AXUIElementPerformAction([self menuItemWithShortCut:@"A" modifiers:@"0"]->uiElementRef, kAXPressAction) == kAXErrorSuccess;
+}
+
+- (NSString *)performCopy:(BOOL)trySelectAllIfFail {
+	QCUIElement *copyMenuItem = [self menuItemWithShortCut:@"C" modifiers:@"0"]; // seems neccesary to either refresh or wait for enabled status to update.
+	NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+	NSUInteger changeCount = [pboard changeCount];
+	NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
 	
-	// Copy
-	for (QCUIElement *eachMenuItem in editMenu.children) {
-		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
-
-		if ([shortcut isEqualToString:@"C"]) {
-			if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:@"0"]) {
-				CFTypeRef enabledAttribute;
-				AXError error = AXUIElementCopyAttributeValue(eachMenuItem->uiElementRef, kAXEnabledAttribute, &enabledAttribute);
-				if (error != kAXErrorSuccess) {
-					return nil;
-				}
-
-				if (CFBooleanGetValue(enabledAttribute)) {
-					NSPasteboard *pboard = [NSPasteboard generalPasteboard];
-					NSUInteger changeCount = [pboard changeCount];
-					
-					if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
-						while ([pboard changeCount] == changeCount) {
-							usleep(100000);
-						}
-						return [pboard stringForType:NSPasteboardTypeString];
-					}
+	if (AXUIElementPerformAction(copyMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
+		while ([pboard changeCount] == changeCount) {
+			if (([NSDate timeIntervalSinceReferenceDate] - startTime) > 0.3) {
+				if (trySelectAllIfFail) {
+					[self performSelectAll];
+					return [self performCopy:NO];
 				} else {
-					// editable text area, but copy not enabled after select all... means it's empty.
 					return @"";
 				}
 			}
+			usleep(100000);
 		}
+		return [pboard stringForType:NSPasteboardTypeString];
 	}
 	
+	return @"";
+}
+
+- (NSString *)readString {	
+	QCUIElement *copyMenuItem = [self menuItemWithShortCut:@"C" modifiers:@"0"];
+
+	if (copyMenuItem) {
+		if (![copyMenuItem enabled]) {
+			if (![self performSelectAll]) {
+				return NO;
+			}
+		}
+		
+		return [self performCopy:YES];
+	}
+		
 	return nil;
 }
 
 - (BOOL)writeString:(NSString *)pasteString {
+	NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+	
+	[pboard clearContents];
+	[pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
+	[pboard setString:pasteString forType:NSPasteboardTypeString];
+	
 	if (![self activateProcess]) {
 		return NO;
 	}
 
-	NSArray *menuBarItems = [[self menuBar] children];
-	QCUIElement *editMenu = [[[menuBarItems objectAtIndex:3] children] lastObject];
-
-	// Paste
-	for (QCUIElement *eachMenuItem in editMenu.children) {
-		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
-		
-		if ([shortcut isEqualToString:@"V"]) {
-			if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:@"0"]) {
-				NSPasteboard *pboard = [NSPasteboard generalPasteboard];
-				
-				[pboard clearContents];
-				[pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
-				[pboard setString:pasteString forType:NSPasteboardTypeString];
-							
-				if ([eachMenuItem enabled]) {
-					if (AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
-						return YES;
-					}
-				}
-			}
+	QCUIElement *pasteMenuItem = [self menuItemWithShortCut:@"V" modifiers:@"0"];
+	
+	if ([pasteMenuItem enabled]) {
+		if (AXUIElementPerformAction(pasteMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
+			return YES;
 		}
 	}
 	

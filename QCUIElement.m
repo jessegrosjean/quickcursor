@@ -260,11 +260,7 @@
 	return NO;
 }
 
-- (NSString *)readString {
-	if (![self isEditableTextArea]) {
-		return nil;
-	}
-	
+- (NSString *)readString {	
 	NSArray *menuBarItems = [[self menuBar] children];
 	QCUIElement *editMenu = [[[menuBarItems objectAtIndex:3] children] lastObject];
 	
@@ -320,23 +316,7 @@
 	if (![self activateProcess]) {
 		return NO;
 	}
-		
-	if (![self isEditableTextArea]) {
-		return NO;
-	}
 	
-	// Select All
-	for (QCUIElement *eachMenuItem in editMenu.children) {
-		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];
-		if ([shortcut isEqualToString:@"A"]) {
-			if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:@"0"]) {
-				if (!AXUIElementPerformAction(eachMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
-					return NO;
-				}
-			}
-		}
-	}
-
 	// Paste
 	for (QCUIElement *eachMenuItem in editMenu.children) {
 		NSString *shortcut = [eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute];

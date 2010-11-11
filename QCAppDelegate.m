@@ -118,11 +118,7 @@
 	return YES;
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	[NSApp setServicesProvider:self];
-
-	NSUpdateDynamicServices();
-	
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {	
 	quickCursorSessionQCUIElements = [[NSMutableSet alloc] init];
 	registeredHotKeys = [[NSMutableArray alloc] init];
 	
@@ -153,11 +149,15 @@
 	NSMenuItem *aboutMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"About", nil) action:@selector(showAbout:) keyEquivalent:@""] autorelease];
 	[aboutMenuItem setTarget:self];
 	[quickCursorMenu addItem:aboutMenuItem];
-	
+		
 	NSMenuItem *preferencesMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Preferences...", nil) action:@selector(showPreferences:) keyEquivalent:@""] autorelease];
 	[preferencesMenuItem setTarget:self];
 	[quickCursorMenu addItem:preferencesMenuItem];
-
+	
+	NSMenuItem *helpMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open User's Guide...", nil) action:@selector(showHelp:) keyEquivalent:@""] autorelease];
+	[helpMenuItem setTarget:self];
+	[quickCursorMenu addItem:helpMenuItem];
+	
 	[quickCursorMenu addItem:[NSMenuItem separatorItem]];
 
 	NSMenuItem *quitMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Quit", nil) action:@selector(terminate:) keyEquivalent:@""] autorelease];
@@ -167,6 +167,21 @@
 	[quickCursorStatusItem setMenu:quickCursorMenu];
 	
 	[self updateHotKeys];
+	
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	if (![userDefaults boolForKey:@"SuppressWelcomeDefaultKey"]) {
+		NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Welcome to QuickCursor", nil)
+										 defaultButton:NSLocalizedString(@"OK", nil)
+									   alternateButton:nil
+										   otherButton:nil
+							 informativeTextWithFormat:NSLocalizedString(@"When QuickCursor is running, its icon displays in the OS X Status Bar. Click the status bar icon to use and configure QuickCursor.", nil)];
+		[alert setShowsSuppressionButton:YES];
+		[alert setDelegate:self];
+		[alert runModal];
+		if ([[alert suppressionButton] state] == NSOnState) {
+			[userDefaults setBool:YES forKey:@"SuppressWelcomeDefaultKey"];
+		}
+	}
 }
 
 #pragma mark Actions
@@ -249,6 +264,10 @@
 	[NSApp activateIgnoringOtherApps:YES];
 	[preferencesWindow center];
 	[preferencesWindow makeKeyAndOrderFront:sender];
+}
+
+- (IBAction)showHelp:(id)sender {
+	[[NSWorkspace sharedWorkspace] openFile:[[NSBundle mainBundle] pathForResource:@"QuickCursor User's Guide" ofType:@"pdf"]];
 }
 
 - (IBAction)editInPopUpButtonClicked:(id)sender {

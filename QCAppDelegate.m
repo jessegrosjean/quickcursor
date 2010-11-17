@@ -305,7 +305,8 @@
 	if (editString) {
 		NSDictionary *context = [NSDictionary dictionaryWithObjectsAndKeys:focusedElement, @"uiElement", editString, @"originalString", processName, @"processName", nil];
 		NSString *windowTitle = focusedElement.window.title;
-		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ - %@", processName, windowTitle];		
+		NSString *correctedWindowTitle = [windowTitle stringByReplacingOccurrencesOfString:@"/" withString:@":"];
+		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ - %@", processName, correctedWindowTitle];	
 		[[ODBEditor sharedODBEditor] setEditorBundleIdentifier:bundleID];
 		[[ODBEditor sharedODBEditor] editString:editString options:[NSDictionary dictionaryWithObject:editorCustomPath forKey:ODBEditorCustomPathKey] forClient:self context:context];
 	} else {

@@ -266,48 +266,72 @@
 	return NO;
 }
 
-- (QCUIElement *)menuItemWithShortCut:(NSString *)shortCut modifiers:(NSString *)modifiers {
-	NSArray *menuBarItems = [[self menuBar] children];
-	QCUIElement *editMenu = [[[menuBarItems objectAtIndex:3] children] lastObject];
-
-	//for (QCUIElement *eachMenu in [[self menuBar] children]) {
-		for (QCUIElement *eachMenuItem in editMenu.children) {
-			if ([shortCut isEqualToString:[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute]]) {
-				if ([[eachMenuItem valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:modifiers]) {
-					return eachMenuItem;
-				}
-			}
+- (QCUIElement *)menuItemWithShortCut:(NSString *)shortCut modifiers:(NSString *)modifiers searchingIn:(QCUIElement *)aMenu {
+	if ([shortCut isEqualToString:[aMenu valueForAttribute:(NSString *)kAXMenuItemCmdCharAttribute]]) {
+		if ([[aMenu valueForAttribute:(NSString *)kAXMenuItemCmdModifiersAttribute] isEqual:modifiers]) {
+			return aMenu;
 		}
-	//}
+	}
+	
+	for (QCUIElement *eachMenuItem in aMenu.children) {
+		QCUIElement *eachSearched = [self menuItemWithShortCut:shortCut modifiers:modifiers searchingIn:eachMenuItem];
+		if (eachSearched) {
+			return eachSearched;
+		}
+	}
+	
 	return nil;
 }
 
+- (QCUIElement *)menuItemWithShortCut:(NSString *)shortCut modifiers:(NSString *)modifiers {
+	QCUIElement *menuBar = [self menuBar];
+	NSArray *menuBarItems = [menuBar children];
+	QCUIElement *editMenu = [[[menuBarItems objectAtIndex:3] children] lastObject];
+	QCUIElement *found = [self menuItemWithShortCut:shortCut modifiers:modifiers searchingIn:editMenu];
+	
+	if (!found) {
+		found = [self menuItemWithShortCut:shortCut modifiers:modifiers searchingIn:menuBar];		
+	}
+	
+	return found;
+}
+
 - (BOOL)performSelectAll {
-	return AXUIElementPerformAction([self menuItemWithShortCut:@"A" modifiers:@"0"]->uiElementRef, kAXPressAction) == kAXErrorSuccess;
+	QCUIElement *selectAllMenuItem = [self menuItemWithShortCut:@"A" modifiers:@"0"];
+	if ([selectAllMenuItem enabled]) {
+		return AXUIElementPerformAction(selectAllMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess;
+	} else {
+		return NO;
+	}
 }
 
 - (NSString *)performCopy:(BOOL)trySelectAllIfFail {
 	QCUIElement *copyMenuItem = [self menuItemWithShortCut:@"C" modifiers:@"0"]; // seems neccesary to either refresh or wait for enabled status to update.
-	NSPasteboard *pboard = [NSPasteboard generalPasteboard];
-	NSUInteger changeCount = [pboard changeCount];
-	NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
 	
-	if (AXUIElementPerformAction(copyMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
-		while ([pboard changeCount] == changeCount) {
-			if (([NSDate timeIntervalSinceReferenceDate] - startTime) > 0.3) {
-				if (trySelectAllIfFail) {
-					[self performSelectAll];
-					return [self performCopy:NO];
-				} else {
-					return @"";
+	if (copyMenuItem) {
+		NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+		NSUInteger changeCount = [pboard changeCount];
+		NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
+		
+		if (AXUIElementPerformAction(copyMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
+			while ([pboard changeCount] == changeCount) {
+				if (([NSDate timeIntervalSinceReferenceDate] - startTime) > 0.3) {
+					if (trySelectAllIfFail) {
+						[self performSelectAll];
+						return [self performCopy:NO];
+					} else {
+						return @"";
+					}
 				}
+				usleep(100000);
 			}
-			usleep(100000);
+			return [pboard stringForType:NSPasteboardTypeString];
 		}
-		return [pboard stringForType:NSPasteboardTypeString];
+		
+		return @"";
+	} else {
+		return nil;
 	}
-	
-	return @"";
 }
 
 - (NSString *)readString {	

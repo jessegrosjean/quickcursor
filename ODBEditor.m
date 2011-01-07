@@ -31,7 +31,7 @@ NSString * const ODBEditorIsEditingString	= @"ODBEditorIsEditingString";
 @interface ODBEditor(Private)
 
 - (BOOL)_launchExternalEditor;
-- (NSString *)_tempFilePathForEditingString:(NSString *)string ODBEditorCustomPathKey:(NSString *)customPathKey;
+- (NSString *)_tempFilePathForEditingString:(NSString *)string ODBEditorCustomPathKey:(NSString *)customPathKey processName:(NSString *)processName;
 - (BOOL)_editFile:(NSString *)path isEditingString:(BOOL)editingStringFlag options:(NSDictionary *)options forClient:(id)client context:(NSDictionary *)context;
 - (void)handleModifiedFileEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent;
 - (void)handleClosedFileEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent;
@@ -187,8 +187,7 @@ static ODBEditor	*_sharedODBEditor;
 	NSString *escapedPathKey = [customPathKey stringByReplacingOccurrencesOfString:@"/" withString:@"-"];	
 	NSString *pathExtension = [escapedPathKey pathExtension];
 
-	for (NSDictionary* programExtension in [[NSUserDefaults standardUserDefaults] objectForKey:@"ProgramExtensions"]) 
-	{
+	for (NSDictionary* programExtension in [[NSUserDefaults standardUserDefaults] objectForKey:@"ProgramExtensions"]) {
 		if ([[programExtension objectForKey:@"ProgramName"] isEqualToString:processName]) {
 			pathExtension = [programExtension objectForKey:@"FileExtension"];
 		}

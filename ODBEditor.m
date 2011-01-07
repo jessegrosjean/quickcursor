@@ -137,8 +137,11 @@ static ODBEditor	*_sharedODBEditor;
 
 - (BOOL)editString:(NSString *)string options:(NSDictionary *)options forClient:(id)client context:(NSDictionary *)context {
 	BOOL success = NO;
-	NSString *path = [self _tempFilePathForEditingString:string ODBEditorCustomPathKey:[options objectForKey:ODBEditorCustomPathKey]];
-	
+	NSString *path = [self _tempFilePathForEditingString:string ODBEditorCustomPathKey:[options objectForKey:ODBEditorCustomPathKey] processName:[context objectForKey:@"processName"]];
+
+		NSLog(@"%@", context);
+
+	NSLog(@"%@", [[context objectForKey:@"processName"] class]);
 	if (path != nil) {
 		success = [self _editFile: path isEditingString: YES options: options forClient: client context: context];
     }
@@ -176,7 +179,7 @@ static ODBEditor	*_sharedODBEditor;
 	return success;
 }
 
-- (NSString *)_tempFilePathForEditingString:(NSString *)string ODBEditorCustomPathKey:(NSString *)customPathKey {
+- (NSString *)_tempFilePathForEditingString:(NSString *)string ODBEditorCustomPathKey:(NSString *)customPathKey processName:(NSString *)processName {
 	static  unsigned sTempFileSequence;
 	
 	NSString *path = nil;
@@ -184,6 +187,13 @@ static ODBEditor	*_sharedODBEditor;
 	NSString *escapedPathKey = [customPathKey stringByReplacingOccurrencesOfString:@"/" withString:@"-"];	
 	NSString *pathExtension = [escapedPathKey pathExtension];
 
+	for (NSDictionary* programExtension in [[NSUserDefaults standardUserDefaults] objectForKey:@"ProgramExtensions"]) 
+	{
+		if ([[programExtension objectForKey:@"ProgramName"] isEqualToString:processName]) {
+			pathExtension = [programExtension objectForKey:@"FileExtension"];
+		}
+	}
+	
 	if ([pathExtension isEqualToString:@""]) {
 		pathExtension = @"txt";
 	}

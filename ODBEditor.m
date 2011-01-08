@@ -139,9 +139,6 @@ static ODBEditor	*_sharedODBEditor;
 	BOOL success = NO;
 	NSString *path = [self _tempFilePathForEditingString:string ODBEditorCustomPathKey:[options objectForKey:ODBEditorCustomPathKey] processName:[context objectForKey:@"processName"]];
 
-		NSLog(@"%@", context);
-
-	NSLog(@"%@", [[context objectForKey:@"processName"] class]);
 	if (path != nil) {
 		success = [self _editFile: path isEditingString: YES options: options forClient: client context: context];
     }

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		882A8BB1128C33CB00D05C94 /* StatusItemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 882A8BB0128C33CB00D05C94 /* StatusItemIcon.png */; };
+		882A8BB1128C33CB00D05C94 /* StatusItemIconOLD.png in Resources */ = {isa = PBXBuildFile; fileRef = 882A8BB0128C33CB00D05C94 /* StatusItemIconOLD.png */; };
 		882A8BD5128C349A00D05C94 /* QCUIElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 882A8BAD128C33BC00D05C94 /* QCUIElement.m */; };
 		882A8BD6128C349A00D05C94 /* QCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 882A8BAB128C33BC00D05C94 /* QCAppDelegate.m */; };
 		882A8BD7128C349B00D05C94 /* PTKeyCombo.m in Sources */ = {isa = PBXBuildFile; fileRef = 882A8BA9128C33BC00D05C94 /* PTKeyCombo.m */; };
@@ -25,6 +25,7 @@
 		882A8DDE128C392800D05C94 /* QuickCursor User's Guide.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 882A8BAF128C33BC00D05C94 /* QuickCursor User's Guide.pdf */; };
 		884E34C4128C7E4100B60730 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884E34C3128C7E4100B60730 /* ShortcutRecorder.framework */; };
 		884E34CF128C7E4700B60730 /* ShortcutRecorder.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 884E34C3128C7E4100B60730 /* ShortcutRecorder.framework */; };
+		88564D8A12DF407E00070CD3 /* StatusItemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 88564D8912DF407E00070CD3 /* StatusItemIcon.png */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -73,7 +74,7 @@
 		882A8BAD128C33BC00D05C94 /* QCUIElement.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QCUIElement.m; sourceTree = "<group>"; };
 		882A8BAE128C33BC00D05C94 /* QuickCursor User's Guide.pages */ = {isa = PBXFileReference; lastKnownFileType = file; path = "QuickCursor User's Guide.pages"; sourceTree = "<group>"; };
 		882A8BAF128C33BC00D05C94 /* QuickCursor User's Guide.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "QuickCursor User's Guide.pdf"; sourceTree = "<group>"; };
-		882A8BB0128C33CB00D05C94 /* StatusItemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusItemIcon.png; sourceTree = "<group>"; };
+		882A8BB0128C33CB00D05C94 /* StatusItemIconOLD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusItemIconOLD.png; sourceTree = "<group>"; };
 		882A8BB2128C33F000D05C94 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		882A8BB6128C344500D05C94 /* QuickCursor-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QuickCursor-Info.plist"; sourceTree = "<group>"; };
 		882A8C0E128C35EE00D05C94 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
@@ -81,6 +82,7 @@
 		882A8DB0128C378800D05C94 /* QuickCursor.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = QuickCursor.icns; sourceTree = "<group>"; };
 		882A8DC8128C381400D05C94 /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		884E34C3128C7E4100B60730 /* ShortcutRecorder.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShortcutRecorder.framework; sourceTree = "<group>"; };
+		88564D8912DF407E00070CD3 /* StatusItemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusItemIcon.png; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* QuickCursor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickCursor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -171,7 +173,8 @@
 				882A8BB6128C344500D05C94 /* QuickCursor-Info.plist */,
 				882A8BAE128C33BC00D05C94 /* QuickCursor User's Guide.pages */,
 				882A8BAF128C33BC00D05C94 /* QuickCursor User's Guide.pdf */,
-				882A8BB0128C33CB00D05C94 /* StatusItemIcon.png */,
+				882A8BB0128C33CB00D05C94 /* StatusItemIconOLD.png */,
+				88564D8912DF407E00070CD3 /* StatusItemIcon.png */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 			);
@@ -268,11 +271,12 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
-				882A8BB1128C33CB00D05C94 /* StatusItemIcon.png in Resources */,
+				882A8BB1128C33CB00D05C94 /* StatusItemIconOLD.png in Resources */,
 				882A8BDA128C349D00D05C94 /* PTKeyCodes.plist in Resources */,
 				882A8DB1128C378800D05C94 /* QuickCursor.icns in Resources */,
 				882A8DC9128C381400D05C94 /* Credits.html in Resources */,
 				882A8DDE128C392800D05C94 /* QuickCursor User's Guide.pdf in Resources */,
+				88564D8A12DF407E00070CD3 /* StatusItemIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

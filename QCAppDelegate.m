@@ -46,7 +46,11 @@
 			NSString *bundlePath = [workspace absolutePathForAppBundleWithIdentifier:eachBundleID];
 			
 			if (bundlePath) {
-				NSMenuItem *eachMenuItem = [[[NSMenuItem alloc] initWithTitle:[[NSBundle bundleWithPath:bundlePath] objectForInfoDictionaryKey:@"CFBundleName"] action:NULL keyEquivalent:@""] autorelease];
+				NSString *bundleName = [[NSBundle bundleWithPath:bundlePath] objectForInfoDictionaryKey:@"CFBundleName"]; // seems to be nil in some cases.
+				if (!bundleName) {
+					bundleName = [[bundlePath lastPathComponent] stringByDeletingPathExtension];
+				}
+				NSMenuItem *eachMenuItem = [[[NSMenuItem alloc] initWithTitle:bundleName action:NULL keyEquivalent:@""] autorelease];
 				[eachMenuItem setRepresentedObject:eachBundleID];
 				[eachMenuItem setIndentationLevel:1];
 				NSImage *icon = [workspace iconForFile:bundlePath];

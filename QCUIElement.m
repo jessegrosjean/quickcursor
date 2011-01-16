@@ -344,7 +344,11 @@
 			}
 		}
 		
-		return [self performCopy:YES];
+		NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+		NSString *savedContents = [pboard stringForType:NSPasteboardTypeString];
+		NSString *copiedContents = [self performCopy:YES];
+		[pboard setString:savedContents forType:NSPasteboardTypeString];
+		return copiedContents;
 	}
 		
 	return nil;

@@ -23,9 +23,9 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1</string>
+	<string>2.2</string>
 	<key>CFBundleVersion</key>
-	<string>19</string>
+	<string>20</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -34,6 +34,7 @@
 	<string>public.app-category.utilities</string>
 	<key>QCEditInChoices</key>
 	<array>
+		<string>org.gnu.Aquamacs</string>
 		<string>com.barebones.bbedit</string>
 		<string>com.macrabbit.espresso</string>
 		<string>org.vim.MacVim</string>

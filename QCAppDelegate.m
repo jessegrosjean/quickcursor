@@ -50,6 +50,11 @@
 				if (!bundleName) {
 					bundleName = [[bundlePath lastPathComponent] stringByDeletingPathExtension];
 				}
+				
+				if ([eachBundleID isEqualToString:@"org.gnu.Aquamacs"]) {
+					bundleName = [bundleName stringByAppendingString:@" 2.2+"];
+				}
+				
 				NSMenuItem *eachMenuItem = [[[NSMenuItem alloc] initWithTitle:bundleName action:NULL keyEquivalent:@""] autorelease];
 				[eachMenuItem setRepresentedObject:eachBundleID];
 				[eachMenuItem setIndentationLevel:1];
@@ -123,6 +128,9 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {	
+	//NSMenu *m = [NSApp mainMenu];
+	
+	
 	quickCursorSessionQCUIElements = [[NSMutableSet alloc] init];
 	registeredHotKeys = [[NSMutableArray alloc] init];
 	
@@ -157,14 +165,14 @@
 	NSMenuItem *aboutMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"About", nil) action:@selector(showAbout:) keyEquivalent:@""] autorelease];
 	[aboutMenuItem setTarget:self];
 	[quickCursorMenu addItem:aboutMenuItem];
-		
-	NSMenuItem *preferencesMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Preferences...", nil) action:@selector(showPreferences:) keyEquivalent:@""] autorelease];
+	
+	NSMenuItem *preferencesMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Preferences...", nil) action:@selector(showPreferences:) keyEquivalent:@","] autorelease];
 	[preferencesMenuItem setTarget:self];
 	[quickCursorMenu addItem:preferencesMenuItem];
 		
 	[quickCursorMenu addItem:[NSMenuItem separatorItem]];
 
-	NSMenuItem *quitMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Quit", nil) action:@selector(terminate:) keyEquivalent:@""] autorelease];
+	NSMenuItem *quitMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Quit", nil) action:@selector(terminate:) keyEquivalent:@"q"] autorelease];
 	[quitMenuItem setTarget:NSApp];
 	[quickCursorMenu addItem:quitMenuItem];
 	
@@ -303,11 +311,12 @@
 	}
 	
 	QCUIElement *focusedElement = [QCUIElement focusedElement];
-	NSString *editString = [focusedElement readString];
-	NSString *processName = [focusedElement processName];
+	QCUIElement *sourceApplicationElement = [focusedElement application];
+	NSString *editString = [sourceApplicationElement readString];
+	NSString *processName = [sourceApplicationElement processName];
 	
-	if (editString) {
-		NSDictionary *context = [NSDictionary dictionaryWithObjectsAndKeys:focusedElement, @"uiElement", editString, @"originalString", processName, @"processName", nil];
+	if (editString) {		
+		NSDictionary *context = [NSDictionary dictionaryWithObjectsAndKeys:sourceApplicationElement, @"sourceApplicationElement", bundleID, @"editorBundleID", editString, @"originalString", processName, @"processName", nil];
 		NSString *windowTitle = focusedElement.window.title;
 		NSString *correctedWindowTitle = [windowTitle stringByReplacingOccurrencesOfString:@"/" withString:@":"];
 		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ - %@", processName, correctedWindowTitle];	
@@ -333,15 +342,27 @@
 }
 
 - (void)odbEditor:(ODBEditor *)editor didModifyFileForString:(NSString *)newString context:(NSDictionary *)context; {
+	// HACK TextMate doesn't sedn a didCloseFile event when a file is closed as the result of the application shutdown process.
+	// But it does send a didModifyFile event, so here I'm catching that event and if the application is no longer running then I paste
+	// text back into source app... This test still has issues (user saves in textmate, then quite app after save), so commenting out for now. Darn TextMate!
+	/*NSString *editorBundleID = [context valueForKey:@"editorBundleID"];
+	if ([editorBundleID isEqualToString:@"com.macromates.textmate"]) {
+		NSRunningApplication *runingEditorApplication = [[NSRunningApplication runningApplicationsWithBundleIdentifier:editorBundleID] lastObject];
+		if (runingEditorApplication) {
+			NSLog(@"%@ is still running", editorBundleID);
+		} else {
+			NSLog(@"%@ is not still running", editorBundleID);
+		}
+	}*/
 }
 
 - (void)odbEditor:(ODBEditor *)editor didCloseFileForString:(NSString *)newString context:(NSDictionary *)context; {
-	QCUIElement *uiElement = [context valueForKey:@"uiElement"];
+	QCUIElement *sourceApplicationElement = [context valueForKey:@"sourceApplicationElement"];
 	NSString *originalString = [context valueForKey:@"originalString"];
 	NSString *processName = [context valueForKey:@"processName"];
 	
 	if (![originalString isEqualToString:newString]) {
-		if (![uiElement writeString:newString]) {
+		if (![sourceApplicationElement writeString:newString]) {
 			NSBeep();
 			[NSApp activateIgnoringOtherApps:YES];
 			[[NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Could not paste text back into %@", nil), processName]
@@ -351,7 +372,7 @@
 				 informativeTextWithFormat:NSLocalizedString(@"Your edited text has been saved to the clipboard and can be pasted into another application.", nil)] runModal];
 		}
 	} else {
-		[uiElement activateProcess];
+		[sourceApplicationElement activateProcess];
 	}
 }
 

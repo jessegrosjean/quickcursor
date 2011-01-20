@@ -345,9 +345,9 @@
 		}
 		
 		NSPasteboard *pboard = [NSPasteboard generalPasteboard];
-		NSString *savedContents = [pboard stringForType:NSPasteboardTypeString];
+		//NSString *savedContents = [pboard stringForType:NSPasteboardTypeString];
 		NSString *copiedContents = [self performCopy:YES];
-		[pboard setString:savedContents forType:NSPasteboardTypeString];
+		//[pboard setString:savedContents forType:NSPasteboardTypeString]; // trying to restore original clip board contents... doesn't seem to work, not sure if good idaea anyway.
 		return copiedContents;
 	}
 		

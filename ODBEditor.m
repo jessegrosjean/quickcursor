@@ -258,9 +258,9 @@ static ODBEditor	*_sharedODBEditor;
 			[_filePathsBeingEdited setObject: dictionary forKey: path];
 		}
 	}
-
+	
 	success = (status == noErr);
-
+	
 	return success;
 }
 

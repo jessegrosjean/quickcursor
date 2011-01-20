@@ -29,6 +29,7 @@
 
 #pragma mark Actions
 
+- (IBAction)showHelp:(id)sender;	
 - (IBAction)showAbout:(id)sender;	
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)editInPopUpButtonClicked:(id)sender;

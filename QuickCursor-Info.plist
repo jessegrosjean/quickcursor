@@ -37,13 +37,13 @@
 		<string>org.gnu.Aquamacs</string>
 		<string>com.barebones.bbedit</string>
 		<string>com.macrabbit.espresso</string>
+		<string>org.fraise.Fraise</string>
 		<string>org.vim.MacVim</string>
 		<string>org.smultron.Smultron</string>
 		<string>com.peterborgapps.Smultron</string>
 		<string>de.codingmonkeys.SubEthaEdit</string>
 		<string>com.macromates.textmate</string>
 		<string>com.barebones.textwrangler</string>
-		<string>org.fraise.Fraise</string>
 		<string>com.hogbaysoftware.WriteRoom</string>
 	</array>
 </dict>

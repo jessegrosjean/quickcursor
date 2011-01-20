@@ -305,7 +305,7 @@
 	}
 }
 
-- (NSString *)performCopy:(BOOL)trySelectAllIfFail {
+- (NSString *)performCopee:(BOOL)trySelectAllIfFail {
 	QCUIElement *copyMenuItem = [self menuItemWithShortCut:@"C" modifiers:@"0"]; // seems neccesary to either refresh or wait for enabled status to update.
 	
 	if (copyMenuItem) {
@@ -318,7 +318,7 @@
 				if (([NSDate timeIntervalSinceReferenceDate] - startTime) > 0.3) {
 					if (trySelectAllIfFail) {
 						[self performSelectAll];
-						return [self performCopy:NO];
+						return [self performCopee:NO];
 					} else {
 						return @"";
 					}
@@ -344,9 +344,9 @@
 			}
 		}
 		
-		NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+		//NSPasteboard *pboard = [NSPasteboard generalPasteboard];
 		//NSString *savedContents = [pboard stringForType:NSPasteboardTypeString];
-		NSString *copiedContents = [self performCopy:YES];
+		NSString *copiedContents = [self performCopee:YES];
 		//[pboard setString:savedContents forType:NSPasteboardTypeString]; // trying to restore original clip board contents... doesn't seem to work, not sure if good idaea anyway.
 		return copiedContents;
 	}

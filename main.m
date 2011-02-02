@@ -7,8 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#include "check.h"
 
 int main(int argc, char *argv[])
 {
-    return NSApplicationMain(argc,  (const char **) argv);
+	if (firstCheck() && secondCheck(nil)) {
+		return NSApplicationMain(argc,  (const char **) argv);
+	}
 }

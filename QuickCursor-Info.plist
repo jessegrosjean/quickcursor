@@ -45,6 +45,7 @@
 		<string>com.macromates.textmate</string>
 		<string>com.barebones.textwrangler</string>
 		<string>com.hogbaysoftware.WriteRoom</string>
+		<string>com.hogbaysoftware.WriteRoom.mac</string>
 	</array>
 </dict>
 </plist>

@@ -27,6 +27,34 @@
 		884E34CF128C7E4700B60730 /* ShortcutRecorder.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 884E34C3128C7E4100B60730 /* ShortcutRecorder.framework */; };
 		88564D8A12DF407E00070CD3 /* StatusItemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 88564D8912DF407E00070CD3 /* StatusItemIcon.png */; };
 		8858B82912F9AC6600696670 /* sample_app_receipt in Resources */ = {isa = PBXBuildFile; fileRef = 8858B82812F9AC6600696670 /* sample_app_receipt */; };
+		889D74CF12FAF83B00FD3B55 /* NativeEnumerated.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B74512F9A35B00696670 /* NativeEnumerated.c */; };
+		889D74D012FAF83C00FD3B55 /* Makefile.am.sample in Resources */ = {isa = PBXBuildFile; fileRef = 8858B74312F9A35B00696670 /* Makefile.am.sample */; };
+		889D74D112FAF83C00FD3B55 /* BIT_STRING.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B73412F9A35B00696670 /* BIT_STRING.c */; };
+		889D74D212FAF83D00FD3B55 /* INTEGER.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B74112F9A35B00696670 /* INTEGER.c */; };
+		889D74D312FAF83D00FD3B55 /* asn_SET_OF.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B72B12F9A35B00696670 /* asn_SET_OF.c */; };
+		889D74D412FAF83E00FD3B55 /* OCTET_STRING.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B74912F9A35B00696670 /* OCTET_STRING.c */; };
+		889D74D512FAF83F00FD3B55 /* constr_SET_OF.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B73812F9A35B00696670 /* constr_SET_OF.c */; };
+		889D74D612FAF84000FD3B55 /* Payload.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B74B12F9A35B00696670 /* Payload.c */; };
+		889D74D712FAF84000FD3B55 /* ber_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B72E12F9A35B00696670 /* ber_decoder.c */; };
+		889D74D812FAF84100FD3B55 /* per_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B74F12F9A35B00696670 /* per_encoder.c */; };
+		889D74D912FAF84100FD3B55 /* per_support.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B75312F9A35B00696670 /* per_support.c */; };
+		889D74DA12FAF84200FD3B55 /* per_opentype.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B75112F9A35B00696670 /* per_opentype.c */; };
+		889D74DB12FAF84300FD3B55 /* ber_tlv_tag.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B73212F9A35B00696670 /* ber_tlv_tag.c */; };
+		889D74DC12FAF84300FD3B55 /* per_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B74D12F9A35B00696670 /* per_decoder.c */; };
+		889D74DD12FAF84300FD3B55 /* constr_TYPE.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B73A12F9A35B00696670 /* constr_TYPE.c */; };
+		889D74DE12FAF84400FD3B55 /* der_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B73F12F9A35B00696670 /* der_encoder.c */; };
+		889D74DF12FAF84500FD3B55 /* converter-sample.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B73E12F9A35B00696670 /* converter-sample.c */; };
+		889D74E012FAF84700FD3B55 /* xer_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B75912F9A35B00696670 /* xer_encoder.c */; };
+		889D74E112FAF84800FD3B55 /* xer_support.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B75B12F9A35B00696670 /* xer_support.c */; };
+		889D74E212FAF84800FD3B55 /* asn_codecs_prim.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B72812F9A35B00696670 /* asn_codecs_prim.c */; };
+		889D74E312FAF84900FD3B55 /* constr_SEQUENCE.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B73612F9A35B00696670 /* constr_SEQUENCE.c */; };
+		889D74E412FAF84A00FD3B55 /* NativeInteger.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B74712F9A35B00696670 /* NativeInteger.c */; };
+		889D74E512FAF84B00FD3B55 /* xer_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B75712F9A35B00696670 /* xer_decoder.c */; };
+		889D74E612FAF84D00FD3B55 /* constraints.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B73C12F9A35B00696670 /* constraints.c */; };
+		889D74E712FAF84D00FD3B55 /* module.asn1 in Resources */ = {isa = PBXBuildFile; fileRef = 8858B74412F9A35B00696670 /* module.asn1 */; };
+		889D74E812FAF84E00FD3B55 /* ReceiptAttribute.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B75512F9A35B00696670 /* ReceiptAttribute.c */; };
+		889D74E912FAF84F00FD3B55 /* ber_tlv_length.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B73012F9A35B00696670 /* ber_tlv_length.c */; };
+		889D74EA12FAF85D00FD3B55 /* ethernet.c in Sources */ = {isa = PBXBuildFile; fileRef = 8858B77812F9A37300696670 /* ethernet.c */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -407,6 +435,8 @@
 				882A8DDE128C392800D05C94 /* QuickCursor User's Guide.pdf in Resources */,
 				88564D8A12DF407E00070CD3 /* StatusItemIcon.png in Resources */,
 				8858B82912F9AC6600696670 /* sample_app_receipt in Resources */,
+				889D74D012FAF83C00FD3B55 /* Makefile.am.sample in Resources */,
+				889D74E712FAF84D00FD3B55 /* module.asn1 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +456,32 @@
 				882A8BDB128C349E00D05C94 /* PTHotKey.m in Sources */,
 				882A8BDC128C349F00D05C94 /* ODBEditor.m in Sources */,
 				882A8BDD128C349F00D05C94 /* NSAppleEventDescriptor-Extensions.m in Sources */,
+				889D74CF12FAF83B00FD3B55 /* NativeEnumerated.c in Sources */,
+				889D74D112FAF83C00FD3B55 /* BIT_STRING.c in Sources */,
+				889D74D212FAF83D00FD3B55 /* INTEGER.c in Sources */,
+				889D74D312FAF83D00FD3B55 /* asn_SET_OF.c in Sources */,
+				889D74D412FAF83E00FD3B55 /* OCTET_STRING.c in Sources */,
+				889D74D512FAF83F00FD3B55 /* constr_SET_OF.c in Sources */,
+				889D74D612FAF84000FD3B55 /* Payload.c in Sources */,
+				889D74D712FAF84000FD3B55 /* ber_decoder.c in Sources */,
+				889D74D812FAF84100FD3B55 /* per_encoder.c in Sources */,
+				889D74D912FAF84100FD3B55 /* per_support.c in Sources */,
+				889D74DA12FAF84200FD3B55 /* per_opentype.c in Sources */,
+				889D74DB12FAF84300FD3B55 /* ber_tlv_tag.c in Sources */,
+				889D74DC12FAF84300FD3B55 /* per_decoder.c in Sources */,
+				889D74DD12FAF84300FD3B55 /* constr_TYPE.c in Sources */,
+				889D74DE12FAF84400FD3B55 /* der_encoder.c in Sources */,
+				889D74DF12FAF84500FD3B55 /* converter-sample.c in Sources */,
+				889D74E012FAF84700FD3B55 /* xer_encoder.c in Sources */,
+				889D74E112FAF84800FD3B55 /* xer_support.c in Sources */,
+				889D74E212FAF84800FD3B55 /* asn_codecs_prim.c in Sources */,
+				889D74E312FAF84900FD3B55 /* constr_SEQUENCE.c in Sources */,
+				889D74E412FAF84A00FD3B55 /* NativeInteger.c in Sources */,
+				889D74E512FAF84B00FD3B55 /* xer_decoder.c in Sources */,
+				889D74E612FAF84D00FD3B55 /* constraints.c in Sources */,
+				889D74E812FAF84E00FD3B55 /* ReceiptAttribute.c in Sources */,
+				889D74E912FAF84F00FD3B55 /* ber_tlv_length.c in Sources */,
+				889D74EA12FAF85D00FD3B55 /* ethernet.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

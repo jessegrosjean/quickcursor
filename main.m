@@ -36,7 +36,7 @@ typedef int (*startup_call_t)(int, const char **);
 
 #ifndef USE_SAMPLE_RECEIPT
 static NSString* hardcoded_bidStr = @"com.hogbaysoftware.QuickCursor";
-static NSString* hardcoded_dvStr = @"2.5";
+static NSString* hardcoded_dvStr = @"2.3";
 #else
 static NSString* hardcoded_bidStr = @"com.example.SampleApp";
 static NSString* hardcoded_dvStr = @"1.0.2";

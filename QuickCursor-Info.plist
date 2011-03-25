@@ -36,6 +36,7 @@
 	<array>
 		<string>org.gnu.Aquamacs</string>
 		<string>com.barebones.bbedit</string>
+		<string>com.metaclassy.byword</string>
 		<string>com.macrabbit.espresso</string>
 		<string>org.fraise.Fraise</string>
 		<string>org.vim.MacVim</string>

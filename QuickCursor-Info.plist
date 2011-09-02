@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array/>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
@@ -20,6 +22,8 @@
 	<string>2.4</string>
 	<key>CFBundleSignature</key>
 	<string>QcCr</string>
+	<key>CFBundleURLTypes</key>
+	<array/>
 	<key>CFBundleVersion</key>
 	<string>22</string>
 	<key>LSApplicationCategoryType</key>
@@ -32,6 +36,8 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSServices</key>
+	<array/>
 	<key>QCEditInChoices</key>
 	<array>
 		<string>org.gnu.Aquamacs</string>
@@ -47,6 +53,11 @@
 		<string>com.barebones.textwrangler</string>
 		<string>com.hogbaysoftware.WriteRoom</string>
 		<string>com.hogbaysoftware.WriteRoom.mac</string>
+		<string>com.peterborgapps.Smultron4.plist</string>
 	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array/>
+	<key>UTImportedTypeDeclarations</key>
+	<array/>
 </dict>
 </plist>

@@ -154,17 +154,18 @@ static ODBEditor	*_sharedODBEditor;
 	BOOL success = NO;
 	BOOL running = NO;
 	NSWorkspace	*workspace = [NSWorkspace sharedWorkspace];
-	NSArray	*runningApplications = [workspace launchedApplications];
+	NSArray	*runningApplications = [workspace runningApplications];
 	NSEnumerator *enumerator = [runningApplications objectEnumerator];
-	NSDictionary *applicationInfo;
+	NSRunningApplication *applicationInfo;
 	
 	while (nil != (applicationInfo = [enumerator nextObject])) {
-		NSString *bundleIdentifier = [applicationInfo objectForKey: @"NSApplicationBundleIdentifier"];
+       
+		NSString *bundleIdentifier = [applicationInfo bundleIdentifier];
 		
 		if ([bundleIdentifier isEqualToString: _editorBundleIdentifier]) {
 			running = YES;
 			// bring the app forward
-			success = [workspace launchApplication: [applicationInfo objectForKey: @"NSApplicationPath"]];
+			success = [workspace launchApplication:[[applicationInfo bundleURL] path]];
 			break;
 		}
 	}

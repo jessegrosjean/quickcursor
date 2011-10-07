@@ -186,7 +186,7 @@
 	AXUIElementIsAttributeSettable(uiElementRef, (CFStringRef)attributeName, &settableFlag);
 	
 	if (!settableFlag) {
-		NSLog(@"%@ is not a writeable attribute", attributeName, nil);
+		NSLog(@"%@ is not a writeable attribute", attributeName);
 		return NO;
 	}
 	

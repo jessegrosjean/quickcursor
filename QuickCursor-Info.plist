@@ -37,20 +37,20 @@
 		<string>org.gnu.Aquamacs</string>
 		<string>com.barebones.bbedit</string>
 		<string>com.metaclassy.byword</string>
+		<string>com.aynimac.CotEditor</string>
 		<string>com.macrabbit.espresso</string>
 		<string>org.fraise.Fraise</string>
 		<string>org.vim.MacVim</string>
 		<string>com.multimarkdown.composer</string>
 		<string>org.smultron.Smultron</string>
 		<string>com.peterborgapps.Smultron</string>
+		<string>com.peterborgapps.Smultron4</string>
 		<string>de.codingmonkeys.SubEthaEdit</string>
 		<string>com.macromates.textmate</string>
 		<string>com.barebones.textwrangler</string>
 		<string>com.hogbaysoftware.WriteRoom</string>
 		<string>com.hogbaysoftware.Wetroad</string>
 		<string>com.hogbaysoftware.WriteRoom.mac</string>
-		<string>com.peterborgapps.Smultron4</string>
-		<string>com.aynimac.CotEditor</string>
 	</array>
 </dict>
 </plist>

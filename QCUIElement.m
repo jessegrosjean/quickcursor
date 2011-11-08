@@ -7,7 +7,7 @@
 //
 
 #import "QCUIElement.h"
-
+#import "NSPasteboard_Extensions.h"
 
 @implementation QCUIElement
 
@@ -345,10 +345,13 @@
 		}
 		
 		NSPasteboard *pboard = [NSPasteboard generalPasteboard];
-		NSString *savedContents = [pboard stringForType:NSPasteboardTypeString];
+        NSDictionary *savedContents = [pboard savePasteboardContents];
+        
+		//NSString *savedContents = [pboard stringForType:NSPasteboardTypeString];
 		NSString *copiedContents = [self performCopee:YES];
-        [pboard clearContents];
-		[pboard setString:savedContents forType:NSPasteboardTypeString]; // trying to restore original clip board contents... doesn't seem to work, not sure if good idaea anyway.
+        [pboard restorePasteboardContents:savedContents];
+        //[pboard clearContents];
+		//[pboard setString:savedContents forType:NSPasteboardTypeString]; // trying to restore original clip board contents... doesn't seem to work, not sure if good idaea anyway.
 		return copiedContents;
 	}
 		
@@ -358,7 +361,9 @@
 - (BOOL)writeString:(NSString *)pasteString {
 	NSPasteboard *pboard = [NSPasteboard generalPasteboard];
 	
-    NSString *savedContents = [pboard stringForType:NSPasteboardTypeString];
+    //NSString *savedContents = [pboard stringForType:NSPasteboardTypeString];
+    NSDictionary *savedContents = [pboard savePasteboardContents];
+
 	[pboard clearContents];
 	[pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
 	[pboard setString:pasteString forType:NSPasteboardTypeString];
@@ -372,8 +377,9 @@
 	if ([pasteMenuItem enabled]) {
 		if (AXUIElementPerformAction(pasteMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
             usleep(100000); // hack... might not work with long documents?
-            [pboard clearContents];
-            [pboard setString:savedContents forType:NSPasteboardTypeString];
+            [pboard restorePasteboardContents:savedContents];
+            //[pboard clearContents];
+            //[pboard setString:savedContents forType:NSPasteboardTypeString];
 			return YES;
 		}
 	}

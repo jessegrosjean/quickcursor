@@ -31,6 +31,7 @@
 		884E34CF128C7E4700B60730 /* ShortcutRecorder.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 884E34C3128C7E4100B60730 /* ShortcutRecorder.framework */; };
 		88564D8A12DF407E00070CD3 /* StatusItemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 88564D8912DF407E00070CD3 /* StatusItemIcon.png */; };
 		8858B82912F9AC6600696670 /* receipt in Resources */ = {isa = PBXBuildFile; fileRef = 8858B82812F9AC6600696670 /* receipt */; };
+		88C3174D1469D7E0003E71E0 /* NSPasteboard_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C3174C1469D7E0003E71E0 /* NSPasteboard_Extensions.m */; };
 		88D3FC48133D0F8B00C2E651 /* ReceiptVerification.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D3FC47133D0F8B00C2E651 /* ReceiptVerification.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -94,6 +95,8 @@
 		884E34C3128C7E4100B60730 /* ShortcutRecorder.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShortcutRecorder.framework; sourceTree = "<group>"; };
 		88564D8912DF407E00070CD3 /* StatusItemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusItemIcon.png; sourceTree = "<group>"; };
 		8858B82812F9AC6600696670 /* receipt */ = {isa = PBXFileReference; lastKnownFileType = file; path = receipt; sourceTree = "<group>"; };
+		88C3174B1469D7E0003E71E0 /* NSPasteboard_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPasteboard_Extensions.h; sourceTree = "<group>"; };
+		88C3174C1469D7E0003E71E0 /* NSPasteboard_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPasteboard_Extensions.m; sourceTree = "<group>"; };
 		88D3FC46133D0F8B00C2E651 /* ReceiptVerification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptVerification.h; sourceTree = "<group>"; };
 		88D3FC47133D0F8B00C2E651 /* ReceiptVerification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptVerification.m; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* QuickCursor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickCursor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +128,8 @@
 				882A8BAB128C33BC00D05C94 /* QCAppDelegate.m */,
 				882A8BAC128C33BC00D05C94 /* QCUIElement.h */,
 				882A8BAD128C33BC00D05C94 /* QCUIElement.m */,
+				88C3174B1469D7E0003E71E0 /* NSPasteboard_Extensions.h */,
+				88C3174C1469D7E0003E71E0 /* NSPasteboard_Extensions.m */,
 				882A8C26128C368400D05C94 /* ODB Editor */,
 				882A8C27128C369100D05C94 /* Hot Key */,
 			);
@@ -325,6 +330,7 @@
 				882A8BDC128C349F00D05C94 /* ODBEditor.m in Sources */,
 				882A8BDD128C349F00D05C94 /* NSAppleEventDescriptor-Extensions.m in Sources */,
 				88D3FC48133D0F8B00C2E651 /* ReceiptVerification.m in Sources */,
+				88C3174D1469D7E0003E71E0 /* NSPasteboard_Extensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

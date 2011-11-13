@@ -35,6 +35,7 @@
 	<key>QCEditInChoices</key>
 	<array>
 		<string>org.gnu.Aquamacs</string>
+                <string>org.pyrite.EditorClient</string>
 		<string>com.barebones.bbedit</string>
 		<string>com.metaclassy.byword</string>
 		<string>com.aynimac.CotEditor</string>

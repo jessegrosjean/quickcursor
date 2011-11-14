@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.4.3</string>
+	<string>2.5</string>
 	<key>CFBundleSignature</key>
 	<string>QcCr</string>
 	<key>CFBundleVersion</key>
-	<string>25</string>
+	<string>26</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -38,7 +38,7 @@
 		<string>com.barebones.bbedit</string>
 		<string>com.metaclassy.byword</string>
 		<string>com.aynimac.CotEditor</string>
-                <string>org.pyrite.EditorClient</string>
+		<string>org.pyrite.EditorClient</string>
 		<string>com.macrabbit.espresso</string>
 		<string>org.fraise.Fraise</string>
 		<string>org.vim.MacVim</string>

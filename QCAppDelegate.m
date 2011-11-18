@@ -197,6 +197,11 @@
 
 #pragma mark Actions
 
+/*
+ 
+ Mac App Store doesn't like us using this. And will be disallowed by sanboxing soon anyway. SMLoginItemSetEnabled
+ might be an alternative method that will work, but I don't really understand it.
+ 
 - (BOOL)enableLoginItem {
 	NSString *bundleName = [[[NSBundle mainBundle] bundlePath] lastPathComponent];
 	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
@@ -249,6 +254,7 @@
 	
 	CFRelease(loginItems);
 }
+*/
 
 - (IBAction)showAbout:(id)sender {
 	[NSApp activateIgnoringOtherApps:YES];

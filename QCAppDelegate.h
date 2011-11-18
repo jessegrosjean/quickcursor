@@ -25,7 +25,7 @@
 
 + (BOOL)universalAccessNeedsToBeTurnedOn;
 
-@property(assign) BOOL enableLoginItem;
+//@property(assign) BOOL enableLoginItem;
 
 #pragma mark Actions
 

@@ -12,6 +12,8 @@
 #import "QCUIElement.h"
 #import "ODBEditor.h"
 
+NSString * const TYPE_EDIT = @"edit";
+NSString * const TYPE_INSERT = @"insert";
 
 @implementation QCAppDelegate
 
@@ -35,7 +37,38 @@
 	}
 }
 
-- (NSArray *)validatedEditorMenuItems:(SEL)action {
+/* 
+ * We can't just identify the user default by the bundleID anymore, because
+ * we need to track two pieces of information in the stored shortcut: the type
+ * of action (edit vs insert) and the bundleID (identifies the application).
+ */
++ (NSString *)makeUserDefaultString:(NSDictionary *)representedObject {
+    NSString *repObjectType = [representedObject objectForKey:@"type"];
+    NSString *repObjectBundleID = [representedObject objectForKey:@"bundleID"];
+    
+    // Example:  @"edit org.myeditor.MyEditor"  or  @"insert org.myeditor.MyEditor"
+    return [NSString stringWithFormat:@"%@ %@", repObjectType, repObjectBundleID];
+}
+
+- (void)dealloc {
+    if (editSRDelegate) {
+        [editSRDelegate release];
+    }
+    if (insertSRDelegate) {
+        [insertSRDelegate release];
+    }
+    [super dealloc];
+}
+
+/*
+ * Loops through QuickCursor-Info.plist, grabs all of the possible bundle names,
+ * then finds installed bundles by those names.  For each found name, two menu items
+ * are created - one for "Edit" and one for "Insert".
+ *
+ * Returns NSDictionary with key "edit" holding NSMenuItems for edit shortcuts,
+ * and key "Insert" holding NSMenuItems for insert shortcuts.
+ */
+- (NSMutableArray *)validatedEditorMenuItems:(SEL)action {
 	static NSArray *cachedMenuItems = nil;
 	
 	if (!cachedMenuItems) {
@@ -70,19 +103,50 @@
 		cachedMenuItems = [menuItems retain];
 	}
 
+    // We build one big set of menu items.  Two types are represented: "edit" and "insert" items.
+    // We can tell the difference by looking at [[each representedObject] stringForKey:@"type"]
 	NSMutableArray *results = [NSMutableArray array];
 	
 	for (NSMenuItem *each in cachedMenuItems) {
-		NSMenuItem *eachCopy = [[each copy] autorelease];
-		[eachCopy setTarget:self];
-		[eachCopy setAction:action];
-		[results addObject:eachCopy];
+    
+        // For each cached item, we will make one "Edit" and one "Insert" item.
+        
+        // The current representedObject is the string bundleID, like @"org.gnu.Aquamacs"
+        NSString *oldRepObject = (NSString *)[each representedObject];
+
+        // Creating the "Edit" item
+        NSMenuItem *editCopy = [[each copy] autorelease];
+
+        // The new represented object is a dictionary with:
+        //    @"type" => @"edit",
+        //    @"bundleID" => @"org.gnu.Aquamacs"
+        NSArray *editDictObjects = [NSArray arrayWithObjects:TYPE_EDIT, oldRepObject, nil];
+        NSArray *editDictKeys = [NSArray arrayWithObjects:@"type", @"bundleID", nil];
+        [editCopy setRepresentedObject:[NSDictionary dictionaryWithObjects:editDictObjects forKeys:editDictKeys]];
+        
+        // Finish up the "Edit" item
+        [editCopy setTarget:self];
+        [editCopy setAction:action];
+        [results addObject:editCopy];
+
+        // Do the same thing to create the "Insert" item
+        NSMenuItem *insertCopy = [[each copy] autorelease];
+
+        NSArray *insertDictObjects = [NSArray arrayWithObjects:TYPE_INSERT, oldRepObject, nil];
+        NSArray *insertDictKeys = [NSArray arrayWithObjects:@"type", @"bundleID", nil];
+        [insertCopy setRepresentedObject:[NSDictionary dictionaryWithObjects:insertDictObjects forKeys:insertDictKeys]];
+
+        [insertCopy setTarget:self];
+        [insertCopy setAction:action];
+        [results addObject:insertCopy];
 	}
-	
+    
 	return results;
 }
 
-- (void)updateHotKeys {
+/* When updating keys from an addition, pass in userDefaultString and the key combo, and
+ * this method will also make sure that there are no duplicates. */
+- (void)updateHotKeys:(NSString *)userDefaultString addingKeyCombo:(PTKeyCombo *)newKeyCombo usingRecorder:(SRRecorderControl *)addingWithRecorder {
 	PTHotKeyCenter *hotKeyCenter = [PTHotKeyCenter sharedCenter];
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
@@ -91,14 +155,46 @@
 	}
 	
 	[registeredHotKeys removeAllObjects];
-	
-	for (NSMenuItem *each in [self validatedEditorMenuItems:NULL]) {
-		id eachKeyComboPlist = [userDefaults objectForKey:[each representedObject]];
-		if (eachKeyComboPlist) {
-			PTKeyCombo *keyCombo = [[[PTKeyCombo alloc] initWithPlistRepresentation:eachKeyComboPlist] autorelease];
-			PTHotKey *hotKey = [[[PTHotKey alloc] initWithIdentifier:[each representedObject] keyCombo:keyCombo] autorelease];
-			[hotKey setTarget:self];
-			[hotKey setAction:@selector(beginQuickCursorEdit:)];
+    
+	for (NSMenuItem *each in [self validatedEditorMenuItems:NULL]) {                
+        NSString *curUserDefaultString = [QCAppDelegate makeUserDefaultString:[each representedObject]];
+        
+		id eachKeyComboPlist = [userDefaults objectForKey:curUserDefaultString];
+		if (eachKeyComboPlist) {            
+			PTKeyCombo *curKeyCombo = [[[PTKeyCombo alloc] initWithPlistRepresentation:eachKeyComboPlist] autorelease];
+            
+            // If we found an existing key combo with the same one we're about to add,
+            // and it's not for this program, then we skip it because it just got overwritten
+            // by the addition.
+            if (newKeyCombo) {
+                if ([newKeyCombo isEqual:curKeyCombo]) {
+                    if (![curUserDefaultString isEqualToString:userDefaultString]) {
+                        [userDefaults removeObjectForKey:curUserDefaultString];
+                        
+                        SRRecorderControl *otherRecorder;
+                        if (addingWithRecorder == editShortcutRecorder) {
+                            otherRecorder = insertShortcutRecorder;
+                        } else {
+                            otherRecorder = editShortcutRecorder;
+                        }
+                        
+                        NSString *addingComboString = [addingWithRecorder keyComboString];
+                        NSString *otherComboString = [otherRecorder keyComboString];
+
+                        // If the combo we're changing is actually displayed right now on the other control
+                        // in the preferences dialog, then we clear it out right now
+                        if ([addingComboString isEqualToString:otherComboString]) {
+                            [otherRecorder setKeyCombo:SRMakeKeyCombo(ShortcutRecorderEmptyCode, ShortcutRecorderEmptyFlags)];
+                        }
+                        
+                        continue;
+                    }
+                }
+            }
+            
+			PTHotKey *hotKey = [[[PTHotKey alloc] initWithIdentifier:curUserDefaultString keyCombo:curKeyCombo] autorelease];
+			[hotKey setTarget:self];            
+			[hotKey setAction:@selector(beginQuickCursorAction:)];
 			[hotKeyCenter registerHotKey:hotKey];
 			[registeredHotKeys addObject:hotKey];
 		}
@@ -106,8 +202,10 @@
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)anItem {
-	if ([anItem action] == @selector(beginQuickCursorEdit:)) {
-		id keyComboPlist = [[NSUserDefaults standardUserDefaults] objectForKey:[anItem representedObject]];
+	if ([anItem action] == @selector(beginQuickCursorAction:)) {
+        NSString *userDefaultString = [QCAppDelegate makeUserDefaultString:[anItem representedObject]];
+        
+		id keyComboPlist = [[NSUserDefaults standardUserDefaults] objectForKey:userDefaultString];
 		BOOL clear = YES;
 		
 		if (keyComboPlist) {
@@ -143,14 +241,36 @@
     [quickCursorStatusItem setHighlightMode:YES];
 		
 	NSMenu *quickCursorMenu = [[[NSMenu alloc] init] autorelease];
-		
-	[quickCursorMenu addItemWithTitle:NSLocalizedString(@"Edit In...", nil) action:NULL keyEquivalent:@""];
 	
-	NSArray *supportedAppsMenuItems = [self validatedEditorMenuItems:@selector(beginQuickCursorEdit:)];
-	if ([supportedAppsMenuItems count] > 0) {
-		for (NSMenuItem *each in supportedAppsMenuItems) {
+    NSMutableArray *validatedItems = [self validatedEditorMenuItems:@selector(beginQuickCursorAction:)];
+    
+    NSMutableArray *editItems = [NSMutableArray array];
+    NSMutableArray *insertItems = [NSMutableArray array];
+
+    // Build separate Insert and Edit items for the menus...
+    for (NSMenuItem *each in validatedItems) {
+        NSString *type = [[each representedObject] objectForKey:@"type"];
+        if ([type isEqualToString:TYPE_EDIT]) {
+            [editItems addObject:each];
+        } else {
+            [insertItems addObject:each];
+        }
+    }
+    
+    // Add "Edit" and "Insert" to menu bar
+	if ([validatedItems count] > 0) {
+        [quickCursorMenu addItemWithTitle:NSLocalizedString(@"Edit In...", nil) action:NULL keyEquivalent:@""];
+        
+		for (NSMenuItem *each in editItems) {
 			[quickCursorMenu addItem:each];
 		}
+        
+        [quickCursorMenu addItemWithTitle:NSLocalizedString(@"Insert In...", nil) action:NULL keyEquivalent:@""];
+        
+        for (NSMenuItem *each in insertItems) {
+            [quickCursorMenu addItem:each];
+        }
+        
 	} else {
 		[quickCursorMenu addItemWithTitle:NSLocalizedString(@"No Supported Text Editors Found", nil) action:nil keyEquivalent:@""];
 		[[[quickCursorMenu itemArray] lastObject] setIndentationLevel:1];
@@ -178,7 +298,7 @@
 	
 	[quickCursorStatusItem setMenu:quickCursorMenu];
 	
-	[self updateHotKeys];
+	[self updateHotKeys:NULL addingKeyCombo:NULL usingRecorder:NULL];
 	
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	if (![userDefaults boolForKey:@"SuppressWelcomeDefaultKey"]) {
@@ -261,22 +381,48 @@
 	[NSApp orderFrontStandardAboutPanel:sender];
 }
 
-- (IBAction)showPreferences:(id)sender {
-	if ([editInPopUpButton numberOfItems] == 0) {
+- (void)setupPrefsForShortcuts:(NSPopUpButton *)popUpButton shortcutRecorder:(SRRecorderControl *)shortcutRecorder {
+    if ([popUpButton numberOfItems] == 0) {
 		[shortcutRecorder setCanCaptureGlobalHotKeys:YES];
-		[shortcutRecorder setDelegate:self];
 
-		for (NSMenuItem *each in [self validatedEditorMenuItems:NULL]) {
-			[[editInPopUpButton menu] addItem:each];
+        // Straight up pointer equality is fine here, since these are pointing to the same place
+        BOOL isEditType = (popUpButton == editInPopUpButton);
+                
+        if (isEditType) {
+            if (!editSRDelegate) {
+                editSRDelegate = [[QCSRDelegate alloc] initWithOwnerAndBtn:self popUpButton:editInPopUpButton];
+            }
+            [shortcutRecorder setDelegate:editSRDelegate];
+        }
+        else {
+            if (!insertSRDelegate) {
+                insertSRDelegate = [[QCSRDelegate alloc] initWithOwnerAndBtn:self popUpButton:insertInPopUpButton];
+            }
+            [shortcutRecorder setDelegate:insertSRDelegate];
+        }
+        
+        NSMutableArray *validatedItems = [self validatedEditorMenuItems:NULL];
+        NSString *onlyUseType = isEditType ? TYPE_EDIT : TYPE_INSERT;
+                
+		for (NSMenuItem *each in validatedItems) {
+            NSString *type = [[each representedObject] objectForKey:@"type"];
+            if ([type isEqualToString:onlyUseType]) {
+                [[popUpButton menu] addItem:each];
+            }
 		}
 		
-		[self editInPopUpButtonClicked:nil];
+        [self popUpButtonClicked:popUpButton];
 		
-		if ([editInPopUpButton numberOfItems] == 0) {
-			[editInPopUpButton setEnabled:NO];
+		if ([popUpButton numberOfItems] == 0) {
+			[popUpButton setEnabled:NO];
 			[shortcutRecorder setEnabled:NO];
 		}
 	}
+}
+
+- (IBAction)showPreferences:(id)sender {
+    [self setupPrefsForShortcuts:editInPopUpButton shortcutRecorder:editShortcutRecorder];
+    [self setupPrefsForShortcuts:insertInPopUpButton shortcutRecorder:insertShortcutRecorder];
 	
 	[NSApp activateIgnoringOtherApps:YES];
 	[preferencesWindow center];
@@ -287,54 +433,86 @@
 	[[NSWorkspace sharedWorkspace] openFile:[[NSBundle mainBundle] pathForResource:@"QuickCursor User's Guide" ofType:@"pdf"]];
 }
 
-- (IBAction)editInPopUpButtonClicked:(id)sender {
-	id clicked = [[editInPopUpButton selectedItem] representedObject];
+/* 
+ * Generic function to process pop-up button clicks (selects the application shortcut)
+ * Can process both 'Edit' and 'Insert' shortcut clicks.
+ */
+- (IBAction)popUpButtonClicked:(id)sender {
+    if (![sender isKindOfClass:[NSPopUpButton class]]) {
+        return;
+    }
+
+    // Since we know the object type, cast it
+    NSPopUpButton *popupSender = (NSPopUpButton *)sender;
+
+    // Figure out which shortcut is being set right now
+    NSString *uiID = [popupSender identifier];
+    SRRecorderControl *recorder;
+    recorder = ([uiID isEqualToString:TYPE_EDIT]) ? editShortcutRecorder : insertShortcutRecorder;
+        
+    id clicked = [QCAppDelegate makeUserDefaultString:[[popupSender selectedItem] representedObject]];
 	if (clicked) {
 		id keyComboPlist = [[NSUserDefaults standardUserDefaults] objectForKey:clicked];
 		if (keyComboPlist) {
 			KeyCombo keyCombo;
 			PTKeyCombo *keyComboObject = [[[PTKeyCombo alloc] initWithPlistRepresentation:keyComboPlist] autorelease];
 			keyCombo.code = [keyComboObject keyCode];
-			keyCombo.flags = [shortcutRecorder carbonToCocoaFlags:[keyComboObject modifiers]];
-			[shortcutRecorder setKeyCombo:keyCombo];
+			keyCombo.flags = [recorder carbonToCocoaFlags:[keyComboObject modifiers]];
+			[recorder setKeyCombo:keyCombo];
 		} else {
-			[shortcutRecorder setKeyCombo:SRMakeKeyCombo(ShortcutRecorderEmptyCode, ShortcutRecorderEmptyFlags)];		
+			[recorder setKeyCombo:SRMakeKeyCombo(ShortcutRecorderEmptyCode, ShortcutRecorderEmptyFlags)];		
 		}
 	}
 }
 
-- (IBAction)beginQuickCursorEdit:(id)sender {
+- (IBAction)beginQuickCursorAction:(id)sender {
 	if ([QCAppDelegate universalAccessNeedsToBeTurnedOn]) {
 		return;
 	}
 	
-	NSString *bundleID = nil;
+	NSString *repObjStr = nil;
 	
 	if ([sender isKindOfClass:[NSMenuItem class]]) {
-		bundleID = [sender representedObject];
+		repObjStr = [sender representedObject];
 	} else {
-		bundleID = [sender identifier];
+		repObjStr = [sender identifier];
 	}
+    
+    NSArray *repObjComponents = [repObjStr componentsSeparatedByString:@" "];
+    if ([repObjComponents count] != 2) {
+        return;
+    }
+    
+    NSString *type = (NSString *)[repObjComponents objectAtIndex:0];
+    NSString *bundleID = (NSString *)[repObjComponents objectAtIndex:1];
 	
 	QCUIElement *focusedElement = [QCUIElement focusedElement];
-	QCUIElement *sourceApplicationElement = [focusedElement application];
-	NSString *editString = [sourceApplicationElement readString];
+	QCUIElement *sourceApplicationElement = [focusedElement application];	
 	NSString *processName = [sourceApplicationElement processName];
-	
-	if (editString) {		
-		NSDictionary *context = [NSDictionary dictionaryWithObjectsAndKeys:sourceApplicationElement, @"sourceApplicationElement", bundleID, @"editorBundleID", editString, @"originalString", processName, @"processName", nil];
-		NSString *windowTitle = focusedElement.window.title;
-		NSString *correctedWindowTitle = [windowTitle stringByReplacingOccurrencesOfString:@"/" withString:@":"];
-		NSString *editorCustomPath = [NSString stringWithFormat:@"%@ - %@", processName, correctedWindowTitle];	
-		[[ODBEditor sharedODBEditor] setEditorBundleIdentifier:bundleID];
-		[[ODBEditor sharedODBEditor] editString:editString options:[NSDictionary dictionaryWithObject:editorCustomPath forKey:ODBEditorCustomPathKey] forClient:self context:context];
-	} else {
-		[[NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Could not copy text from %@", nil), processName]
-						 defaultButton:NSLocalizedString(@"OK", nil)
-					   alternateButton:nil
-						   otherButton:nil
-			 informativeTextWithFormat:[NSString stringWithFormat:NSLocalizedString(@"QuickCursor could not copy text from %@. Please make sure that a text area has focus and try again.", nil), processName]] runModal];
-	}
+    NSString *editString;
+    
+    if ([type isEqualToString:TYPE_EDIT]) {
+        editString = [sourceApplicationElement readString];
+        
+        if (!editString) {
+            [[NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Could not copy text from %@", nil), processName]
+                             defaultButton:NSLocalizedString(@"OK", nil)
+                           alternateButton:nil
+                               otherButton:nil
+                 informativeTextWithFormat:[NSString stringWithFormat:NSLocalizedString(@"QuickCursor could not copy text from %@. Please make sure that a text area has focus and try again.", nil), processName]] runModal];
+            
+            return;
+        }
+    } else {
+        editString = @"";
+    }
+    		
+    NSDictionary *context = [NSDictionary dictionaryWithObjectsAndKeys:sourceApplicationElement, @"sourceApplicationElement", bundleID, @"editorBundleID", editString, @"originalString", processName, @"processName", nil];
+    NSString *windowTitle = focusedElement.window.title;
+    NSString *correctedWindowTitle = [windowTitle stringByReplacingOccurrencesOfString:@"/" withString:@":"];
+    NSString *editorCustomPath = [NSString stringWithFormat:@"%@ - %@", processName, correctedWindowTitle];	
+    [[ODBEditor sharedODBEditor] setEditorBundleIdentifier:bundleID];
+    [[ODBEditor sharedODBEditor] editString:editString options:[NSDictionary dictionaryWithObject:editorCustomPath forKey:ODBEditorCustomPathKey] forClient:self context:context];
 }
 
 #pragma mark ODBEditor Callbacks
@@ -380,22 +558,6 @@
 	} else {
 		[sourceApplicationElement activateProcess];
 	}
-}
-
-#pragma mark shortcutRecorder Delegate
-
-- (BOOL)shortcutRecorder:(SRRecorderControl *)aRecorder isKeyCode:(NSInteger)keyCode andFlagsTaken:(NSUInteger)flags reason:(NSString **)aReason {
-	return NO;
-}
-
-- (void)shortcutRecorder:(SRRecorderControl *)aRecorder keyComboDidChange:(KeyCombo)newKeyCombo {
-	signed short code = newKeyCombo.code;
-	unsigned int flags = [aRecorder cocoaToCarbonFlags:newKeyCombo.flags];
-	PTKeyCombo *keyCombo = [[[PTKeyCombo alloc] initWithKeyCode:code modifiers:flags] autorelease];
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	[userDefaults setObject:[keyCombo plistRepresentation] forKey:[[editInPopUpButton selectedItem] representedObject]];
-	[self updateHotKeys];
-	[userDefaults synchronize];
 }
 
 @end

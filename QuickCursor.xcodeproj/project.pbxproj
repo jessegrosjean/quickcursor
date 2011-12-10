@@ -36,6 +36,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		9496F7961490A85500D429FB /* QCSRDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9496F7951490A85500D429FB /* QCSRDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -100,6 +101,8 @@
 		88D3FC46133D0F8B00C2E651 /* ReceiptVerification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptVerification.h; sourceTree = "<group>"; };
 		88D3FC47133D0F8B00C2E651 /* ReceiptVerification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptVerification.m; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* QuickCursor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickCursor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9496F7941490A85500D429FB /* QCSRDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCSRDelegate.h; sourceTree = "<group>"; };
+		9496F7951490A85500D429FB /* QCSRDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCSRDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +135,8 @@
 				88C3174C1469D7E0003E71E0 /* NSPasteboard_Extensions.m */,
 				882A8C26128C368400D05C94 /* ODB Editor */,
 				882A8C27128C369100D05C94 /* Hot Key */,
+				9496F7941490A85500D429FB /* QCSRDelegate.h */,
+				9496F7951490A85500D429FB /* QCSRDelegate.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -331,6 +336,7 @@
 				882A8BDD128C349F00D05C94 /* NSAppleEventDescriptor-Extensions.m in Sources */,
 				88D3FC48133D0F8B00C2E651 /* ReceiptVerification.m in Sources */,
 				88C3174D1469D7E0003E71E0 /* NSPasteboard_Extensions.m in Sources */,
+				9496F7961490A85500D429FB /* QCSRDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

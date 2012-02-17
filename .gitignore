@@ -2,3 +2,5 @@
 build
 *.pbxuser
 *.perspectivev3
+QuickCursor.xcodeproj/project.xcworkspace/xcuserdata/
+QuickCursor.xcodeproj/xcuserdata/

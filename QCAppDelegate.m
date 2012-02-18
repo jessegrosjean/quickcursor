@@ -35,14 +35,21 @@
 	}
 }
 
+
 - (NSArray *)validatedEditorMenuItems:(SEL)action {
-	static NSArray *cachedMenuItems = nil;
-	
 	if (!cachedMenuItems) {
 		NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
 		NSMutableArray *menuItems = [NSMutableArray array];
-		
-		for (NSString *eachBundleID in [[NSBundle mainBundle] objectForInfoDictionaryKey:@"QCEditInChoices"]) {
+        
+        NSMutableArray *editInChoices = [NSMutableArray arrayWithArray:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"QCEditInChoices"]];
+        for (NSDictionary *customEditors in [[NSUserDefaults standardUserDefaults] objectForKey:@"CustomEditors"]) {
+            NSString *bundleID = [customEditors objectForKey:@"BundleID"];
+            if (bundleID) {
+                [editInChoices addObject:bundleID];
+            }
+        }
+        
+		for (NSString *eachBundleID in editInChoices) {
 			NSString *bundlePath = [workspace absolutePathForAppBundleWithIdentifier:eachBundleID];
 			
 			if (bundlePath) {
@@ -64,31 +71,7 @@
 				[menuItems addObject:eachMenuItem];
 			}
 		}
-        
-        for (NSDictionary *customEditors in [[NSUserDefaults standardUserDefaults] objectForKey:@"CustomEditors"]) {
-            NSString *eachBundleID = [customEditors objectForKey:@"BundleID"];
-            NSString *bundlePath = [workspace absolutePathForAppBundleWithIdentifier:eachBundleID];
-            if (bundlePath) {
-				NSString *bundleName = [[NSBundle bundleWithPath:bundlePath] objectForInfoDictionaryKey:@"CFBundleName"]; // seems to be nil in some cases.
-				if (!bundleName) {
-					bundleName = [[bundlePath lastPathComponent] stringByDeletingPathExtension];
-				}
-				
-				if ([eachBundleID isEqualToString:@"org.gnu.Aquamacs"]) {
-					bundleName = [bundleName stringByAppendingString:@" 2.2+"];
-				}
-				
-				NSMenuItem *eachMenuItem = [[[NSMenuItem alloc] initWithTitle:bundleName action:NULL keyEquivalent:@""] autorelease];
-				[eachMenuItem setRepresentedObject:eachBundleID];
-				[eachMenuItem setIndentationLevel:1];
-				NSImage *icon = [workspace iconForFile:bundlePath];
-				[icon setSize:NSMakeSize(16, 16)];
-				[eachMenuItem setImage:icon];
-				[menuItems addObject:eachMenuItem];
-			}
-        }
-		
-		[menuItems sortUsingDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES] autorelease]]];
+        [menuItems sortUsingDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES] autorelease]]];
 		
 		cachedMenuItems = [menuItems retain];
 	}

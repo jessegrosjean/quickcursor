@@ -21,6 +21,8 @@
 	NSStatusItem *quickCursorStatusItem;
 	NSMutableSet *quickCursorSessionQCUIElements;
 	NSMutableArray *registeredHotKeys;
+    
+    NSArray *cachedMenuItems;
 }
 
 + (BOOL)universalAccessNeedsToBeTurnedOn;

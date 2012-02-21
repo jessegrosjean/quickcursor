@@ -44,7 +44,7 @@
         NSMutableArray *editInChoices = [NSMutableArray arrayWithArray:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"QCEditInChoices"]];
         for (NSDictionary *customEditors in [[NSUserDefaults standardUserDefaults] objectForKey:@"CustomEditors"]) {
             NSString *bundleID = [customEditors objectForKey:@"BundleID"];
-            if (bundleID) {
+            if (bundleID && ![editInChoices containsObject:bundleID]) {
                 [editInChoices addObject:bundleID];
             }
         }

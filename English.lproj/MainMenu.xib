@@ -387,7 +387,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents"> Custom Bundle IDs</string>
+														<string key="NSContents"> Custom Bundle IDs (requires ODB support for "Edit In" apps)</string>
 														<reference key="NSSupport" ref="26"/>
 														<object class="NSColor" key="NSBackgroundColor">
 															<int key="NSColorSpace">3</int>
@@ -622,7 +622,7 @@
 							<string key="NSFrame">{{59, 19}, {40, 23}}</string>
 							<reference key="NSSuperview" ref="248881203"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
+							<reference key="NSNextKeyView" ref="849498993"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="124828206">
 								<int key="NSCellFlags">-2080244224</int>
@@ -647,6 +647,26 @@
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="138723173"/>
 							<string key="NSClassName">SRRecorderControl</string>
+						</object>
+						<object class="NSTextField" id="849498993">
+							<reference key="NSNextResponder" ref="248881203"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{104, 23}, {258, 14}}</string>
+							<reference key="NSSuperview" ref="248881203"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
+							<string key="NSReuseIdentifierKey">_NS:3944</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSTextFieldCell" key="NSCell" id="990644250">
+								<int key="NSCellFlags">68288064</int>
+								<int key="NSCellFlags2">272761856</int>
+								<string key="NSContents">Restart QuickCursor to update editor list.</string>
+								<reference key="NSSupport" ref="26"/>
+								<string key="NSCellIdentifier">_NS:3944</string>
+								<reference key="NSControlView" ref="849498993"/>
+								<reference key="NSBackgroundColor" ref="641415861"/>
+								<reference key="NSTextColor" ref="556299165"/>
+							</object>
 						</object>
 					</object>
 					<string key="NSFrameSize">{435, 481}</string>
@@ -1246,6 +1266,7 @@
 							<reference ref="311190998"/>
 							<reference ref="555985658"/>
 							<reference ref="195222859"/>
+							<reference ref="849498993"/>
 						</object>
 						<reference key="parent" ref="448742277"/>
 					</object>
@@ -1668,6 +1689,20 @@
 						<reference key="object" ref="246639390"/>
 						<reference key="parent" ref="0"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">921</int>
+						<reference key="object" ref="849498993"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="990644250"/>
+						</object>
+						<reference key="parent" ref="248881203"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">922</int>
+						<reference key="object" ref="990644250"/>
+						<reference key="parent" ref="849498993"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1750,6 +1785,8 @@
 					<string>901.IBPluginDependency</string>
 					<string>902.IBPluginDependency</string>
 					<string>905.IBPluginDependency</string>
+					<string>921.IBPluginDependency</string>
+					<string>922.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1829,6 +1866,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -1843,7 +1882,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">918</int>
+			<int key="maxID">922</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

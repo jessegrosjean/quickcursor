@@ -349,7 +349,11 @@
         
 		//NSString *savedContents = [pboard stringForType:NSPasteboardTypeString];
 		NSString *copiedContents = [self performCopee:YES];
-        [pboard restorePasteboardContents:savedContents];
+        
+        NSNumber *disableClipboardRestore = [[NSUserDefaults standardUserDefaults] objectForKey:@"DisableClipboardRestore"]; 
+        if (!disableClipboardRestore || ![disableClipboardRestore boolValue]) {
+            [pboard restorePasteboardContents:savedContents];            
+        }
         //[pboard clearContents];
 		//[pboard setString:savedContents forType:NSPasteboardTypeString]; // trying to restore original clip board contents... doesn't seem to work, not sure if good idaea anyway.
 		return copiedContents;
@@ -367,7 +371,7 @@
 	[pboard clearContents];
 	[pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
 	[pboard setString:pasteString forType:NSPasteboardTypeString];
-	
+    
 	if (![self activateProcess]) {
 		return NO;
 	}
@@ -377,7 +381,10 @@
 	if ([pasteMenuItem enabled]) {
 		if (AXUIElementPerformAction(pasteMenuItem->uiElementRef, kAXPressAction) == kAXErrorSuccess) {
             usleep(100000); // hack... might not work with long documents?
-            [pboard restorePasteboardContents:savedContents];
+            NSNumber *disableClipboardRestore = [[NSUserDefaults standardUserDefaults] objectForKey:@"DisableClipboardRestore"]; 
+            if (!disableClipboardRestore || ![disableClipboardRestore boolValue]) {
+                [pboard restorePasteboardContents:savedContents];
+            }
             //[pboard clearContents];
             //[pboard setString:savedContents forType:NSPasteboardTypeString];
 			return YES;

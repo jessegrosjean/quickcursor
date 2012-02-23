@@ -61,7 +61,7 @@
 			<object class="NSWindowTemplate" id="448742277">
 				<int key="NSWindowStyleMask">7</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{235, 207}, {435, 481}}</string>
+				<string key="NSWindowRect">{{235, 207}, {435, 508}}</string>
 				<int key="NSWTFlags">1685588992</int>
 				<string key="NSWindowTitle">QuickCursor Preferences</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -75,7 +75,7 @@
 						<object class="NSPopUpButton" id="1039590887">
 							<reference key="NSNextResponder" ref="248881203"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{102, 436}, {153, 26}}</string>
+							<string key="NSFrame">{{102, 463}, {153, 26}}</string>
 							<reference key="NSSuperview" ref="248881203"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="868578286"/>
@@ -116,7 +116,7 @@
 						<object class="NSTextField" id="521699642">
 							<reference key="NSNextResponder" ref="248881203"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{17, 443}, {82, 17}}</string>
+							<string key="NSFrame">{{17, 470}, {82, 17}}</string>
 							<reference key="NSSuperview" ref="248881203"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1039590887"/>
@@ -642,10 +642,10 @@
 						<object class="NSCustomView" id="868578286">
 							<reference key="NSNextResponder" ref="248881203"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{260, 439}, {155, 22}}</string>
+							<string key="NSFrame">{{260, 466}, {155, 22}}</string>
 							<reference key="NSSuperview" ref="248881203"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="138723173"/>
+							<reference key="NSNextKeyView" ref="236097746"/>
 							<string key="NSClassName">SRRecorderControl</string>
 						</object>
 						<object class="NSTextField" id="849498993">
@@ -668,8 +668,39 @@
 								<reference key="NSTextColor" ref="556299165"/>
 							</object>
 						</object>
+						<object class="NSButton" id="236097746">
+							<reference key="NSNextResponder" ref="248881203"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{30, 434}, {186, 18}}</string>
+							<reference key="NSSuperview" ref="248881203"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="138723173"/>
+							<string key="NSReuseIdentifierKey">_NS:771</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="553244582">
+								<int key="NSCellFlags">-2080244224</int>
+								<int key="NSCellFlags2">0</int>
+								<string key="NSContents">Disable Clipboard Restore</string>
+								<reference key="NSSupport" ref="752916645"/>
+								<string key="NSCellIdentifier">_NS:771</string>
+								<reference key="NSControlView" ref="236097746"/>
+								<int key="NSButtonFlags">1211912703</int>
+								<int key="NSButtonFlags2">2</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">NSSwitch</string>
+								</object>
+								<object class="NSButtonImageSource" key="NSAlternateImage">
+									<string key="NSImageName">NSSwitch</string>
+								</object>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
+							</object>
+						</object>
 					</object>
-					<string key="NSFrameSize">{435, 481}</string>
+					<string key="NSFrameSize">{435, 508}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="521699642"/>
@@ -1201,6 +1232,22 @@
 					</object>
 					<int key="connectionID">915</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.DisableClipboardRestore</string>
+						<reference key="source" ref="236097746"/>
+						<reference key="destination" ref="192827805"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="236097746"/>
+							<reference key="NSDestination" ref="192827805"/>
+							<string key="NSLabel">value: values.DisableClipboardRestore</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.DisableClipboardRestore</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">927</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1267,6 +1314,7 @@
 							<reference ref="555985658"/>
 							<reference ref="195222859"/>
 							<reference ref="849498993"/>
+							<reference ref="236097746"/>
 						</object>
 						<reference key="parent" ref="448742277"/>
 					</object>
@@ -1703,6 +1751,20 @@
 						<reference key="object" ref="990644250"/>
 						<reference key="parent" ref="849498993"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">923</int>
+						<reference key="object" ref="236097746"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="553244582"/>
+						</object>
+						<reference key="parent" ref="248881203"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">924</int>
+						<reference key="object" ref="553244582"/>
+						<reference key="parent" ref="236097746"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1787,6 +1849,8 @@
 					<string>905.IBPluginDependency</string>
 					<string>921.IBPluginDependency</string>
 					<string>922.IBPluginDependency</string>
+					<string>923.IBPluginDependency</string>
+					<string>924.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1868,6 +1932,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -1882,7 +1948,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">922</int>
+			<int key="maxID">927</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2031,6 +2097,7 @@
 				<string>NSMenuCheckmark</string>
 				<string>NSMenuMixedState</string>
 				<string>NSRemoveTemplate</string>
+				<string>NSSwitch</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2038,6 +2105,7 @@
 				<string>{9, 8}</string>
 				<string>{7, 2}</string>
 				<string>{8, 8}</string>
+				<string>{15, 15}</string>
 			</object>
 		</object>
 	</data>

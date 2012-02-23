@@ -372,7 +372,7 @@
 	QCUIElement *sourceApplicationElement = [context valueForKey:@"sourceApplicationElement"];
 	NSString *originalString = [context valueForKey:@"originalString"];
 	NSString *processName = [context valueForKey:@"processName"];
-	
+    
 	if (![originalString isEqualToString:newString]) {
 		if (![sourceApplicationElement writeString:newString]) {
 			NSBeep();

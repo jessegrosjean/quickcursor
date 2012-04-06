@@ -339,7 +339,12 @@
 
 	if (copyMenuItem) {
 		if (![copyMenuItem enabled]) {
-			if (![self performSelectAll]) {
+            NSNumber* smartEdit = [[NSUserDefaults standardUserDefaults] objectForKey:@"SmartEdit"];
+            if (!smartEdit || [smartEdit boolValue])
+            {
+                return @"";
+            }
+			else if (![self performSelectAll]) {
 				return NO;
 			}
 		}

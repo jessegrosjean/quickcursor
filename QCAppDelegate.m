@@ -164,6 +164,12 @@
 	
 	[quickCursorMenu addItem:[NSMenuItem separatorItem]];
 	
+    NSMenuItem *insertAtCursorMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Insert at cursor", nil) action:nil keyEquivalent:@""] autorelease];
+    [insertAtCursorMenuItem bind:@"value" toObject:[NSUserDefaults standardUserDefaults] withKeyPath:@"SmartEdit" options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"NSContinuouslyUpdatesValue"]];
+    [quickCursorMenu addItem:insertAtCursorMenuItem];    
+    [quickCursorMenu addItem:[NSMenuItem separatorItem]];
+	
+    
 	NSMenuItem *helpMenuItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Help", nil) action:@selector(showHelp:) keyEquivalent:@""] autorelease];
 	[helpMenuItem setTarget:self];
 	[quickCursorMenu addItem:helpMenuItem];

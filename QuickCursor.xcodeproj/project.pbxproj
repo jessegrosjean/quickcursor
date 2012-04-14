@@ -79,7 +79,6 @@
 		882A8BAB128C33BC00D05C94 /* QCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QCAppDelegate.m; sourceTree = "<group>"; };
 		882A8BAC128C33BC00D05C94 /* QCUIElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QCUIElement.h; sourceTree = "<group>"; };
 		882A8BAD128C33BC00D05C94 /* QCUIElement.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QCUIElement.m; sourceTree = "<group>"; };
-		882A8BAE128C33BC00D05C94 /* QuickCursor User's Guide.pages */ = {isa = PBXFileReference; lastKnownFileType = file; path = "QuickCursor User's Guide.pages"; sourceTree = "<group>"; };
 		882A8BAF128C33BC00D05C94 /* QuickCursor User's Guide.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "QuickCursor User's Guide.pdf"; sourceTree = "<group>"; };
 		882A8BB0128C33CB00D05C94 /* StatusItemIconOLD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusItemIconOLD.png; sourceTree = "<group>"; };
 		882A8BB2128C33F000D05C94 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
@@ -200,7 +199,6 @@
 				882A8DC8128C381400D05C94 /* Credits.html */,
 				882A8DB0128C378800D05C94 /* QuickCursor.icns */,
 				882A8BB6128C344500D05C94 /* QuickCursor-Info.plist */,
-				882A8BAE128C33BC00D05C94 /* QuickCursor User's Guide.pages */,
 				882A8BAF128C33BC00D05C94 /* QuickCursor User's Guide.pdf */,
 				882A8BB0128C33CB00D05C94 /* StatusItemIconOLD.png */,
 				88564D8912DF407E00070CD3 /* StatusItemIcon.png */,

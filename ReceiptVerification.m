@@ -46,7 +46,7 @@
 @end
 
 //These need to be defined for each application and version
-static NSString * const kReceiptBundleVersion = @"2.6.1";
+static NSString * const kReceiptBundleVersion = @"2.7";
 static NSString * const kReceiptBundleIdentifier = @"com.hogbaysoftware.QuickCursor";
 
 static NSString * const kReceiptBundleIdentiferKey = @"BundleIdentifier";

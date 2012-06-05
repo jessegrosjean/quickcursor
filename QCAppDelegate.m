@@ -315,20 +315,8 @@
 	}
 }
 
-- (IBAction)beginQuickCursorEdit:(id)sender {
-	if ([QCAppDelegate universalAccessNeedsToBeTurnedOn]) {
-		return;
-	}
-	
-	NSString *bundleID = nil;
-	
-	if ([sender isKindOfClass:[NSMenuItem class]]) {
-		bundleID = [sender representedObject];
-	} else {
-		bundleID = [sender identifier];
-	}
-	
-	QCUIElement *focusedElement = [QCUIElement focusedElement];
+- (void)beginQuickCursorEditByBundleID:(NSString *)bundleID {
+    QCUIElement *focusedElement = [QCUIElement focusedElement];
 	QCUIElement *sourceApplicationElement = [focusedElement application];
 	NSString *editString = [sourceApplicationElement readString];
 	NSString *processName = [sourceApplicationElement processName];
@@ -347,6 +335,22 @@
 						   otherButton:nil
 			 informativeTextWithFormat:[NSString stringWithFormat:NSLocalizedString(@"QuickCursor could not copy text from %@. Please make sure that a text area has focus and try again.", nil), processName]] runModal];
 	}
+}
+
+- (IBAction)beginQuickCursorEdit:(id)sender {
+	if ([QCAppDelegate universalAccessNeedsToBeTurnedOn]) {
+		return;
+	}
+	
+	NSString *bundleID = nil;
+	
+	if ([sender isKindOfClass:[NSMenuItem class]]) {
+		bundleID = [sender representedObject];
+	} else {
+		bundleID = [sender identifier];
+	}
+    
+    [self performSelector:@selector(beginQuickCursorEditByBundleID:) withObject:bundleID afterDelay:0.1];
 }
 
 #pragma mark ODBEditor Callbacks

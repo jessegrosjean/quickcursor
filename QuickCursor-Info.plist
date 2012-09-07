@@ -55,6 +55,7 @@
 		<string>com.hogbaysoftware.WriteRoom</string>
 		<string>com.hogbaysoftware.WriteRoom.mac</string>
 		<string>com.mouapp.mou</string>
+		<string>org.gnu.Emacs</string>
 	</array>
 </dict>
 </plist>

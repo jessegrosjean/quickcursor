@@ -1,1 +1,1 @@
-I’ve made this code available so that you can hack away and customize QuickCursor to work just the way that you want. But I’m also trying to make a small profit on QuickCursor in the Mac App Store. Please don't re-distribute similar apps based on this code. I hope you enjoy hacking away.
+QuickCursor is no longer in active development because it's incompatible with the OS X Sandbox, and so we can no longer sell it in the Mac App Store. Use this code as you see fit.

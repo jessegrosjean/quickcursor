@@ -333,7 +333,7 @@
 						 defaultButton:NSLocalizedString(@"OK", nil)
 					   alternateButton:nil
 						   otherButton:nil
-			 informativeTextWithFormat:[NSString stringWithFormat:NSLocalizedString(@"QuickCursor could not copy text from %@. Please make sure that a text area has focus and try again.", nil), processName]] runModal];
+			 informativeTextWithFormat:NSLocalizedString(@"QuickCursor could not copy text from %@. Please make sure that a text area has focus and try again.", nil), processName] runModal];
 	}
 }
 
